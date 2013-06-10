@@ -17,6 +17,9 @@ public class PlayerJoinListener implements Listener{
 	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent evt) {
+		
+		Main.playerkits.put(evt.getPlayer().getName(), null);
+		
 		if(Main.instance.getServer().getOnlinePlayers().length == Config.minPlayersToStart && !Main.inProgress){
 			gameStartTask = Main.instance.getServer().getScheduler().runTaskTimer(Main.instance, new GameStartTask(), 20, 20);
 		}
@@ -30,5 +33,6 @@ public class PlayerJoinListener implements Listener{
 			gameStartTask.cancel();
 			gameStartTask = null;
 		}
+		Main.playerkits.remove(evt.getPlayer().getName());
 	}
 }
