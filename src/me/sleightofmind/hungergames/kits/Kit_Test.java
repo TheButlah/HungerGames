@@ -2,6 +2,7 @@ package me.sleightofmind.hungergames.kits;
 
 import me.sleightofmind.hungergames.Main;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
@@ -19,7 +20,12 @@ public class Kit_Test extends Kit implements Listener{
 	
 	@EventHandler
 	public void BlockDamageListener(BlockDamageEvent e){
-		e.getBlock().getLocation().getWorld().spawnEntity(e.getBlock().getLocation(), EntityType.PRIMED_TNT);
+		if (Main.playerkits.get(e.getPlayer().getName()) instanceof Kit_Test) {
+			Location loc = e.getBlock().getLocation();
+			loc.getWorld().spawnEntity(loc, EntityType.PRIMED_TNT);
+		} else {
+			
+		}
 	}
 
 }

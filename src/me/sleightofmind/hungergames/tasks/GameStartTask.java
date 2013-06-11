@@ -10,9 +10,9 @@ public class GameStartTask extends BukkitRunnable {
 	public void run() {
 		if(Main.timeLeftToStart > 0){
 			Main.timeLeftToStart--;
+			Main.log.info(Integer.toString(Main.timeLeftToStart));
 		}else{
-			Main.startGame();
-			cancel();
+			Main.instance.startGame();
 		}
 		
 	}
