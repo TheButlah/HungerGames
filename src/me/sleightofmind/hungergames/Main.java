@@ -16,6 +16,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 public class Main extends JavaPlugin {
@@ -71,12 +72,21 @@ public class Main extends JavaPlugin {
 			}
 		}
 		
+		for (int i = 0; i<10; i++) getServer().broadcastMessage("");
+		getServer().broadcastMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "The Hunger Games have begun! \nMay the odds be ever in your favour...");
+		getServer().broadcastMessage("");
+		getServer().broadcastMessage("");
+		getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "You are now invincible for " + Integer.toString(Config.invincibilityDuration) + " seconds.");
+				
+		//Activate invincibility countdown
+		getServer().getScheduler().runTaskLater(this, new BukkitRunnable() {
+			@Override
+			public void run() { 
+				Main.invinciblePeriod = false; 
+				Main.instance.getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Your invincibility has worn off.");
+			}
+		}, Config.invincibilityDuration * 20);
 		
-		getServer().broadcastMessage("");
-		getServer().broadcastMessage("");
-		getServer().broadcastMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "The Hunger Games have begun! May the odds be ever in your favour...");
-		getServer().broadcastMessage("");
-		getServer().broadcastMessage("");
 	}
 	
 	public Kit getKit(Player p){

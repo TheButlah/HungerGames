@@ -4,7 +4,7 @@ import me.sleightofmind.hungergames.Main;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class GameStartTask extends BukkitRunnable {
+public class GameCountdownTask extends BukkitRunnable {
 
 	@Override
 	public void run() {
