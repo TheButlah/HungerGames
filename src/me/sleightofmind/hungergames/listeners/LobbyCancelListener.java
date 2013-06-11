@@ -1,4 +1,6 @@
-package me.sleightofmind.hungergames;
+package me.sleightofmind.hungergames.listeners;
+
+import me.sleightofmind.hungergames.Main;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,7 +12,7 @@ public class LobbyCancelListener implements Listener{
 	
 	@EventHandler
 	public void onEntityDamage(EntityDamageEvent evt){
-		if(!Main.inProgress || Main.invincible){
+		if(!Main.inProgress || Main.invinciblePeriod){
 			evt.setCancelled(true);
 		}
 	}

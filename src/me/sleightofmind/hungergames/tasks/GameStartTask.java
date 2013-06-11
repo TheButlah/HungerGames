@@ -1,4 +1,6 @@
-package me.sleightofmind.hungergames;
+package me.sleightofmind.hungergames.tasks;
+
+import me.sleightofmind.hungergames.Main;
 
 import org.bukkit.scheduler.BukkitRunnable;
 

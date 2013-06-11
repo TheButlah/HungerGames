@@ -5,11 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
+import me.sleightofmind.hungergames.commands.Kit_CommandExecutor;
 import me.sleightofmind.hungergames.kits.Kit;
+import me.sleightofmind.hungergames.kits.Kit_Test;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
@@ -19,11 +22,12 @@ public class Main extends JavaPlugin {
 	public static Plugin instance;
 	
 	public static HashMap<String, Kit> playerkits = new HashMap<String, Kit>();
+	public static List<Kit> defaultkits = new ArrayList<Kit>();
 	
 	public static int timeLeftToStart;
 	public static boolean inProgress = false;
 	
-	public static boolean invincible = true;
+	public static boolean invinciblePeriod = true;
 	
 	
 	FileConfiguration c;
@@ -34,7 +38,13 @@ public class Main extends JavaPlugin {
 		log = getLogger();
 		Config.init();
 		timeLeftToStart = Config.normalTimeToStart;
-		//getServer().broadcastMessage();
+		
+		//Load kits into defaultkits array
+		defaultkits.add(new Kit_Test());
+		
+		
+		//Set up commands
+		getCommand("kit").setExecutor(new Kit_CommandExecutor());
 	}
 	
 	public void onDisable() {

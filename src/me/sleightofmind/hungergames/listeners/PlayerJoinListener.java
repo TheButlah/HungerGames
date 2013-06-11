@@ -1,9 +1,10 @@
 package me.sleightofmind.hungergames.listeners;
 
 import me.sleightofmind.hungergames.Config;
-import me.sleightofmind.hungergames.GameStartTask;
 import me.sleightofmind.hungergames.Main;
+import me.sleightofmind.hungergames.tasks.GameStartTask;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -17,7 +18,8 @@ public class PlayerJoinListener implements Listener{
 	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent evt) {
-		
+		Player p = evt.getPlayer();
+		p.sendMessage(Integer.toString(p.getInventory().getContents().length));
 		Main.playerkits.put(evt.getPlayer().getName(), null);
 		
 		if(Main.instance.getServer().getOnlinePlayers().length == Config.minPlayersToStart && !Main.inProgress){
