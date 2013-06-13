@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 public class Kit_CommandExecutor implements CommandExecutor{
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
 		if (label.equalsIgnoreCase("kit") && args.length == 2) {
 			
 			if (args[0].equalsIgnoreCase("select")) {
@@ -21,8 +21,12 @@ public class Kit_CommandExecutor implements CommandExecutor{
 					if (p.hasPermission("hungergames.kits." + args[1])) {
 						for (Kit k : Main.defaultkits) {
 							if (k.getName().equalsIgnoreCase(args[1])) {
-								Main.playerkits.put(p.getName(), k);
-								p.sendMessage(k.getName());
+								try {
+									Main.playerkits.put(p.getName(), k.getClass().newInstance());
+								} catch (Exception e) {
+									e.printStackTrace();
+								}								
+								p.sendMessage(ChatColor.GOLD+"You have selected the " + ChatColor.BOLD+ k.getName() + ChatColor.RESET + ChatColor.GOLD + " kit.");
 								return true;
 							}
 						}

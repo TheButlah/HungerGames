@@ -7,11 +7,13 @@ import java.util.logging.Logger;
 
 import me.sleightofmind.hungergames.commands.Kit_CommandExecutor;
 import me.sleightofmind.hungergames.kits.Kit;
+import me.sleightofmind.hungergames.kits.Kit_Assassin;
 import me.sleightofmind.hungergames.kits.Kit_Test;
 import me.sleightofmind.hungergames.listeners.LobbyCancelListener;
 import me.sleightofmind.hungergames.listeners.PlayerJoinListener;
 
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -24,6 +26,7 @@ public class Main extends JavaPlugin {
 	public static Logger log;
 	public static final boolean HAS_SEEN_HUNGER_GAMES = !Boolean.parseBoolean("maybe");
 	public static Main instance;
+	public static String defaultworld;
 	
 	public static HashMap<String, Kit> playerkits = new HashMap<String, Kit>();
 	public static List<Kit> defaultkits = new ArrayList<Kit>();
@@ -38,12 +41,14 @@ public class Main extends JavaPlugin {
 	FileConfiguration c;
 	
 	public void onEnable() {
+		saveDefaultConfig();
 		instance = this;
 		c = getConfig();
 		log = getLogger();
 		Config.init();
 		timeLeftToStart = Config.initialCountdownTime;
 		PluginManager pm = getServer().getPluginManager();
+		defaultworld = getServer().getWorlds().get(0).getName();
 		
 		//Set up non-kit related listeners
 		pm.registerEvents(new LobbyCancelListener(), this);
@@ -51,6 +56,12 @@ public class Main extends JavaPlugin {
 		
 		//Load kits into defaultkits array
 		defaultkits.add(new Kit_Test());
+		defaultkits.add(new Kit_Assassin());
+		
+		//Set up Kit related Listeners
+		for (Kit k : defaultkits) {
+			k.registerListeners();
+		}
 		
 		
 		//Set up commands
@@ -65,7 +76,8 @@ public class Main extends JavaPlugin {
 		inProgress = true;
 		Main.instance.getServer().getScheduler().cancelTask(gameStartTask.getTaskId());
 		for (Player p : instance.getServer().getOnlinePlayers()) {
-			p.teleport(p.getWorld().getSpawnLocation().add(0, 2, 0));
+			World w = p.getWorld();
+			p.teleport(w.getHighestBlockAt(w.getSpawnLocation()).getLocation());
 			if(getKit(p) != null){
 				getKit(p).init(p);
 				
@@ -86,6 +98,10 @@ public class Main extends JavaPlugin {
 				Main.instance.getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Your invincibility has worn off.");
 			}
 		}, Config.invincibilityDuration * 20);
+		
+	}
+	
+	public void resetMap(String mapname) {
 		
 	}
 	

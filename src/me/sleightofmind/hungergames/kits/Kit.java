@@ -1,12 +1,13 @@
 package me.sleightofmind.hungergames.kits;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public abstract class Kit{
 
 	protected ItemStack[] items;
-	
+	protected String playername;	
 	protected String name;
 	
 	public String getName(){
@@ -17,9 +18,14 @@ public abstract class Kit{
 		return items;
 	}
 	
+	//only override this if you need to register listeners
+	public void registerListeners() {
+		
+	}
+	
 	public void init(Player player) {
-		player.getInventory().clear();
 		player.getInventory().setContents(items);
+		player.getInventory().addItem(new ItemStack(Material.COMPASS));
 	}
 
 }
