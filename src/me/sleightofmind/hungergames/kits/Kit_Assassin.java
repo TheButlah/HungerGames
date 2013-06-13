@@ -56,7 +56,7 @@ public class Kit_Assassin extends Kit implements Listener{
 		if (chargelevel >= maxchargelevel) {
 			Main.instance.getServer().getScheduler().cancelTask(chargeTask.getTaskId());
 		}
-		System.out.println(chargelevel +" increaseCharge");
+		//System.out.println(chargelevel +" increaseCharge");
 	}
 	
 	public void decreaseCharge() {
@@ -66,7 +66,7 @@ public class Kit_Assassin extends Kit implements Listener{
 		if (chargelevel <= 0) {
 			Main.instance.getServer().getScheduler().cancelTask(dechargeTask.getTaskId());
 		}
-		System.out.println(chargelevel+ " decreaseCharge");
+		//System.out.println(chargelevel+ " decreaseCharge");
 	}
 	
 }
