@@ -5,9 +5,12 @@ import me.sleightofmind.hungergames.Main;
 import me.sleightofmind.hungergames.tasks.AssassinChargeTask;
 import me.sleightofmind.hungergames.tasks.AssassinDechargeTask;
 
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
@@ -15,7 +18,7 @@ import org.bukkit.scheduler.BukkitTask;
 public class Kit_Assassin extends Kit implements Listener{
 	
 	private int chargelevel = 0;
-	private final int maxchargelevel = 5;
+	private static final int maxchargelevel = 5;
 	private BukkitTask chargeTask;
 	private BukkitTask dechargeTask;
 	
@@ -32,41 +35,58 @@ public class Kit_Assassin extends Kit implements Listener{
 	@EventHandler
 	public void onPlayerCrouch(PlayerToggleSneakEvent evt) {
 		Player player = evt.getPlayer();
+		Kit k = Main.playerkits.get(player.getName());
+		if (!(k instanceof Kit_Assassin)) return;
+		Kit_Assassin kit = (Kit_Assassin) k;
+		
 		//if player is ENTERING sneak mode
 		if (!player.isSneaking()) {
-			if (dechargeTask != null) Main.instance.getServer().getScheduler().cancelTask(dechargeTask.getTaskId());
-			if(chargelevel < maxchargelevel) {
-				chargeTask = Main.instance.getServer().getScheduler().runTaskTimer(Main.instance, new AssassinChargeTask(this), Config.assassinChargeRate, Config.assassinChargeRate);
+			if (kit.dechargeTask != null) Main.instance.getServer().getScheduler().cancelTask(kit.dechargeTask.getTaskId());
+			if(kit.chargelevel < maxchargelevel) {
+				kit.chargeTask = Main.instance.getServer().getScheduler().runTaskTimer(Main.instance, new AssassinChargeTask(kit, player), Config.assassinChargeRate, Config.assassinChargeRate);
 			}
 		}
 		
 		//if player is LEAVING sneak mode
 		if (player.isSneaking()) {
-			if (chargeTask != null) Main.instance.getServer().getScheduler().cancelTask(chargeTask.getTaskId());
-			if (chargelevel > 0) {
-				dechargeTask = Main.instance.getServer().getScheduler().runTaskTimer(Main.instance, new AssassinDechargeTask(this), Config.assassinDechargeRate, Config.assassinDechargeRate);
+			if (kit.chargeTask != null) Main.instance.getServer().getScheduler().cancelTask(kit.chargeTask.getTaskId());
+			if (kit.chargelevel > 0) {
+				kit.dechargeTask = Main.instance.getServer().getScheduler().runTaskTimer(Main.instance, new AssassinDechargeTask(kit, player), Config.assassinDechargeRate, Config.assassinDechargeRate);
 			}
 		}
 	}
 	
-	public void increaseCharge() {
+	public void increaseCharge(Player p) {
 		if (chargelevel < maxchargelevel) {
 			chargelevel++;
 		} 
 		if (chargelevel >= maxchargelevel) {
 			Main.instance.getServer().getScheduler().cancelTask(chargeTask.getTaskId());
 		}
-		//System.out.println(chargelevel +" increaseCharge");
+		p.sendMessage(ChatColor.GREEN + Integer.toString(chargelevel*20) + "% Attack Power");
 	}
 	
-	public void decreaseCharge() {
+	public void decreaseCharge(Player p) {
 		if (chargelevel > 0) {
 			chargelevel--;
 		}
 		if (chargelevel <= 0) {
 			Main.instance.getServer().getScheduler().cancelTask(dechargeTask.getTaskId());
 		}
-		//System.out.println(chargelevel+ " decreaseCharge");
+		p.sendMessage(ChatColor.GREEN + Integer.toString(chargelevel*20) + "% Attack Power");
+	}
+	
+	@EventHandler
+	public void onPlayerAttack(EntityDamageByEntityEvent evt) {
+		Entity ent = evt.getDamager();
+		if (!(ent instanceof Player)) return;
+		Player damager = (Player) ent;
+		
+		Kit k = Main.playerkits.get(damager.getName());
+		if (!(k instanceof Kit_Assassin)) return;
+		Kit_Assassin kit = (Kit_Assassin) k;
+		
+		evt.setDamage( (int) (((evt.getDamage()*Config.assassinDamageModifier) - evt.getDamage())*(kit.chargelevel/5.0) + evt.getDamage()) );
 	}
 	
 }

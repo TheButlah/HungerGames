@@ -11,6 +11,7 @@ import me.sleightofmind.hungergames.kits.Kit_Assassin;
 import me.sleightofmind.hungergames.kits.Kit_Test;
 import me.sleightofmind.hungergames.listeners.LobbyCancelListener;
 import me.sleightofmind.hungergames.listeners.PlayerJoinListener;
+import me.sleightofmind.hungergames.tasks.FeastCountdownTask;
 import me.sleightofmind.hungergames.worldgen.LoadListener;
 
 import org.bukkit.ChatColor;
@@ -31,6 +32,7 @@ public class Main extends JavaPlugin {
 	public static HashMap<String, Kit> playerkits = new HashMap<String, Kit>();
 	public static List<Kit> defaultkits = new ArrayList<Kit>();
 	public static BukkitTask gameStartTask = null;
+	public static BukkitTask feastGenTask = null;
 	
 	public static int timeLeftToStart;
 	public static boolean inProgress = false;
@@ -100,6 +102,7 @@ public class Main extends JavaPlugin {
 			}
 		}, Config.invincibilityDuration * 20);
 		
+		feastGenTask = new FeastCountdownTask().runTaskTimer(Main.instance, 1200, 1200);
 	}
 	
 	public void resetMap(String mapname) {

@@ -6,3 +6,12 @@ Timer:
   InitialCountdownTime: 300
   QuickStartCountdownTime: 20
   InvincibilityDuration: 10
+  
+KitSettings:
+  Assassin:
+    #These should be specified in ticks (20t = 1 second)
+    AssassinChargeRate: 40
+    AssassinDechargeRate: 10
+    
+    #This is the amount that the assassins dmg is multiplied by when is charge is 100%
+    AssassinDamageModifier: 2

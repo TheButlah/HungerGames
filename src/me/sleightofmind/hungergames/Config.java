@@ -13,6 +13,7 @@ public class Config {
 	public static int minPlayersToStart, playersToQuickStart, initialCountdownTime, quickStartCountdownTime, invincibilityDuration;
 	
 	public static int assassinChargeRate, assassinDechargeRate;
+	public static double assassinDamageModifier;
 	
 	
 	public static FileConfiguration c;
@@ -32,6 +33,8 @@ public class Config {
 			
 			assassinChargeRate = c.getInt("KitSettings.Assassin.AssassinChargeRate");
 			assassinDechargeRate = c.getInt("KitSettings.Assassin.AssassinDechargeRate");
+			assassinDamageModifier = c.getDouble("KitSettings.Assassin.AssassinDamageModifier");
+			
 		}
 		catch(NumberFormatException e){
 			Main.log.severe("One of the configuration options has an invalid value.");
