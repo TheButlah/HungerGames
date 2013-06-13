@@ -1,12 +1,15 @@
+Settings:
+  HungerGamesWorld: world
+
 Timer:
   MinimumPlayersToStart: 1
-  PlayersToQuickStart: 1
+  PlayersToQuickStart: 2
   
   #These should be specified in seconds
-  InitialCountdownTime: 300
-  QuickStartCountdownTime: 20
+  InitialCountdownTime: 30
+  QuickStartCountdownTime: 10
   InvincibilityDuration: 10
-  
+
 KitSettings:
   Assassin:
     #These should be specified in ticks (20t = 1 second)
@@ -15,3 +18,22 @@ KitSettings:
     
     #This is the amount that the assassins dmg is multiplied by when is charge is 100%
     AssassinDamageModifier: 2
+
+FeastItems:
+  firedoor:
+    itemid: 64
+    itemdata: 1
+    maxquantity: 26
+    minquantity: 13
+    percentchance: 55
+    enchantments:
+      - 1|2
+  swordofderp:
+    itemid: 267
+    itemdata: 200
+    maxquantity: 1
+    minquantity: 1
+    percentchance: 25
+    itemname: "The Sword of Derp"
+    enchantments:
+      - 1|2

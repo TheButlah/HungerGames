@@ -10,6 +10,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class Config {
 
+	public static String hgWorld;
+	
 	public static int minPlayersToStart, playersToQuickStart, initialCountdownTime, quickStartCountdownTime, invincibilityDuration;
 	
 	public static int assassinChargeRate, assassinDechargeRate;
@@ -24,7 +26,7 @@ public class Config {
 		r = new Random();
 		c = Main.instance.getConfig();
 		try{
-			
+			hgWorld = c.getString("Settings.HungerGamesWorld");
 			minPlayersToStart = c.getInt("Timer.MinimumPlayersToStart");
 			playersToQuickStart = c.getInt("Timer.PlayersToQuickStart");
 			initialCountdownTime = c.getInt("Timer.InitialCountdownTime");

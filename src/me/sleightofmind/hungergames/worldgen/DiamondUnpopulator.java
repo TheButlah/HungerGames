@@ -2,8 +2,6 @@ package me.sleightofmind.hungergames.worldgen;
 
 import java.util.Random;
 
-import me.sleightofmind.hungergames.Debug;
-
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -46,8 +44,6 @@ public class DiamondUnpopulator extends BlockPopulator{
 				}
 			}
 		}
-		Debug.debug(stonecount + "stone looked at.");
-		Debug.debug(orecount + " ore replaced.");
 		runonce = false;
 	}
 

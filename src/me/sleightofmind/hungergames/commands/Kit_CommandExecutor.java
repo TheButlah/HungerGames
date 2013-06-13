@@ -1,5 +1,6 @@
 package me.sleightofmind.hungergames.commands;
 
+import me.sleightofmind.hungergames.Config;
 import me.sleightofmind.hungergames.Main;
 import me.sleightofmind.hungergames.kits.Kit;
 
@@ -38,6 +39,11 @@ public class Kit_CommandExecutor implements CommandExecutor{
 				}
 			}
 					
+		}
+		if(args.length == 1 && args[0].equalsIgnoreCase("gimmechest")){
+			Player p = (Player) sender;
+			p.getInventory().setContents(Config.getNewFeastChest());
+			return true;
 		}
 		return false;
 	}

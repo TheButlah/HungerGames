@@ -28,7 +28,6 @@ public class Main extends JavaPlugin {
 	public static Logger log;
 	public static final boolean HAS_SEEN_HUNGER_GAMES = !Boolean.parseBoolean("maybe");
 	public static Main instance;
-	public static String defaultWorld;	
 	public static HashMap<String, Kit> playerkits = new HashMap<String, Kit>();
 	public static List<Kit> defaultkits = new ArrayList<Kit>();
 	public static BukkitTask gameStartTask = null;
@@ -50,7 +49,6 @@ public class Main extends JavaPlugin {
 		Config.init();
 		timeLeftToStart = Config.initialCountdownTime;
 		PluginManager pm = getServer().getPluginManager();
-		defaultWorld = getServer().getWorlds().get(0).getName();
 		
 		//Set up non-kit related listeners
 		pm.registerEvents(new LobbyCancelListener(), this);
@@ -91,14 +89,14 @@ public class Main extends JavaPlugin {
 		getServer().broadcastMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "The Hunger Games have begun! \nMay the odds be ever in your favour...");
 		getServer().broadcastMessage("");
 		getServer().broadcastMessage("");
-		getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "You are now invincible for " + Integer.toString(Config.invincibilityDuration) + " seconds.");
+		getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "You are now invincible for " + Integer.toString(Config.invincibilityDuration) + " seconds.");
 				
 		//Activate invincibility countdown
 		getServer().getScheduler().runTaskLater(this, new BukkitRunnable() {
 			@Override
 			public void run() { 
 				Main.invinciblePeriod = false; 
-				Main.instance.getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Your invincibility has worn off.");
+				Main.instance.getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "Your invincibility has worn off.");
 			}
 		}, Config.invincibilityDuration * 20);
 		
