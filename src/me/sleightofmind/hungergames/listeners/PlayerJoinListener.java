@@ -2,7 +2,11 @@ package me.sleightofmind.hungergames.listeners;
 
 import me.sleightofmind.hungergames.Config;
 import me.sleightofmind.hungergames.Main;
+import me.sleightofmind.hungergames.kits.DefaultKit;
 import me.sleightofmind.hungergames.tasks.GameCountdownTask;
+
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -13,7 +17,9 @@ public class PlayerJoinListener implements Listener{
 	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent evt) {
-		Main.playerkits.put(evt.getPlayer().getName(), null);
+		Player player = evt.getPlayer();
+		Main.playerkits.put(player.getName(), new DefaultKit());
+		if(Main.inProgress && !(player.isOp() || player.hasPermission("HungerGames.CanJoinGameInProgress"))) player.kickPlayer(ChatColor.GOLD + "You are not allowed to join a game that is in progress!");
 		
 		if(Main.instance.getServer().getOnlinePlayers().length == Config.minPlayersToStart && !Main.inProgress){
 			Main.gameStartTask = Main.instance.getServer().getScheduler().runTaskTimer(Main.instance, new GameCountdownTask(), 20, 20);

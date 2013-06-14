@@ -89,14 +89,14 @@ public class Main extends JavaPlugin {
 		getServer().broadcastMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "The Hunger Games have begun! \nMay the odds be ever in your favour...");
 		getServer().broadcastMessage("");
 		getServer().broadcastMessage("");
-		getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "You are now invincible for " + Integer.toString(Config.invincibilityDuration) + " seconds.");
+		getServer().broadcastMessage(ChatColor.GREEN + "You are now invincible for " + Integer.toString(Config.invincibilityDuration) + " seconds.");
 				
 		//Activate invincibility countdown
 		getServer().getScheduler().runTaskLater(this, new BukkitRunnable() {
 			@Override
 			public void run() { 
 				Main.invinciblePeriod = false; 
-				Main.instance.getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "Your invincibility has worn off.");
+				Main.instance.getServer().broadcastMessage(ChatColor.GREEN + "Your invincibility has worn off.");
 			}
 		}, Config.invincibilityDuration * 20);
 		
@@ -107,16 +107,8 @@ public class Main extends JavaPlugin {
 		
 	}
 	
-	public Kit getKit(Player p){
+	public static Kit getKit(Player p){
 		return playerkits.get(p.getName());
-	}
-	
-	public List<String> getPlayers(String kitname){
-		List<String> result = new ArrayList<String>();
-		for (String playername : playerkits.keySet()) {
-			if (playerkits.get(playername).getName().equals(kitname)) result.add(playername);
-		}
-		return result;
 	}
 
 }

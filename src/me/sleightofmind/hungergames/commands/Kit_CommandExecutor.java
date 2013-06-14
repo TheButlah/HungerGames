@@ -19,7 +19,7 @@ public class Kit_CommandExecutor implements CommandExecutor{
 			if (args[0].equalsIgnoreCase("select")) {
 				if (sender instanceof Player) {
 					Player p = (Player) sender;
-					if (p.hasPermission("hungergames.kits." + args[1])) {
+					if (p.isOp() ||p.hasPermission("HungerGames.Kits." + args[1].toLowerCase())) {
 						for (Kit k : Main.defaultkits) {
 							if (k.getName().equalsIgnoreCase(args[1])) {
 								try {

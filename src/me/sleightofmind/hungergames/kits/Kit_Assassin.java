@@ -63,7 +63,7 @@ public class Kit_Assassin extends Kit implements Listener{
 		if (chargelevel >= maxchargelevel) {
 			Main.instance.getServer().getScheduler().cancelTask(chargeTask.getTaskId());
 		}
-		p.sendMessage(ChatColor.DARK_PURPLE + Integer.toString(chargelevel*20) + "% Attack Power");
+		p.sendMessage(ChatColor.GREEN + Integer.toString(chargelevel*20) + "% Attack Power");
 	}
 	
 	public void decreaseCharge(Player p) {
@@ -73,7 +73,7 @@ public class Kit_Assassin extends Kit implements Listener{
 		if (chargelevel <= 0) {
 			Main.instance.getServer().getScheduler().cancelTask(dechargeTask.getTaskId());
 		}
-		p.sendMessage(ChatColor.LIGHT_PURPLE + Integer.toString(chargelevel*20) + "% Attack Power");
+		p.sendMessage(ChatColor.GREEN + Integer.toString(chargelevel*20) + "% Attack Power");
 	}
 	
 	@EventHandler
