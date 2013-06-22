@@ -24,7 +24,6 @@ public class Kit_Assassin extends Kit implements Listener{
 	private static final int maxchargelevel = 5;
 	private BukkitTask chargeTask;
 	private BukkitTask dechargeTask;
-	public BukkitTask compassTask;
 	
 	public Kit_Assassin() {
 		name = "Assassin";
@@ -98,15 +97,15 @@ public class Kit_Assassin extends Kit implements Listener{
 		Player player = evt.getPlayer();
 		if (!(Main.playerkits.get(player.getName()) instanceof Kit_Assassin)) return;
 		ItemStack item = evt.getItem();
-		if (item.getType().equals(Material.COMPASS)) {
+		if (evt.hasItem() && item.getType().equals(Material.COMPASS)) {
 			Player[] players = Main.instance.getServer().getOnlinePlayers();
-			if (compassTask != null) Main.instance.getServer().getScheduler().cancelTask(compassTask.getTaskId());
 			if (players.length > 1) {
 				Player target = players[(int)(Math.random()*players.length)];
 				while(target.getName().equals(player.getName())) {
 					target = players[(int)(Math.random()*players.length)];
 				}
-				compassTask = Main.instance.getServer().getScheduler().runTaskTimer(Main.instance, new AssassinCompassTask(player, target), 0, 40);
+				player.sendMessage(ChatColor.GREEN + "You have selected " + target.getName() + "!");
+				AssassinCompassTask.targets.put(player.getName(), target.getName());
 			} else {
 				player.setCompassTarget(Main.instance.getServer().getWorld(Config.hgWorld).getSpawnLocation());
 			}

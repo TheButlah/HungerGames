@@ -8,7 +8,6 @@ import java.util.Random;
 import me.sleightofmind.hungergames.Config;
 import me.sleightofmind.hungergames.Main;
 
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -20,36 +19,24 @@ public class FeastGen {
 	static World world = Main.instance.getServer().getWorld(Config.hgWorld);
 	static int floatamount = Config.feastFloatDistance;
 	public static Block FeastLoc;
+	public static int radius = 10;
 	
 	public static void generateFeast(){
-		//Main.instance.getServer().getScheduler().cancelTask(Main.feastGenTask.getTaskId());
+		FeastUtils.clearCyl(FeastLoc.getLocation(), radius, 25, Material.GRASS);
 		
-		
-		Block initloc = selectLoc(world);
-		initloc.setType(Material.ENCHANTMENT_TABLE);
-		
-		FeastUtils.clearCyl(initloc.getLocation(), 10, 25, Material.GRASS);
-		
-		Block et = world.getHighestBlockAt(initloc.getLocation());
-		FeastLoc = et;
-		et.setType(Material.ENCHANTMENT_TABLE);
+		FeastLoc.setType(Material.ENCHANTMENT_TABLE);
 		
 		for(int x = -2; x <= 2; x++){
 			for(int z = -2; z <= 2; z++){
-				int worldx = (x + et.getX());
-				int worldz = (z + et.getZ());
+				int worldx = (x + FeastLoc.getX());
+				int worldz = (z + FeastLoc.getZ());
 				if((Math.abs(x) == Math.abs(z) && x != 0) || (Math.abs(x) == 2 && z == 0) || (Math.abs(z) == 2 && x == 0)){
-					//Location loc = new Location(et.getWorld(), worldx, highest(world, worldx, worldz), worldz);
-					
-					
-					//loc = new Location(et.getWorld(), worldx, highest(world, worldx, worldz), worldz);
-					
-					generateFeastChest(new Location(et.getLocation().getWorld(), worldx, et.getY(), worldz));
+					generateFeastChest(new Location(FeastLoc.getLocation().getWorld(), worldx, FeastLoc.getY(), worldz));
 				}
 			}
 		}
 		
-		System.out.println("Spawned feast at " + et.getX() + ", " + et.getY() + ", " + et.getZ());
+		System.out.println("Spawned feast at " + FeastLoc.getX() + ", " + FeastLoc.getY() + ", " + FeastLoc.getZ());
 	}
 	
 	public static int highest(World w, int x, int z){
@@ -67,7 +54,7 @@ public class FeastGen {
 		Random rand = new Random();
 		int finx = world.getSpawnLocation().getBlockX() + (rand.nextInt(Config.forcefieldSideLength * 2) - Config.forcefieldSideLength);
 		int finz = world.getSpawnLocation().getBlockZ() + (rand.nextInt(Config.forcefieldSideLength * 2) - Config.forcefieldSideLength);
-		Block b = world.getBlockAt(finx, highest(world, finx, finz) + floatamount, finz);
+		Block b = world.getBlockAt(finx, world.getHighestBlockYAt(finx, finz) + floatamount, finz);
 		return b;
 	}
 	
@@ -75,8 +62,8 @@ public class FeastGen {
 		Block b = world.getBlockAt(loc);
 		b.setType(Material.CHEST);
 		((Chest)b.getState()).getInventory().setContents(Config.getNewFeastChest());
-		System.out.println("Feast chest generated at " + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ());
-		world.getPlayers().get(0).teleport(loc);
+		//System.out.println("Feast chest generated at " + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ());
+		//world.getPlayers().get(0).teleport(loc);
 	}
 	
 	//config.getNewFeastChest();

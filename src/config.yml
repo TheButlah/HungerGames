@@ -3,14 +3,14 @@ Settings:
   ForcefieldSideLength: 300
   FeastFloatingDistance: 3
   MiniFeastFloating: 3
-  InvincibilityStartMessage: "You are now invincible!"
-  InvincibilityExpireMessage: "You are no longer invisible."
-  GameStartMessage: "The Hunger Games have begun!"
+  InvincibilityStartMessage: "&aYou are now invincible!"
+  InvincibilityExpireMessage: "&aYou are no longer invincible."
+  GameStartMessage: "&6The Hunger Games have begun!"
   
 Timer:
   MinimumPlayersToStart: 1
   PlayersToQuickStart: 2
-  MinutesToFeast: 22
+  MinutesToFeast: 1
   
   #These should be specified in seconds
   InitialCountdownTime: 30
@@ -25,6 +25,10 @@ KitSettings:
     
     #This is the amount that the assassins dmg is multiplied by when is charge is 100%
     AssassinDamageModifier: 2
+ 
+  Thor:
+    #The number of ticks of cooldown in between lightning strikes
+    ThorCooldownRate: 40
 
 FeastItems:
   firedoor:

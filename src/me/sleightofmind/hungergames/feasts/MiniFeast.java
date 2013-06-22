@@ -16,6 +16,8 @@ import org.bukkit.entity.Player;
 public class MiniFeast {
 	
 	private static int floatamount = Config.miniFeastFloatDistance;
+	public static int radius = 8;
+	private static Location loc;
 	
 	private static Location chooseLoc(Location FeastLoc){
 		Random rand = new Random();
@@ -52,8 +54,8 @@ public class MiniFeast {
 	
 	public static void gen(Location FeastLoc){
 		Location temp = chooseLoc(FeastLoc);
-		Location loc = new Location(temp.getWorld(), temp.getBlockX(), temp.getBlockY() + floatamount, temp.getBlockZ());
-		FeastUtils.clearCyl(loc, 9, 10, Material.GLASS);
+		loc = new Location(temp.getWorld(), temp.getBlockX(), temp.getBlockY() + floatamount, temp.getBlockZ());
+		FeastUtils.clearCyl(loc, radius, 15, Material.GLASS);
 		loc.getBlock().setType(Material.ANVIL);
 		Block ne = loc.getBlock().getRelative(BlockFace.NORTH_EAST);
 		Block nw = loc.getBlock().getRelative(BlockFace.NORTH_WEST);
@@ -69,6 +71,10 @@ public class MiniFeast {
 		for(Player p : Main.instance.getServer().getOnlinePlayers()){
 			p.sendMessage(ChatColor.GREEN + "A Mini-Feast Has Been Generated in " + genRanges(loc));
 		}
+	}
+	
+	public static Location getLocation(){
+		return loc;
 	}
 
 }

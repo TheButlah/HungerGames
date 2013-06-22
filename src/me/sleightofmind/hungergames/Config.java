@@ -24,6 +24,8 @@ public class Config {
 	public static int assassinChargeRate, assassinDechargeRate;
 	public static double assassinDamageModifier;
 	
+	public static int thorCooldownRate;
+	
 	
 	public static FileConfiguration c;
 	public static Random r;
@@ -46,13 +48,15 @@ public class Config {
 			feastFloatDistance = c.getInt("Setting.FeastFloatingDistance");
 			miniFeastFloatDistance = c.getInt("Setting.MiniFeastFloatingDistance");
 			
-			invincibilityStartMessage = c.getString("Settings.InvincibilityStartMessage").replaceAll("&", "ยง");
-			gameStartMessage = c.getString("Settings.GameStartMessage").replaceAll("&", "ยง");
-			invincibilityExpireMessage = c.getString("Settings.InvincibilityExpireMessage").replaceAll("&", "ยง");
+			invincibilityStartMessage = c.getString("Settings.InvincibilityStartMessage").replaceAll("&", "ง");
+			gameStartMessage = c.getString("Settings.GameStartMessage").replaceAll("&", "ง");
+			invincibilityExpireMessage = c.getString("Settings.InvincibilityExpireMessage").replaceAll("&", "ง");
 			
 			assassinChargeRate = c.getInt("KitSettings.Assassin.AssassinChargeRate");
 			assassinDechargeRate = c.getInt("KitSettings.Assassin.AssassinDechargeRate");
 			assassinDamageModifier = c.getDouble("KitSettings.Assassin.AssassinDamageModifier");
+			
+			thorCooldownRate = c.getInt("KitSettings.Thor.ThorCooldownRate");
 			
 		}
 		catch(NumberFormatException e){

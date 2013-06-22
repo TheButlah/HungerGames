@@ -18,9 +18,9 @@ public class FeastUtils {
 		for(int x = -radius; x <= radius; x++) {
 			for(int y = -1; y <= h; y++){
 			    for(int z = -radius; z <= radius; z++) {
-			        if( Math.abs(x*x) + Math.abs(z*z) < radiusSquared) {
-			        	Block b = w.getBlockAt(cx + x, y + cy, cz + z);
-			        	if(y != -1 && b.getType() != Material.CHEST && b.getTypeId() != 0 && !b.getLocation().equals(loc)){
+			        if((x*x) + (z*z) < radiusSquared) {
+			        	Block b = w.getBlockAt(cx + x, cy + y, cz + z);
+			        	if(y != -1 && b.getType() != Material.CHEST && b.getType() != Material.AIR && !b.getLocation().equals(loc)){
 			        		b.setTypeId(0);
 			        		//System.out.println(b.getX() + ", " + b.getY() + ", " + b.getZ());
 			        	}

@@ -10,14 +10,18 @@ import me.sleightofmind.hungergames.commands.Target_CommandExecutor;
 import me.sleightofmind.hungergames.kits.Kit;
 import me.sleightofmind.hungergames.kits.Kit_Assassin;
 import me.sleightofmind.hungergames.kits.Kit_Test;
+import me.sleightofmind.hungergames.kits.Kit_Thor;
+import me.sleightofmind.hungergames.listeners.CompassListener;
+import me.sleightofmind.hungergames.listeners.FeastBlockListener;
 import me.sleightofmind.hungergames.listeners.LobbyCancelListener;
 import me.sleightofmind.hungergames.listeners.PlayerJoinListener;
 import me.sleightofmind.hungergames.listeners.SoupListener;
+import me.sleightofmind.hungergames.tasks.AssassinCompassTask;
 import me.sleightofmind.hungergames.tasks.FeastCountdownTask;
 import me.sleightofmind.hungergames.tasks.ForceFieldTask;
 import me.sleightofmind.hungergames.worldgen.LoadListener;
 
-import org.bukkit.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -54,20 +58,24 @@ public class Main extends JavaPlugin {
 		Config.init();
 		timeLeftToStart = Config.initialCountdownTime;
 		PluginManager pm = getServer().getPluginManager();
-		getServer().getWorld(Config.hgWorld).setAutoSave(false);
+		
 		
 		//Set up non-kit related listeners
 		pm.registerEvents(new LobbyCancelListener(), this);
 		pm.registerEvents(new PlayerJoinListener(), this);
 		pm.registerEvents(new LoadListener(), this);
 		pm.registerEvents(new SoupListener(), this);
+		pm.registerEvents(new CompassListener(), this);
+		pm.registerEvents(new FeastBlockListener(), this);
 		
 		//Load kits into defaultkits array
 		defaultkits.add(new Kit_Test());
 		defaultkits.add(new Kit_Assassin());
+		defaultkits.add(new Kit_Thor());
 		
 		//setup tasks
 		this.getServer().getScheduler().scheduleSyncDelayedTask(this, new ForceFieldTask(), 20);
+		Bukkit.getScheduler().runTaskTimer(this, new AssassinCompassTask(), 1, 40);
 		
 		//Set up Kit related Listeners
 		for (Kit k : defaultkits) {
@@ -119,7 +127,8 @@ public class Main extends JavaPlugin {
 	public void unloadMap(String mapname){
 		if(getServer().unloadWorld(getServer().getWorld(mapname), false)){
 			getServer().getLogger().info("Successfully unloaded " + mapname);
-		}else{
+		}
+		else{
 			getServer().getLogger().severe("COULD NOT UNLOAD " + mapname);
 		}
 	}
