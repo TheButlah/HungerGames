@@ -1,9 +1,16 @@
 Settings:
   HungerGamesWorld: world
-
+  ForcefieldSideLength: 300
+  FeastFloatingDistance: 3
+  MiniFeastFloating: 3
+  InvincibilityStartMessage: "You are now invincible!"
+  InvincibilityExpireMessage: "You are no longer invisible."
+  GameStartMessage: "The Hunger Games have begun!"
+  
 Timer:
   MinimumPlayersToStart: 1
   PlayersToQuickStart: 2
+  MinutesToFeast: 22
   
   #These should be specified in seconds
   InitialCountdownTime: 30
@@ -20,6 +27,24 @@ KitSettings:
     AssassinDamageModifier: 2
 
 FeastItems:
+  firedoor:
+    itemid: 64
+    itemdata: 1
+    maxquantity: 26
+    minquantity: 13
+    percentchance: 55
+    enchantments:
+      - 1|2
+  swordofderp:
+    itemid: 267
+    itemdata: 200
+    maxquantity: 1
+    minquantity: 1
+    percentchance: 25
+    itemname: "The Sword of Derp"
+    enchantments:
+      - 1|2
+MiniFeastItems:
   firedoor:
     itemid: 64
     itemdata: 1

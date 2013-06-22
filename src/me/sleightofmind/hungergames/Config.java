@@ -12,7 +12,14 @@ public class Config {
 
 	public static String hgWorld;
 	
-	public static int minPlayersToStart, playersToQuickStart, initialCountdownTime, quickStartCountdownTime, invincibilityDuration;
+	public static int minPlayersToStart, playersToQuickStart, initialCountdownTime, quickStartCountdownTime, invincibilityDuration, minutesToFeast, forcefieldSideLength;
+	
+	public static int feastFloatDistance, miniFeastFloatDistance;
+	
+	
+	public static String gameStartMessage, invincibilityExpireMessage, invincibilityStartMessage;
+	
+	
 	
 	public static int assassinChargeRate, assassinDechargeRate;
 	public static double assassinDamageModifier;
@@ -27,11 +34,21 @@ public class Config {
 		c = Main.instance.getConfig();
 		try{
 			hgWorld = c.getString("Settings.HungerGamesWorld");
+			
 			minPlayersToStart = c.getInt("Timer.MinimumPlayersToStart");
 			playersToQuickStart = c.getInt("Timer.PlayersToQuickStart");
 			initialCountdownTime = c.getInt("Timer.InitialCountdownTime");
 			quickStartCountdownTime = c.getInt("Timer.QuickStartCountdownTime");
 			invincibilityDuration = c.getInt("Timer.InvincibilityDuration");
+			minutesToFeast = c.getInt("Timer.MinutesToFeast");
+			forcefieldSideLength = c.getInt("Settings.ForcefieldSideLength");
+			
+			feastFloatDistance = c.getInt("Setting.FeastFloatingDistance");
+			miniFeastFloatDistance = c.getInt("Setting.MiniFeastFloatingDistance");
+			
+			invincibilityStartMessage = c.getString("Settings.InvincibilityStartMessage").replaceAll("&", "§");
+			gameStartMessage = c.getString("Settings.GameStartMessage").replaceAll("&", "§");
+			invincibilityExpireMessage = c.getString("Settings.InvincibilityExpireMessage").replaceAll("&", "§");
 			
 			assassinChargeRate = c.getInt("KitSettings.Assassin.AssassinChargeRate");
 			assassinDechargeRate = c.getInt("KitSettings.Assassin.AssassinDechargeRate");
@@ -93,6 +110,62 @@ public class Config {
 			}
 			
 		}
+		result = cullToChestSize(result);
+		ItemStack[] realresult = new ItemStack[result.size()];
+		realresult = result.toArray(realresult);
+		return realresult;
+	}
+	
+	public static ItemStack[] getNewMiniFeastChest(){
+		ArrayList<ItemStack> result = new ArrayList<ItemStack>();
+		for(String path : c.getConfigurationSection("MiniFeastItems").getKeys(false)){
+			Debug.debug("Looking for item at path: " + path);
+			int chosenpercent = r.nextInt(100) + 1;
+			if(c.getInt("MiniFeastItems." + path + ".percentchance") <= chosenpercent){
+				Debug.debug("Item's percentage was low enough.");
+				int id = c.getInt("MiniFeastItems." + path + ".itemid"); 
+				Debug.debug("ID is " + id);
+				Integer data = -1;
+				if(c.isInt("MiniFeastItems." + path + ".itemdata")){
+					data = c.getInt("MiniFeastItems." + path + ".itemdata"); 
+				}
+				
+				Integer minquant = 1;
+				if(c.isInt("MiniFeastItems." + path + ".minquantity")){
+					minquant= c.getInt("MiniFeastItems." + path + ".minquantity");
+				}
+				
+				Integer maxquant = 1;
+				if(c.isInt("MiniFeastItems." + path + ".maxquantity")){
+					maxquant= c.getInt("MiniFeastItems." + path + ".maxquantity");
+				}
+				Debug.debug("Max number is " + maxquant + " min is " + minquant);
+				int quant = r.nextInt(maxquant - minquant + 1) + minquant;
+				ItemStack currentitem = new ItemStack(id, quant);
+				if(data != -1){
+					currentitem.setDurability(Short.parseShort(data.toString())); 
+				}
+				
+				if(c.isSet("MiniFeastItems." + path + ".enchantments")){
+					Debug.debug("Getting enchants from " + "MiniFeastItems." + path + ".enchantments" + "which is a string list equal to " +
+							c.getStringList("MiniFeastItems." + path + ".enchantments").toString());
+					for(String ench : c.getStringList("MiniFeastItems." + path + ".enchantments")){
+						Debug.debug("Sending " + ench + " to parser.");
+						currentitem = addParsedEnchant(currentitem, ench);
+					}
+				}
+				if(c.isString("MiniFeastItems." + path + ".itemname")){
+					ItemMeta im = currentitem.getItemMeta();
+					im.setDisplayName(c.getString("MiniFeastItems." + path + ".itemname"));
+					currentitem.setItemMeta(im);
+				}
+				Debug.debug("Adding item to results: " + currentitem.toString());
+				result.add(currentitem);
+				
+			}
+			
+		}
+		result = cullToChestSize(result);
 		ItemStack[] realresult = new ItemStack[result.size()];
 		realresult = result.toArray(realresult);
 		return realresult;
@@ -105,6 +178,14 @@ public class Config {
 		target.addUnsafeEnchantment(enchant, Integer.parseInt(enchs[1]));
 		
 		return target;
+	}
+	
+	public static ArrayList<ItemStack> cullToChestSize(ArrayList<ItemStack> items){
+		while(items.size() > 27){
+			int random = Config.r.nextInt(items.size());
+			items.remove(random);
+		}
+		return items;
 	}
 	
 }

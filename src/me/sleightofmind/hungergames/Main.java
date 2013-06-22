@@ -14,10 +14,12 @@ import me.sleightofmind.hungergames.listeners.LobbyCancelListener;
 import me.sleightofmind.hungergames.listeners.PlayerJoinListener;
 import me.sleightofmind.hungergames.listeners.SoupListener;
 import me.sleightofmind.hungergames.tasks.FeastCountdownTask;
+import me.sleightofmind.hungergames.tasks.ForceFieldTask;
 import me.sleightofmind.hungergames.worldgen.LoadListener;
 
 import org.bukkit.ChatColor;
 import org.bukkit.World;
+import org.bukkit.WorldCreator;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -52,6 +54,7 @@ public class Main extends JavaPlugin {
 		Config.init();
 		timeLeftToStart = Config.initialCountdownTime;
 		PluginManager pm = getServer().getPluginManager();
+		getServer().getWorld(Config.hgWorld).setAutoSave(false);
 		
 		//Set up non-kit related listeners
 		pm.registerEvents(new LobbyCancelListener(), this);
@@ -63,6 +66,9 @@ public class Main extends JavaPlugin {
 		defaultkits.add(new Kit_Test());
 		defaultkits.add(new Kit_Assassin());
 		
+		//setup tasks
+		this.getServer().getScheduler().scheduleSyncDelayedTask(this, new ForceFieldTask(), 20);
+		
 		//Set up Kit related Listeners
 		for (Kit k : defaultkits) {
 			k.registerListeners();
@@ -72,6 +78,8 @@ public class Main extends JavaPlugin {
 		//Set up commands
 		getCommand("kit").setExecutor(new Kit_CommandExecutor());
 		getCommand("target").setExecutor(new Target_CommandExecutor());
+		
+		
 	}
 	
 	public void onDisable() {
@@ -91,25 +99,38 @@ public class Main extends JavaPlugin {
 		}
 		
 		for (int i = 0; i<10; i++) getServer().broadcastMessage("");
-		getServer().broadcastMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "The Hunger Games have begun! \nMay the odds be ever in your favour...");
+		getServer().broadcastMessage(Config.gameStartMessage);
 		getServer().broadcastMessage("");
 		getServer().broadcastMessage("");
-		getServer().broadcastMessage(ChatColor.GREEN + "You are now invincible for " + Integer.toString(Config.invincibilityDuration) + " seconds.");
+		getServer().broadcastMessage(Config.invincibilityStartMessage);
 				
 		//Activate invincibility countdown
 		getServer().getScheduler().runTaskLater(this, new BukkitRunnable() {
 			@Override
 			public void run() { 
 				Main.invinciblePeriod = false; 
-				Main.instance.getServer().broadcastMessage(ChatColor.GREEN + "Your invincibility has worn off.");
+				Main.instance.getServer().broadcastMessage(Config.invincibilityExpireMessage);
 			}
 		}, Config.invincibilityDuration * 20);
 		
 		feastGenTask = new FeastCountdownTask().runTaskTimer(Main.instance, 1200, 1200);
 	}
 	
-	public void resetMap(String mapname) {
-		
+	public void unloadMap(String mapname){
+		if(getServer().unloadWorld(getServer().getWorld(mapname), false)){
+			getServer().getLogger().info("Successfully unloaded " + mapname);
+		}else{
+			getServer().getLogger().severe("COULD NOT UNLOAD " + mapname);
+		}
+	}
+
+	public void loadMap(String mapname){
+		getServer().createWorld(new WorldCreator(mapname));
+	}
+
+	public void resetMap(String mapname){
+		unloadMap(mapname);
+		loadMap(mapname);
 	}
 	
 	public static Kit getKit(Player p){

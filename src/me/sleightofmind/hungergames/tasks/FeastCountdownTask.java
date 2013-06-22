@@ -1,5 +1,6 @@
 package me.sleightofmind.hungergames.tasks;
 
+import me.sleightofmind.hungergames.Config;
 import me.sleightofmind.hungergames.Main;
 import me.sleightofmind.hungergames.feasts.FeastGen;
 
@@ -10,15 +11,24 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class FeastCountdownTask extends BukkitRunnable{
 
 	
-	private int feasttime = 1;
+	private int feasttime = Config.minutesToFeast;
 	
 	public void run() {
 		feasttime--;
 		if(feasttime <= 5){
-			for(Player p : Main.instance.getServer().getOnlinePlayers()){
-				p.sendMessage(ChatColor.GOLD + Integer.toString(feasttime) + " minutes until the feast!");
+			if(feasttime <= 0){
+				for(Player p : Main.instance.getServer().getOnlinePlayers()){
+					p.sendMessage(ChatColor.RED + "The Feast Has Begun!");
+				}
+				FeastGen.generateFeast();
+				new MiniFeastCountdownTask().runTaskTimer(Main.instance, 1200, 1200);
+				this.cancel();
 			}
-			if(feasttime <= 0) FeastGen.generateFeast();
+			
+			for(Player p : Main.instance.getServer().getOnlinePlayers()){
+				if(feasttime > 1)p.sendMessage(ChatColor.RED + "The feast will begin at (" + FeastGen.FeastLoc.getX() + ", " + FeastGen.FeastLoc.getY() + ", " + FeastGen.FeastLoc.getZ() + ") in " + feasttime + " minutes!");
+				else if(feasttime == 1)p.sendMessage(ChatColor.RED + "The feast will begin at (" + FeastGen.FeastLoc.getX() + ", " + FeastGen.FeastLoc.getY() + ", " + FeastGen.FeastLoc.getZ() + ") in " + feasttime + " minute!");
+			}
 		}
 	}
 }

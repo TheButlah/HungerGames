@@ -18,8 +18,9 @@ public class PlayerJoinListener implements Listener{
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent evt) {
 		Player player = evt.getPlayer();
-		Main.playerkits.put(player.getName(), new DefaultKit());
 		if(Main.inProgress && !(player.isOp() || player.hasPermission("HungerGames.CanJoinGameInProgress"))) player.kickPlayer(ChatColor.GOLD + "You are not allowed to join a game that is in progress!");
+		Main.playerkits.put(player.getName(), new DefaultKit());
+		
 		
 		if(Main.instance.getServer().getOnlinePlayers().length == Config.minPlayersToStart && !Main.inProgress){
 			Main.gameStartTask = Main.instance.getServer().getScheduler().runTaskTimer(Main.instance, new GameCountdownTask(), 20, 20);
@@ -43,7 +44,7 @@ public class PlayerJoinListener implements Listener{
 		}
 		Main.playerkits.remove(evt.getPlayer().getName());
 		
-		if (Main.inProgress && !(p.isOp() || p.hasPermission("HungerGames.CanJoinGameInProgress"))) {
+		if (Main.inProgress && !(p.isOp() || p.hasPermission("HungerGames.CanJoinGameInProgress")) && Main.playerkits.containsKey(p.getName())) {
 			p.setHealth(0);
 			Main.playerkits.remove(evt.getPlayer().getName());
 		}
