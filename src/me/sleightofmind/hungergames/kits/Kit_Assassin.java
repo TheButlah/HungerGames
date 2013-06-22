@@ -3,14 +3,17 @@ package me.sleightofmind.hungergames.kits;
 import me.sleightofmind.hungergames.Config;
 import me.sleightofmind.hungergames.Main;
 import me.sleightofmind.hungergames.tasks.AssassinChargeTask;
+import me.sleightofmind.hungergames.tasks.AssassinCompassTask;
 import me.sleightofmind.hungergames.tasks.AssassinDechargeTask;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
@@ -21,6 +24,7 @@ public class Kit_Assassin extends Kit implements Listener{
 	private static final int maxchargelevel = 5;
 	private BukkitTask chargeTask;
 	private BukkitTask dechargeTask;
+	private BukkitTask compassTask;
 	
 	public Kit_Assassin() {
 		name = "Assassin";
@@ -87,6 +91,26 @@ public class Kit_Assassin extends Kit implements Listener{
 		Kit_Assassin kit = (Kit_Assassin) k;
 		
 		evt.setDamage((int) (evt.getDamage()*(1+kit.chargelevel/5.0)));
+	}
+	
+	@EventHandler
+	public void onCompassClick(PlayerInteractEvent evt) {
+		Player player = evt.getPlayer();
+		if (!(Main.playerkits.get(player.getName()) instanceof Kit_Assassin)) return;
+		ItemStack item = evt.getItem();
+		if (item.getType().equals(Material.COMPASS)) {
+			Player[] players = Main.instance.getServer().getOnlinePlayers();
+			if (compassTask != null) Main.instance.getServer().getScheduler().cancelTask(compassTask.getTaskId());
+			if (players.length > 1) {
+				Player target = players[(int)(Math.random()*players.length)];
+				while(target.getName().equals(player.getName())) {
+					target = players[(int)(Math.random()*players.length)];
+				}
+				compassTask = Main.instance.getServer().getScheduler().runTaskTimer(Main.instance, new AssassinCompassTask(player, target), 0, 40);
+			} else {
+				player.setCompassTarget(Main.instance.getServer().getWorld(Config.hgWorld).getSpawnLocation());
+			}
+		}
 	}
 	
 }

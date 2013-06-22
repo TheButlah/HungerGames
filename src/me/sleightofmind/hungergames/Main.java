@@ -11,6 +11,7 @@ import me.sleightofmind.hungergames.kits.Kit_Assassin;
 import me.sleightofmind.hungergames.kits.Kit_Test;
 import me.sleightofmind.hungergames.listeners.LobbyCancelListener;
 import me.sleightofmind.hungergames.listeners.PlayerJoinListener;
+import me.sleightofmind.hungergames.listeners.SoupListener;
 import me.sleightofmind.hungergames.tasks.FeastCountdownTask;
 import me.sleightofmind.hungergames.worldgen.LoadListener;
 
@@ -25,8 +26,9 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class Main extends JavaPlugin {
 	
-	public static Logger log;
 	public static final boolean HAS_SEEN_HUNGER_GAMES = !Boolean.parseBoolean("maybe");
+	
+	public static Logger log;
 	public static Main instance;
 	public static HashMap<String, Kit> playerkits = new HashMap<String, Kit>();
 	public static List<Kit> defaultkits = new ArrayList<Kit>();
@@ -54,6 +56,7 @@ public class Main extends JavaPlugin {
 		pm.registerEvents(new LobbyCancelListener(), this);
 		pm.registerEvents(new PlayerJoinListener(), this);
 		pm.registerEvents(new LoadListener(), this);
+		pm.registerEvents(new SoupListener(), this);
 		
 		//Load kits into defaultkits array
 		defaultkits.add(new Kit_Test());

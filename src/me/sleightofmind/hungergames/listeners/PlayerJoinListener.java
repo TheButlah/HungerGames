@@ -31,6 +31,8 @@ public class PlayerJoinListener implements Listener{
 	
 	@EventHandler
 	public void onPlayerLeave(PlayerQuitEvent evt){
+		Player p = evt.getPlayer();
+		
 		/* Note that the following if statement only checks to see if the online players
 		 * is less than OR EQUAL TO the MinimumPlayersToStart. This is because when the player
 		 * tries to disconnect, the online player count isn't updated until AFTER this method.
@@ -40,5 +42,9 @@ public class PlayerJoinListener implements Listener{
 			Main.gameStartTask = null;
 		}
 		Main.playerkits.remove(evt.getPlayer().getName());
+		
+		if (Main.inProgress && !(p.isOp() || p.hasPermission("HungerGames.CanJoinGameInProgress"))) {
+			p.setHealth(0);
+		}
 	}
 }
