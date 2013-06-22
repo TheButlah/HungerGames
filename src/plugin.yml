@@ -5,4 +5,7 @@ load: STARTUP
 commands:
   kit:
     description: Select your kit to play with.
-    usage: "NOPE, CHUCK TESTA. Correct usage: /kit select <kitname>"
+    usage: "Correct usage: /kit select <kitname>"
+  target:
+    description: Assassins can use this to select which player their compass targets.
+    usage: "Correct usage: /target <playername>"

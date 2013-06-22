@@ -24,7 +24,7 @@ public class Kit_Assassin extends Kit implements Listener{
 	private static final int maxchargelevel = 5;
 	private BukkitTask chargeTask;
 	private BukkitTask dechargeTask;
-	private BukkitTask compassTask;
+	public BukkitTask compassTask;
 	
 	public Kit_Assassin() {
 		name = "Assassin";

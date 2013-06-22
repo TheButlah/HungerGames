@@ -45,6 +45,7 @@ public class PlayerJoinListener implements Listener{
 		
 		if (Main.inProgress && !(p.isOp() || p.hasPermission("HungerGames.CanJoinGameInProgress"))) {
 			p.setHealth(0);
+			Main.playerkits.remove(evt.getPlayer().getName());
 		}
 	}
 }

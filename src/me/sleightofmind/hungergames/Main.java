@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import me.sleightofmind.hungergames.commands.Kit_CommandExecutor;
+import me.sleightofmind.hungergames.commands.Target_CommandExecutor;
 import me.sleightofmind.hungergames.kits.Kit;
 import me.sleightofmind.hungergames.kits.Kit_Assassin;
 import me.sleightofmind.hungergames.kits.Kit_Test;
@@ -70,6 +71,7 @@ public class Main extends JavaPlugin {
 		
 		//Set up commands
 		getCommand("kit").setExecutor(new Kit_CommandExecutor());
+		getCommand("target").setExecutor(new Target_CommandExecutor());
 	}
 	
 	public void onDisable() {
