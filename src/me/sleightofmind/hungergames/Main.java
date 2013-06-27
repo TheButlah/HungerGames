@@ -9,6 +9,7 @@ import me.sleightofmind.hungergames.commands.Kit_CommandExecutor;
 import me.sleightofmind.hungergames.commands.Target_CommandExecutor;
 import me.sleightofmind.hungergames.kits.Kit;
 import me.sleightofmind.hungergames.kits.Kit_Assassin;
+import me.sleightofmind.hungergames.kits.Kit_Cultivator;
 import me.sleightofmind.hungergames.kits.Kit_Test;
 import me.sleightofmind.hungergames.kits.Kit_Thor;
 import me.sleightofmind.hungergames.listeners.CompassListener;
@@ -72,6 +73,7 @@ public class Main extends JavaPlugin {
 		defaultkits.add(new Kit_Test());
 		defaultkits.add(new Kit_Assassin());
 		defaultkits.add(new Kit_Thor());
+		defaultkits.add(new Kit_Cultivator());
 		
 		//setup tasks
 		this.getServer().getScheduler().scheduleSyncDelayedTask(this, new ForceFieldTask(), 20);
