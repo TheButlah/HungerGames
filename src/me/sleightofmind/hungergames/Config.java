@@ -17,7 +17,7 @@ public class Config {
 	public static int feastFloatDistance, miniFeastFloatDistance;
 	
 	
-	public static String gameStartMessage, invincibilityExpireMessage, invincibilityStartMessage;
+	public static String gameStartMessage, invincibilityExpireMessage, invincibilityStartMessage, noKitMessage, kitSelectMessage;
 	
 	
 	
@@ -51,6 +51,8 @@ public class Config {
 			invincibilityStartMessage = c.getString("Settings.InvincibilityStartMessage").replaceAll("&", "§");
 			gameStartMessage = c.getString("Settings.GameStartMessage").replaceAll("&", "§");
 			invincibilityExpireMessage = c.getString("Settings.InvincibilityExpireMessage").replaceAll("&", "§");
+			noKitMessage = c.getString("Settings.NoKitMessage").replaceAll("&", "§");
+			kitSelectMessage = c.getString("Settings.KitSelectMessage").replaceAll("&", "§");;
 			
 			assassinChargeRate = c.getInt("KitSettings.Assassin.AssassinChargeRate");
 			assassinDechargeRate = c.getInt("KitSettings.Assassin.AssassinDechargeRate");

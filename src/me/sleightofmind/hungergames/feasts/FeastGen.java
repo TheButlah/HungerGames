@@ -8,6 +8,8 @@ import java.util.Random;
 import me.sleightofmind.hungergames.Config;
 import me.sleightofmind.hungergames.Main;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -36,7 +38,7 @@ public class FeastGen {
 			}
 		}
 		
-		System.out.println("Spawned feast at " + FeastLoc.getX() + ", " + FeastLoc.getY() + ", " + FeastLoc.getZ());
+		Bukkit.broadcastMessage(ChatColor.GOLD + "Spawned feast at " + FeastLoc.getX() + ", " + FeastLoc.getY() + ", " + FeastLoc.getZ() + "!");
 	}
 	
 	public static int highest(World w, int x, int z){

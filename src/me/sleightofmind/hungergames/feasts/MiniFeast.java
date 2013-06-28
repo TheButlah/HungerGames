@@ -3,15 +3,13 @@ package me.sleightofmind.hungergames.feasts;
 import java.util.Random;
 
 import me.sleightofmind.hungergames.Config;
-import me.sleightofmind.hungergames.Main;
-
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
-import org.bukkit.entity.Player;
 
 public class MiniFeast {
 	
@@ -68,9 +66,8 @@ public class MiniFeast {
 			tempchest.getInventory().setContents(Config.getNewMiniFeastChest());
 		}
 		//System.out.println(loc.getBlockX() + " " + loc.getBlockZ());
-		for(Player p : Main.instance.getServer().getOnlinePlayers()){
-			p.sendMessage(ChatColor.GREEN + "A Mini-Feast Has Been Generated in " + genRanges(loc));
-		}
+		
+		Bukkit.broadcastMessage(ChatColor.GREEN + "A Mini-Feast Has Been Generated in " + genRanges(loc));
 	}
 	
 	public static Location getLocation(){

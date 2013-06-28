@@ -15,7 +15,7 @@ public class FeastCountdownTask extends BukkitRunnable{
 	private int feasttime = Config.minutesToFeast;
 	
 	public void run() {
-		Debug.debug("Task run.");
+		Debug.debug("FeastCountdownTask run");
 		if(Main.instance.getServer().getWorld(Config.hgWorld) == null){
 			Debug.debug("World is null lol");
 		}
@@ -24,17 +24,14 @@ public class FeastCountdownTask extends BukkitRunnable{
 		feasttime--;
 		if(feasttime <= 5){
 			if(feasttime <= 0){
-				for(Player p : Main.instance.getServer().getOnlinePlayers()){
-					p.sendMessage(ChatColor.RED + "The Feast Has Begun!");
-				}
 				FeastGen.generateFeast();
 				new MiniFeastCountdownTask().runTaskTimer(Main.instance, 1200, 1200);
 				this.cancel();
 			}
 			
 			for(Player p : Main.instance.getServer().getOnlinePlayers()){
-				if(feasttime > 1)p.sendMessage(ChatColor.RED + "The feast will begin at (" + FeastGen.FeastLoc.getX() + ", " + FeastGen.FeastLoc.getY() + ", " + FeastGen.FeastLoc.getZ() + ") in " + feasttime + " minutes!");
-				else if(feasttime == 1)p.sendMessage(ChatColor.RED + "The feast will begin at (" + FeastGen.FeastLoc.getX() + ", " + FeastGen.FeastLoc.getY() + ", " + FeastGen.FeastLoc.getZ() + ") in " + feasttime + " minute!");
+				if(feasttime > 1)p.sendMessage(ChatColor.GOLD + "The feast will begin at (" + FeastGen.FeastLoc.getX() + ", " + FeastGen.FeastLoc.getY() + ", " + FeastGen.FeastLoc.getZ() + ") in " + feasttime + " minutes!");
+				else if(feasttime == 1)p.sendMessage(ChatColor.GOLD + "The feast will begin at (" + FeastGen.FeastLoc.getX() + ", " + FeastGen.FeastLoc.getY() + ", " + FeastGen.FeastLoc.getZ() + ") in " + feasttime + " minute!");
 			}
 		}
 	}

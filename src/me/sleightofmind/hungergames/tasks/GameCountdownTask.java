@@ -9,9 +9,9 @@ public class GameCountdownTask extends BukkitRunnable {
 
 	@Override
 	public void run() {
+		Main.timeLeftToStart--;
 		if(Main.timeLeftToStart > 0){
-			Main.timeLeftToStart--;
-			if (Main.timeLeftToStart < 10) {
+			if (Main.timeLeftToStart <= 10) {
 				Main.instance.getServer().broadcastMessage(ChatColor.GOLD + Integer.toString(Main.timeLeftToStart) + " Second(s) Remaining!");
 			} else if (Main.timeLeftToStart % 60 == 0) {
 				Main.instance.getServer().broadcastMessage(ChatColor.GOLD + Integer.toString(Main.timeLeftToStart/60) + " Minute(s) Remaining");

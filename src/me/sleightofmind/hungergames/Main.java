@@ -10,8 +10,10 @@ import me.sleightofmind.hungergames.commands.Target_CommandExecutor;
 import me.sleightofmind.hungergames.kits.Kit;
 import me.sleightofmind.hungergames.kits.Kit_Assassin;
 import me.sleightofmind.hungergames.kits.Kit_Cultivator;
+import me.sleightofmind.hungergames.kits.Kit_Suprise;
 import me.sleightofmind.hungergames.kits.Kit_Test;
 import me.sleightofmind.hungergames.kits.Kit_Thor;
+import me.sleightofmind.hungergames.kits.Kit_Viper;
 import me.sleightofmind.hungergames.listeners.CompassListener;
 import me.sleightofmind.hungergames.listeners.FeastBlockListener;
 import me.sleightofmind.hungergames.listeners.LobbyCancelListener;
@@ -74,6 +76,9 @@ public class Main extends JavaPlugin {
 		defaultkits.add(new Kit_Assassin());
 		defaultkits.add(new Kit_Thor());
 		defaultkits.add(new Kit_Cultivator());
+		defaultkits.add(new Kit_Viper());
+		defaultkits.add(new Kit_Suprise());
+		Bukkit.broadcastMessage(Integer.toString(defaultkits.size()));
 		
 		//setup tasks
 		this.getServer().getScheduler().scheduleSyncDelayedTask(this, new ForceFieldTask(), 20);
@@ -99,6 +104,13 @@ public class Main extends JavaPlugin {
 	public void startGame(){
 		inProgress = true;
 		Main.instance.getServer().getScheduler().cancelTask(gameStartTask.getTaskId());
+		
+		
+		for (int i = 0; i<10; i++) getServer().broadcastMessage("");
+		getServer().broadcastMessage(Config.gameStartMessage);
+		getServer().broadcastMessage("");
+		getServer().broadcastMessage(Config.invincibilityStartMessage);
+		
 		for (Player p : instance.getServer().getOnlinePlayers()) {
 			World w = p.getWorld();
 			p.teleport(w.getHighestBlockAt(w.getSpawnLocation()).getLocation());
@@ -107,12 +119,6 @@ public class Main extends JavaPlugin {
 				
 			}
 		}
-		
-		for (int i = 0; i<10; i++) getServer().broadcastMessage("");
-		getServer().broadcastMessage(Config.gameStartMessage);
-		getServer().broadcastMessage("");
-		getServer().broadcastMessage("");
-		getServer().broadcastMessage(Config.invincibilityStartMessage);
 				
 		//Activate invincibility countdown
 		getServer().getScheduler().runTaskLater(this, new BukkitRunnable() {

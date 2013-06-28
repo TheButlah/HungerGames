@@ -6,6 +6,10 @@ Settings:
   InvincibilityStartMessage: "&aYou are now invincible!"
   InvincibilityExpireMessage: "&aYou are no longer invincible."
   GameStartMessage: "&6The Hunger Games have begun!"
+  NoKitMessage: "&6You haven't selected a kit! Select one before the game starts for items and abilities."
+
+  #<kitname> will be replaced with the name of the player's kit
+  KitSelectMessage: "&6You have selected the &l<kitname>&6 kit!"
   
 Timer:
   MinimumPlayersToStart: 1

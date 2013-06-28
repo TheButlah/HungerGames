@@ -14,7 +14,17 @@ public class Kit_CommandExecutor implements CommandExecutor{
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
-		if (label.equalsIgnoreCase("kit") && args.length == 2) {
+		if (args.length == 0) {
+			if (sender instanceof Player) {
+				Player p = (Player) sender;
+				Kit k = Main.playerkits.get(p.getName());
+				if (k == null) p.sendMessage(Config.noKitMessage);
+				p.sendMessage(Config.kitSelectMessage.replaceAll("<kitname>", k.getName()));
+				return true;
+			}
+		}
+		
+		if (args.length == 2) {
 			
 			if (args[0].equalsIgnoreCase("select")) {
 				if (sender instanceof Player) {
@@ -27,7 +37,7 @@ public class Kit_CommandExecutor implements CommandExecutor{
 								} catch (Exception e) {
 									e.printStackTrace();
 								}								
-								p.sendMessage(ChatColor.GOLD+"You have selected the " + ChatColor.BOLD+ k.getName() + ChatColor.RESET + ChatColor.GOLD + " kit.");
+								p.sendMessage(Config.kitSelectMessage.replaceAll("<kitname>", k.getName()));
 								return true;
 							}
 						}
