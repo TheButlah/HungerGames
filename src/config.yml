@@ -17,7 +17,7 @@ Timer:
   MinutesToFeast: 1
   
   #These should be specified in seconds
-  InitialCountdownTime: 30
+  InitialCountdownTime: 15
   QuickStartCountdownTime: 10
   InvincibilityDuration: 10
 

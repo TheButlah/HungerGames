@@ -7,13 +7,7 @@ import java.util.logging.Logger;
 
 import me.sleightofmind.hungergames.commands.Kit_CommandExecutor;
 import me.sleightofmind.hungergames.commands.Target_CommandExecutor;
-import me.sleightofmind.hungergames.kits.Kit;
-import me.sleightofmind.hungergames.kits.Kit_Assassin;
-import me.sleightofmind.hungergames.kits.Kit_Cultivator;
-import me.sleightofmind.hungergames.kits.Kit_Suprise;
-import me.sleightofmind.hungergames.kits.Kit_Test;
-import me.sleightofmind.hungergames.kits.Kit_Thor;
-import me.sleightofmind.hungergames.kits.Kit_Viper;
+import me.sleightofmind.hungergames.kits.*;
 import me.sleightofmind.hungergames.listeners.CompassListener;
 import me.sleightofmind.hungergames.listeners.FeastBlockListener;
 import me.sleightofmind.hungergames.listeners.LobbyCancelListener;
@@ -78,7 +72,7 @@ public class Main extends JavaPlugin {
 		defaultkits.add(new Kit_Cultivator());
 		defaultkits.add(new Kit_Viper());
 		defaultkits.add(new Kit_Suprise());
-		Bukkit.broadcastMessage(Integer.toString(defaultkits.size()));
+		defaultkits.add(new Kit_Hades());
 		
 		//setup tasks
 		this.getServer().getScheduler().scheduleSyncDelayedTask(this, new ForceFieldTask(), 20);
