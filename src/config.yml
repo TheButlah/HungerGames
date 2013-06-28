@@ -1,6 +1,6 @@
 Settings:
   HungerGamesWorld: world
-  ForcefieldSideLength: 300
+  ForcefieldSideLength: 500
   FeastFloatingDistance: 3
   MiniFeastFloating: 3
   InvincibilityStartMessage: "&aYou are now invincible!"

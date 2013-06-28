@@ -72,10 +72,9 @@ public class Main extends JavaPlugin {
 		defaultkits.add(new Kit_Cultivator());
 		defaultkits.add(new Kit_Viper());
 		defaultkits.add(new Kit_Suprise());
-		defaultkits.add(new Kit_Hades());
 		
 		//setup tasks
-		this.getServer().getScheduler().scheduleSyncDelayedTask(this, new ForceFieldTask(), 20);
+		Bukkit.getScheduler().runTaskTimer(this, new ForceFieldTask(), 1, 40);
 		Bukkit.getScheduler().runTaskTimer(this, new AssassinCompassTask(), 1, 40);
 		
 		//Set up Kit related Listeners
@@ -93,6 +92,7 @@ public class Main extends JavaPlugin {
 	
 	public void onDisable() {
 		instance = null;
+		Bukkit.getScheduler().cancelAllTasks();
 	}
 	
 	public void startGame(){
