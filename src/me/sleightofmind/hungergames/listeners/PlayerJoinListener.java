@@ -28,6 +28,9 @@ public class PlayerJoinListener implements Listener{
 		if (Main.instance.getServer().getOnlinePlayers().length == Config.playersToQuickStart && !Main.inProgress && Main.timeLeftToStart > Config.quickStartCountdownTime) {
 			Main.timeLeftToStart = Config.quickStartCountdownTime;
 		}
+		
+		player.teleport(Main.instance.getServer().getWorld(Config.hgWorld).getSpawnLocation());
+		
 	}
 	
 	@EventHandler
@@ -47,6 +50,17 @@ public class PlayerJoinListener implements Listener{
 		if (Main.inProgress && !(p.isOp() || p.hasPermission("HungerGames.CanJoinGameInProgress")) && Main.playerkits.containsKey(p.getName())) {
 			p.setHealth(0);
 			Main.playerkits.remove(evt.getPlayer().getName());
+		}
+		
+		if(Main.instance.getServer().getOnlinePlayers().length == 2 && Main.inProgress){
+			Player winner = null;
+			if(Main.instance.getServer().getOnlinePlayers()[0].equals(p.getName())){
+				winner = Main.instance.getServer().getOnlinePlayers()[1];
+			}else{
+				winner = Main.instance.getServer().getOnlinePlayers()[0];
+			}
+			
+			Main.registerVictory(winner);
 		}
 	}
 }

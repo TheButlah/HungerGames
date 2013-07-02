@@ -17,12 +17,15 @@ public class Config {
 	public static int feastFloatDistance, miniFeastFloatDistance;
 	
 	
-	public static String gameStartMessage, invincibilityExpireMessage, invincibilityStartMessage, noKitMessage, kitSelectMessage;
+	public static String gameStartMessage, invincibilityExpireMessage, invincibilityStartMessage, noKitMessage, kitSelectMessage, victoryMessage;
 	
 	
 	
 	public static int assassinChargeRate, assassinDechargeRate;
 	public static double assassinDamageModifier;
+	
+	public static int barbarianKillsToRankUp;
+	
 	
 	public static int thorCooldownRate;
 	
@@ -48,15 +51,18 @@ public class Config {
 			feastFloatDistance = c.getInt("Setting.FeastFloatingDistance");
 			miniFeastFloatDistance = c.getInt("Setting.MiniFeastFloatingDistance");
 			
-			invincibilityStartMessage = c.getString("Settings.InvincibilityStartMessage").replaceAll("&", "ง");
-			gameStartMessage = c.getString("Settings.GameStartMessage").replaceAll("&", "ง");
-			invincibilityExpireMessage = c.getString("Settings.InvincibilityExpireMessage").replaceAll("&", "ง");
-			noKitMessage = c.getString("Settings.NoKitMessage").replaceAll("&", "ง");
-			kitSelectMessage = c.getString("Settings.KitSelectMessage").replaceAll("&", "ง");;
+			invincibilityStartMessage = c.getString("Settings.InvincibilityStartMessage").replaceAll("&", "ยง");
+			gameStartMessage = c.getString("Settings.GameStartMessage").replaceAll("&", "ยง");
+			invincibilityExpireMessage = c.getString("Settings.InvincibilityExpireMessage").replaceAll("&", "ยง");
+			noKitMessage = c.getString("Settings.NoKitMessage").replaceAll("&", "ยง");
+			kitSelectMessage = c.getString("Settings.KitSelectMessage").replaceAll("&", "ยง");
+			victoryMessage = c.getString("Settings.VictoryMessage").replaceAll("&", "ยง");
 			
 			assassinChargeRate = c.getInt("KitSettings.Assassin.AssassinChargeRate");
 			assassinDechargeRate = c.getInt("KitSettings.Assassin.AssassinDechargeRate");
 			assassinDamageModifier = c.getDouble("KitSettings.Assassin.AssassinDamageModifier");
+			
+			barbarianKillsToRankUp = c.getInt("KitSttings.Barbarian.KillsToRankUp");
 			
 			thorCooldownRate = c.getInt("KitSettings.Thor.ThorCooldownRate");
 			

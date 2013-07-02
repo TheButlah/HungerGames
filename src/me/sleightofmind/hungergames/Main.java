@@ -9,6 +9,7 @@ import me.sleightofmind.hungergames.commands.Kit_CommandExecutor;
 import me.sleightofmind.hungergames.commands.Target_CommandExecutor;
 import me.sleightofmind.hungergames.kits.*;
 import me.sleightofmind.hungergames.listeners.CompassListener;
+import me.sleightofmind.hungergames.listeners.DeathListener;
 import me.sleightofmind.hungergames.listeners.FeastBlockListener;
 import me.sleightofmind.hungergames.listeners.LobbyCancelListener;
 import me.sleightofmind.hungergames.listeners.PlayerJoinListener;
@@ -16,13 +17,17 @@ import me.sleightofmind.hungergames.listeners.SoupListener;
 import me.sleightofmind.hungergames.tasks.AssassinCompassTask;
 import me.sleightofmind.hungergames.tasks.FeastCountdownTask;
 import me.sleightofmind.hungergames.tasks.ForceFieldTask;
+import me.sleightofmind.hungergames.tasks.VictoryTask;
 import me.sleightofmind.hungergames.worldgen.LoadListener;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -64,7 +69,7 @@ public class Main extends JavaPlugin {
 		pm.registerEvents(new SoupListener(), this);
 		pm.registerEvents(new CompassListener(), this);
 		pm.registerEvents(new FeastBlockListener(), this);
-		
+		pm.registerEvents(new DeathListener(), this);
 		//Load kits into defaultkits array
 		defaultkits.add(new Kit_Test());
 		defaultkits.add(new Kit_Assassin());
@@ -86,7 +91,11 @@ public class Main extends JavaPlugin {
 		//Set up commands
 		getCommand("kit").setExecutor(new Kit_CommandExecutor());
 		getCommand("target").setExecutor(new Target_CommandExecutor());
+		//
 		
+		ShapedRecipe grinderRecipe = new ShapedRecipe(new ItemStack(Material.MUSHROOM_SOUP)).shape("bib", "iri", "bib").setIngredient('b', Material.CLAY_BRICK).
+		setIngredient('i', Material.IRON_INGOT).setIngredient('r', Material.REDSTONE);
+		getServer().addRecipe(grinderRecipe);
 		
 	}
 	
@@ -126,26 +135,31 @@ public class Main extends JavaPlugin {
 		feastGenTask = new FeastCountdownTask().runTaskTimer(Main.instance, 1200, 1200);
 	}
 	
-	public void unloadMap(String mapname){
-		if(getServer().unloadWorld(getServer().getWorld(mapname), false)){
-			getServer().getLogger().info("Successfully unloaded " + mapname);
+	public static void unloadMap(String mapname){
+		if(instance.getServer().unloadWorld(instance.getServer().getWorld(mapname), false)){
+			instance.getServer().getLogger().info("Successfully unloaded " + mapname);
 		}
 		else{
-			getServer().getLogger().severe("COULD NOT UNLOAD " + mapname);
+			instance.getServer().getLogger().severe("COULD NOT UNLOAD " + mapname);
 		}
 	}
 
-	public void loadMap(String mapname){
-		getServer().createWorld(new WorldCreator(mapname));
+	public static void loadMap(String mapname){
+		instance.getServer().createWorld(new WorldCreator(mapname));
 	}
 
-	public void resetMap(String mapname){
+	public static void resetMap(String mapname){
 		unloadMap(mapname);
 		loadMap(mapname);
 	}
 	
 	public static Kit getKit(Player p){
 		return playerkits.get(p.getName());
+	}
+	
+	public static void registerVictory(Player p){
+		p.sendMessage(Config.victoryMessage);
+		Main.instance.getServer().getScheduler().scheduleSyncDelayedTask(instance, new VictoryTask(), 200);
 	}
 
 }

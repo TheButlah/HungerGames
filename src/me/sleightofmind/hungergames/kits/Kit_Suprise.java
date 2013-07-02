@@ -29,7 +29,7 @@ public class Kit_Suprise extends Kit{
 			Debug.debug("put the " + instantiatedkit.name + " kit in the playerkits array!");
 			player.sendMessage(ChatColor.GREEN + "You have drawn the " + instantiatedkit.name + " kit!");
 			instantiatedkit.init(player);
-		} catch (InstantiationException | IllegalAccessException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

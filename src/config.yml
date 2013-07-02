@@ -7,12 +7,12 @@ Settings:
   InvincibilityExpireMessage: "&aYou are no longer invincible."
   GameStartMessage: "&6The Hunger Games have begun!"
   NoKitMessage: "&6You haven't selected a kit! Select one before the game starts for items and abilities."
-
+  VictoryMessage: "&6You have won the Hunger Games!"
   #<kitname> will be replaced with the name of the player's kit
   KitSelectMessage: "&6You have selected the &l<kitname>&6 kit!"
   
 Timer:
-  MinimumPlayersToStart: 1
+  MinimumPlayersToStart: 2
   PlayersToQuickStart: 2
   MinutesToFeast: 1
   
@@ -29,7 +29,8 @@ KitSettings:
     
     #This is the amount that the assassins dmg is multiplied by when is charge is 100%
     AssassinDamageModifier: 2
- 
+  Barbarian:
+    KillsToRankUp: 4
   Thor:
     #The number of ticks of cooldown in between lightning strikes
     ThorCooldownRate: 40
