@@ -6,6 +6,7 @@ import me.sleightofmind.hungergames.kits.DefaultKit;
 import me.sleightofmind.hungergames.tasks.GameCountdownTask;
 
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,9 +29,8 @@ public class PlayerJoinListener implements Listener{
 		if (Main.instance.getServer().getOnlinePlayers().length == Config.playersToQuickStart && !Main.inProgress && Main.timeLeftToStart > Config.quickStartCountdownTime) {
 			Main.timeLeftToStart = Config.quickStartCountdownTime;
 		}
-		
-		player.teleport(Main.instance.getServer().getWorld(Config.hgWorld).getSpawnLocation());
-		
+		World w = Main.instance.getServer().getWorld(Config.hgWorld);
+		player.teleport(w.getHighestBlockAt(w.getSpawnLocation()).getLocation());
 	}
 	
 	@EventHandler

@@ -11,10 +11,8 @@ public class VictoryTask extends BukkitRunnable{
 
 	@Override
 	public void run() {
-		for(Player p : Bukkit.getOnlinePlayers()){
-			p.kickPlayer("Server being restarted to reset the map for the next game!");
-		}
-		Main.resetMap(Config.hgWorld);
+		Main.endGame();
+		
 	}
 
 }

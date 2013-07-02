@@ -21,6 +21,7 @@ import me.sleightofmind.hungergames.tasks.VictoryTask;
 import me.sleightofmind.hungergames.worldgen.LoadListener;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -43,6 +44,7 @@ public class Main extends JavaPlugin {
 	public static List<Kit> defaultkits = new ArrayList<Kit>();
 	public static BukkitTask gameStartTask = null;
 	public static BukkitTask feastGenTask = null;
+	public static BukkitTask miniFeastGenTask = null;
 	
 	public static int timeLeftToStart;
 	public static boolean inProgress = false;
@@ -79,8 +81,7 @@ public class Main extends JavaPlugin {
 		defaultkits.add(new Kit_Suprise());
 		
 		//setup tasks
-		Bukkit.getScheduler().runTaskTimer(this, new ForceFieldTask(), 1, 40);
-		Bukkit.getScheduler().runTaskTimer(this, new AssassinCompassTask(), 1, 40);
+		setupTasks();
 		
 		//Set up Kit related Listeners
 		for (Kit k : defaultkits) {
@@ -105,6 +106,7 @@ public class Main extends JavaPlugin {
 	}
 	
 	public void startGame(){
+		this.timeLeftToStart = Config.initialCountdownTime;
 		inProgress = true;
 		Main.instance.getServer().getScheduler().cancelTask(gameStartTask.getTaskId());
 		
@@ -135,6 +137,23 @@ public class Main extends JavaPlugin {
 		feastGenTask = new FeastCountdownTask().runTaskTimer(Main.instance, 1200, 1200);
 	}
 	
+	public static void endGame(){
+		Bukkit.getScheduler().cancelTasks(instance);
+		
+		feastGenTask = null;
+		miniFeastGenTask = null;
+		invinciblePeriod = false;
+		
+		inProgress = false;
+		
+		for(Player p : Bukkit.getOnlinePlayers()){
+			p.kickPlayer("Server being restarted to reset the map for the next game!");
+		}
+		Main.resetMap(Config.hgWorld);
+		Main.playerkits.clear();
+		setupTasks();
+	}
+	
 	public static void unloadMap(String mapname){
 		if(instance.getServer().unloadWorld(instance.getServer().getWorld(mapname), false)){
 			instance.getServer().getLogger().info("Successfully unloaded " + mapname);
@@ -149,9 +168,18 @@ public class Main extends JavaPlugin {
 	}
 
 	public static void resetMap(String mapname){
-		unloadMap(mapname);
-		loadMap(mapname);
+		//test
+		World w = Main.instance.getServer().getWorld(mapname);
+		
+		for(Chunk c : w.getLoadedChunks()){
+			w.regenerateChunk(c.getX(), c.getZ());
+		}
+		/*unloadMap(mapname);
+		loadMap(mapname);*/
 	}
+	
+	
+	
 	
 	public static Kit getKit(Player p){
 		return playerkits.get(p.getName());
@@ -162,4 +190,9 @@ public class Main extends JavaPlugin {
 		Main.instance.getServer().getScheduler().scheduleSyncDelayedTask(instance, new VictoryTask(), 200);
 	}
 
+	private static void setupTasks(){
+		Bukkit.getScheduler().runTaskTimer(Main.instance, new ForceFieldTask(), 1, 40);
+		Bukkit.getScheduler().runTaskTimer(Main.instance, new AssassinCompassTask(), 1, 40);
+	}
+	
 }

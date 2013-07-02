@@ -25,7 +25,7 @@ public class FeastCountdownTask extends BukkitRunnable{
 		if(feasttime <= 5){
 			if(feasttime <= 0){
 				FeastGen.generateFeast();
-				new MiniFeastCountdownTask().runTaskTimer(Main.instance, 1200, 1200);
+				Main.miniFeastGenTask = new MiniFeastCountdownTask().runTaskTimer(Main.instance, 1200, 1200);
 				this.cancel();
 			}
 			
