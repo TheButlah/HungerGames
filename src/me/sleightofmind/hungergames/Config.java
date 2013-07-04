@@ -13,6 +13,7 @@ public class Config {
 	public static String hgWorld;
 	
 	public static int minPlayersToStart, playersToQuickStart, initialCountdownTime, quickStartCountdownTime, invincibilityDuration, minutesToFeast, forcefieldSideLength;
+	public static String compassTrackMessage;
 	
 	public static int feastFloatDistance, miniFeastFloatDistance;
 	
@@ -25,6 +26,7 @@ public class Config {
 	public static double assassinDamageModifier;
 	
 	public static int barbarianKillsToRankUp;
+	public static String barbarianSwordName;
 	
 	
 	public static int thorCooldownRate;
@@ -57,12 +59,14 @@ public class Config {
 			noKitMessage = c.getString("Settings.NoKitMessage").replaceAll("&", "§");
 			kitSelectMessage = c.getString("Settings.KitSelectMessage").replaceAll("&", "§");
 			victoryMessage = c.getString("Settings.VictoryMessage").replaceAll("&", "§");
+			compassTrackMessage = c.getString("Settings.CompassTrackMessage").replaceAll("&", "§");
 			
 			assassinChargeRate = c.getInt("KitSettings.Assassin.AssassinChargeRate");
 			assassinDechargeRate = c.getInt("KitSettings.Assassin.AssassinDechargeRate");
 			assassinDamageModifier = c.getDouble("KitSettings.Assassin.AssassinDamageModifier");
 			
-			barbarianKillsToRankUp = c.getInt("KitSttings.Barbarian.KillsToRankUp");
+			barbarianKillsToRankUp = c.getInt("KitSettings.Barbarian.KillsToRankUp");
+			barbarianSwordName = c.getString("KitSettings.Barbarian.SwordName").replaceAll("&", "§");
 			
 			thorCooldownRate = c.getInt("KitSettings.Thor.ThorCooldownRate");
 			

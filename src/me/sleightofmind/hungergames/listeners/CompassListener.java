@@ -1,5 +1,6 @@
 package me.sleightofmind.hungergames.listeners;
 
+import me.sleightofmind.hungergames.Config;
 import me.sleightofmind.hungergames.Main;
 import me.sleightofmind.hungergames.kits.Kit_Assassin;
 
@@ -36,6 +37,7 @@ public class CompassListener implements Listener {
 				}
 			}
 			player.setCompassTarget(target.getLocation());
+			player.sendMessage(Config.compassTrackMessage.replaceAll("<playername>", target.getDisplayName()));
 		}
 	}
 }

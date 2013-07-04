@@ -20,24 +20,28 @@ import me.sleightofmind.hungergames.listeners.SoupListener;
 import me.sleightofmind.hungergames.tasks.AssassinCompassTask;
 import me.sleightofmind.hungergames.tasks.FeastCountdownTask;
 import me.sleightofmind.hungergames.tasks.ForceFieldTask;
+import me.sleightofmind.hungergames.tasks.InvincibilityTask;
 import me.sleightofmind.hungergames.tasks.KitInformTask;
 import me.sleightofmind.hungergames.tasks.VictoryTask;
 import me.sleightofmind.hungergames.worldgen.LoadListener;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
+import org.bukkit.Color;
+import org.bukkit.FireworkEffect;
+import org.bukkit.FireworkEffect.Builder;
+import org.bukkit.FireworkEffect.Type;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.WorldCreator;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 public class Main extends JavaPlugin {
@@ -57,6 +61,7 @@ public class Main extends JavaPlugin {
 	public static boolean inProgress = false;
 	
 	public static boolean invinciblePeriod = true;
+	private static BukkitTask invincibletask = null;
 	
 	
 	FileConfiguration c;
@@ -132,14 +137,14 @@ public class Main extends JavaPlugin {
 		getServer().addRecipe(cactusSoupRecipe);
 		getServer().addRecipe(cocoaSoupRecipe);
 		
-		Bukkit.getScheduler().runTaskLater(this, new Runnable(){
+		/*Bukkit.getScheduler().runTaskLater(this, new Runnable(){
 
 			@Override
 			public void run() {
 				resetMap(Config.hgWorld);
 			}
 			
-		},1);
+		},1);*/
 		
 	}
 	
@@ -175,20 +180,7 @@ public class Main extends JavaPlugin {
 				
 		//Activate invincibility countdown
 		invincibilityTimeLeft = Config.invincibilityDuration;
-		Bukkit.getScheduler().runTaskTimer(instance, new BukkitRunnable() {
-			@Override
-			public void run() {
-				Main.invincibilityTimeLeft--;
-				if(Main.invincibilityTimeLeft == 0){
-					Main.invinciblePeriod = false; 
-					Main.instance.getServer().broadcastMessage(Config.invincibilityExpireMessage);
-					this.cancel();
-				}else if(Main.invincibilityTimeLeft < 15 && Main.invincibilityTimeLeft > 0){
-					Main.instance.getServer().broadcastMessage(ChatColor.RED + "" + Main.invincibilityTimeLeft + " seconds until invincibility wears off!");
-				}
-				
-			}
-		}, 20, 20);
+		invincibletask = Bukkit.getScheduler().runTaskTimer(instance, new InvincibilityTask(), 20, 20);
 		
 		feastGenTask = new FeastCountdownTask().runTaskTimer(Main.instance, 1200, 1200);
 	}
@@ -210,19 +202,6 @@ public class Main extends JavaPlugin {
 		setupTasks();
 	}
 	
-	public static void unloadMap(String mapname){
-		if(instance.getServer().unloadWorld(instance.getServer().getWorld(mapname), false)){
-			instance.getServer().getLogger().info("Successfully unloaded " + mapname);
-		}
-		else{
-			instance.getServer().getLogger().severe("COULD NOT UNLOAD " + mapname);
-		}
-	}
-
-	public static void loadMap(String mapname){
-		instance.getServer().createWorld(new WorldCreator(mapname));
-	}
-
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void resetMap(String mapname){
 		//test
@@ -251,13 +230,6 @@ public class Main extends JavaPlugin {
 			e.printStackTrace();
 		}
 		
-		/*net.minecraft.server.v1_5_R3.WorldData data = ((CraftWorld)w).getHandle().worldData;
-		Field f = data.getClass().getDeclaredField("seed");
-		f.setAccessible(true);
-		f.setLong(worldData, newSeed);
-		f.setAccessible(false);
-		 
-		world.save();*/
 		double totalchunks = Math.pow((((Config.forcefieldSideLength / 16)*2) + 1), 2);
 		double donechunks = 0;
 		int chunks = 0;
@@ -276,8 +248,6 @@ public class Main extends JavaPlugin {
 			
 		}
 		Debug.debug("Final seed:  " + w.getSeed());
-		/*unloadMap(mapname);
-		loadMap(mapname);*/
 	}
 	
 	public static <CW,WS,WD> void setSeed(World world, long seed, String version, Class<CW> craftworldclass, Class<WS> worldServerClass, Class<WD> worlddataclass){
@@ -327,6 +297,18 @@ public class Main extends JavaPlugin {
 	
 	public static void registerVictory(Player p){
 		p.sendMessage(Config.victoryMessage);
+		p.setHealth(20);
+		Firework f = p.getWorld().spawn(p.getLocation(), Firework.class);
+		FireworkMeta fmeta = f.getFireworkMeta();
+		
+		Builder effect1 = FireworkEffect.builder();
+		effect1.with(Type.CREEPER);
+		effect1.withColor(Color.GREEN);
+		effect1.flicker(true);
+		fmeta.addEffect(effect1.build());
+		
+		fmeta.setPower(1);
+		f.setFireworkMeta(fmeta);
 		Debug.debug("Sent victory message to " + p.getName());
 		Main.instance.getServer().getScheduler().scheduleSyncDelayedTask(instance, new VictoryTask(), 200);
 	}
@@ -334,7 +316,12 @@ public class Main extends JavaPlugin {
 	private static void setupTasks(){
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new ForceFieldTask(), 1, 40);
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new AssassinCompassTask(), 1, 40);
-		Bukkit.getScheduler().runTaskTimer(Main.instance, new KitInformTask(), 30, 30);
+		Bukkit.getScheduler().runTaskTimer(Main.instance, new KitInformTask(), 200, 400);
+	}
+	
+	public static void cancelInvincibilityTask() {
+		if (invincibletask == null) return;
+		Bukkit.getScheduler().cancelTask(invincibletask.getTaskId());
 	}
 	
 }

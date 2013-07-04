@@ -1,6 +1,7 @@
 package me.sleightofmind.hungergames.tasks;
 
 import me.sleightofmind.hungergames.Main;
+import me.sleightofmind.hungergames.kits.DefaultKit;
 import me.sleightofmind.hungergames.kits.Kit;
 
 import org.bukkit.Bukkit;
@@ -14,7 +15,7 @@ public class KitInformTask extends BukkitRunnable {
 	public void run() {
 		if(Main.inProgress) return;
 		for(Player p : Bukkit.getOnlinePlayers()){
-			for(int i = 0; i < 10; i++) p.sendMessage(" ");
+			if (!(Main.playerkits.get(p.getName()) instanceof DefaultKit)) continue;
 			p.sendMessage(ChatColor.BLUE + "Choose your kit now: /kit [kitname]");
 			String haslist = "";
 			String otherlist = "";

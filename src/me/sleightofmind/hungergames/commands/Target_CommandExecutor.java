@@ -19,7 +19,7 @@ public class Target_CommandExecutor implements CommandExecutor{
 		if (!(sender instanceof Player) || args.length != 1) return false;
 		Player player = (Player) sender;
 		Kit k = Main.playerkits.get(player.getName());
-		if (!(k instanceof Kit_Assassin)) return false;
+		if (!(k instanceof Kit_Assassin)) return true;
 		if (args[0].equals(player.getName())) {
 			player.sendMessage(ChatColor.GREEN + "You cannot target yourself!");
 			return true;

@@ -22,20 +22,34 @@ public class PlayerJoinListener implements Listener{
 		Player player = evt.getPlayer();
 		
 		
-		if(Main.inProgress && !(player.isOp() || player.hasPermission("HungerGames.CanJoinGameInProgress"))) player.kickPlayer(ChatColor.GOLD + "You are not allowed to join a game that is in progress!");
-		Main.playerkits.put(player.getName(), new DefaultKit());
+		if(Main.inProgress && !(player.isOp() || player.hasPermission("HungerGames.CanJoinGameInProgress"))) {
+			player.kickPlayer(ChatColor.GOLD + "You are not allowed to join a game that is in progress!");
+			return;
+		}
+		
+		if (!Main.inProgress) {
+			player.teleport(player.getWorld().getHighestBlockAt(player.getLocation()).getLocation());
+		}
+		
+		if (!Main.playerkits.containsKey(player.getName())) Main.playerkits.put(player.getName(), new DefaultKit());
 		
 		
-		if(Main.instance.getServer().getOnlinePlayers().length == Config.minPlayersToStart && !Main.inProgress){
+		if(!Main.inProgress && Main.instance.getServer().getOnlinePlayers().length == Config.minPlayersToStart && !Main.inProgress){
 			Main.gameStartTask = Main.instance.getServer().getScheduler().runTaskTimer(Main.instance, new GameCountdownTask(), 20, 20);
 		}
-		if (Main.instance.getServer().getOnlinePlayers().length == Config.playersToQuickStart && !Main.inProgress && Main.timeLeftToStart > Config.quickStartCountdownTime) {
+		
+		if (!Main.inProgress && Main.instance.getServer().getOnlinePlayers().length == Config.playersToQuickStart && !Main.inProgress && Main.timeLeftToStart > Config.quickStartCountdownTime) {
 			Main.timeLeftToStart = Config.quickStartCountdownTime;
 		}
-		World w = Main.instance.getServer().getWorld(Config.hgWorld);
-		player.teleport(w.getHighestBlockAt(w.getSpawnLocation()).getLocation());
-		player.setHealth(player.getMaxHealth());
-		player.getInventory().clear();
+		
+		if (!Main.inProgress){
+			World w = Main.instance.getServer().getWorld(Config.hgWorld);
+			player.teleport(w.getHighestBlockAt(w.getSpawnLocation()).getLocation());
+			player.setHealth(player.getMaxHealth());
+			player.setFoodLevel(20);
+			player.getInventory().clear();
+		}
+		
 	}
 	
 	@EventHandler

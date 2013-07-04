@@ -10,15 +10,17 @@ Settings:
   VictoryMessage: "&6You have won the Hunger Games!"
   #<kitname> will be replaced with the name of the player's kit
   KitSelectMessage: "&6You have selected the &l<kitname>&6 kit!"
+  #<playername> will be replaced with the name of the player
+  CompassTrackMessage: "&aYou have selected &l<playername>&a!"
   
 Timer:
-  MinimumPlayersToStart: 2
+  MinimumPlayersToStart: 1
   PlayersToQuickStart: 2
   MinutesToFeast: 1
   
   #These should be specified in seconds
-  InitialCountdownTime: 15
-  QuickStartCountdownTime: 10
+  InitialCountdownTime: 20
+  QuickStartCountdownTime: 15
   InvincibilityDuration: 10
 
 KitSettings:
@@ -30,7 +32,10 @@ KitSettings:
     #This is the amount that the assassins dmg is multiplied by when is charge is 100%
     AssassinDamageModifier: 2
   Barbarian:
-    KillsToRankUp: 3
+    #This is the inital number of kills to rank up from wood to stone sword
+    #Each level of sword costs one more than the previous level (i.e. stone to iron costs 3 if this value is 2)
+    KillsToRankUp: 2
+    SwordName: "&cTyrfing"
   Thor:
     #The number of ticks of cooldown in between lightning strikes
     ThorCooldownRate: 40
