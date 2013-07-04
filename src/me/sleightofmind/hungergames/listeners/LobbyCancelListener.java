@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 public class LobbyCancelListener implements Listener{
 	
@@ -14,6 +15,13 @@ public class LobbyCancelListener implements Listener{
 	public void onEntityDamage(EntityDamageEvent evt){
 		if(!Main.inProgress || Main.invinciblePeriod){
 			evt.setCancelled(true);
+		}
+	}
+	
+	@EventHandler
+	public void onHunger(FoodLevelChangeEvent e){
+		if(!Main.inProgress){
+			e.setCancelled(true);
 		}
 	}
 	

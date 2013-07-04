@@ -17,7 +17,7 @@ public class GameCountdownTask extends BukkitRunnable {
 				Main.instance.getServer().broadcastMessage(ChatColor.GOLD + Integer.toString(Main.timeLeftToStart/60) + " Minute(s) Remaining");
 			}
 		}else{
-			Main.instance.startGame();
+			Main.startGame();
 		}
 		
 	}

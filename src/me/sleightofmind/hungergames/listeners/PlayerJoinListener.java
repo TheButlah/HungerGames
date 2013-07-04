@@ -1,6 +1,7 @@
 package me.sleightofmind.hungergames.listeners;
 
 import me.sleightofmind.hungergames.Config;
+import me.sleightofmind.hungergames.Debug;
 import me.sleightofmind.hungergames.Main;
 import me.sleightofmind.hungergames.kits.DefaultKit;
 import me.sleightofmind.hungergames.tasks.GameCountdownTask;
@@ -19,6 +20,8 @@ public class PlayerJoinListener implements Listener{
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent evt) {
 		Player player = evt.getPlayer();
+		
+		
 		if(Main.inProgress && !(player.isOp() || player.hasPermission("HungerGames.CanJoinGameInProgress"))) player.kickPlayer(ChatColor.GOLD + "You are not allowed to join a game that is in progress!");
 		Main.playerkits.put(player.getName(), new DefaultKit());
 		
@@ -31,11 +34,15 @@ public class PlayerJoinListener implements Listener{
 		}
 		World w = Main.instance.getServer().getWorld(Config.hgWorld);
 		player.teleport(w.getHighestBlockAt(w.getSpawnLocation()).getLocation());
+		player.setHealth(player.getMaxHealth());
+		player.getInventory().clear();
 	}
 	
 	@EventHandler
 	public void onPlayerLeave(PlayerQuitEvent evt){
 		Player p = evt.getPlayer();
+		//reset display name
+		p.setDisplayName(p.getName());
 		
 		/* Note that the following if statement only checks to see if the online players
 		 * is less than OR EQUAL TO the MinimumPlayersToStart. This is because when the player
@@ -54,12 +61,12 @@ public class PlayerJoinListener implements Listener{
 		
 		if(Main.instance.getServer().getOnlinePlayers().length == 2 && Main.inProgress){
 			Player winner = null;
-			if(Main.instance.getServer().getOnlinePlayers()[0].equals(p.getName())){
+			if(Main.instance.getServer().getOnlinePlayers()[0].getName().equals(p.getName())){
 				winner = Main.instance.getServer().getOnlinePlayers()[1];
 			}else{
 				winner = Main.instance.getServer().getOnlinePlayers()[0];
 			}
-			
+			Debug.debug("Registering victory for " + winner.getName());
 			Main.registerVictory(winner);
 		}
 	}

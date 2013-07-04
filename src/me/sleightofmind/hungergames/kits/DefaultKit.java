@@ -5,7 +5,7 @@ import org.bukkit.inventory.ItemStack;
 public class DefaultKit extends Kit{
 	
 	public DefaultKit() {
-		name = "DefaultKit";
+		name = "None";
 		items = new ItemStack[0];
 	}
 }

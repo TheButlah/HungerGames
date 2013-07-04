@@ -51,12 +51,12 @@ public class Config {
 			feastFloatDistance = c.getInt("Setting.FeastFloatingDistance");
 			miniFeastFloatDistance = c.getInt("Setting.MiniFeastFloatingDistance");
 			
-			invincibilityStartMessage = c.getString("Settings.InvincibilityStartMessage").replaceAll("&", "ยง");
-			gameStartMessage = c.getString("Settings.GameStartMessage").replaceAll("&", "ยง");
-			invincibilityExpireMessage = c.getString("Settings.InvincibilityExpireMessage").replaceAll("&", "ยง");
-			noKitMessage = c.getString("Settings.NoKitMessage").replaceAll("&", "ยง");
-			kitSelectMessage = c.getString("Settings.KitSelectMessage").replaceAll("&", "ยง");
-			victoryMessage = c.getString("Settings.VictoryMessage").replaceAll("&", "ยง");
+			invincibilityStartMessage = c.getString("Settings.InvincibilityStartMessage").replaceAll("&", "ง");
+			gameStartMessage = c.getString("Settings.GameStartMessage").replaceAll("&", "ง");
+			invincibilityExpireMessage = c.getString("Settings.InvincibilityExpireMessage").replaceAll("&", "ง");
+			noKitMessage = c.getString("Settings.NoKitMessage").replaceAll("&", "ง");
+			kitSelectMessage = c.getString("Settings.KitSelectMessage").replaceAll("&", "ง");
+			victoryMessage = c.getString("Settings.VictoryMessage").replaceAll("&", "ง");
 			
 			assassinChargeRate = c.getInt("KitSettings.Assassin.AssassinChargeRate");
 			assassinDechargeRate = c.getInt("KitSettings.Assassin.AssassinDechargeRate");

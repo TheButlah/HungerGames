@@ -24,14 +24,14 @@ public class Kit_CommandExecutor implements CommandExecutor{
 			}
 		}
 		
-		if (args.length == 2) {
+		if (args.length == 1) {
 			
-			if (args[0].equalsIgnoreCase("select")) {
+			if (true) {
 				if (sender instanceof Player) {
 					Player p = (Player) sender;
-					if (p.isOp() ||p.hasPermission("HungerGames.Kits." + args[1].toLowerCase())) {
+					if (p.isOp() ||p.hasPermission("HungerGames.Kits." + args[0].toLowerCase())) {
 						for (Kit k : Main.defaultkits) {
-							if (k.getName().equalsIgnoreCase(args[1])) {
+							if (k.getName().equalsIgnoreCase(args[0])) {
 								try {
 									Main.playerkits.put(p.getName(), k.getClass().newInstance());
 								} catch (Exception e) {
@@ -50,11 +50,11 @@ public class Kit_CommandExecutor implements CommandExecutor{
 			}
 					
 		}
-		if(args.length == 1 && args[0].equalsIgnoreCase("gimmechest")){
+		/*if(args.length == 1 && args[0].equalsIgnoreCase("resetmap")){
 			Player p = (Player) sender;
-			p.getInventory().setContents(Config.getNewFeastChest());
-			return true;
-		}
+			Main.resetMap(p.getWorld().getName());
+		}*/
+		
 		return false;
 	}
 

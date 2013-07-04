@@ -30,7 +30,7 @@ KitSettings:
     #This is the amount that the assassins dmg is multiplied by when is charge is 100%
     AssassinDamageModifier: 2
   Barbarian:
-    KillsToRankUp: 4
+    KillsToRankUp: 3
   Thor:
     #The number of ticks of cooldown in between lightning strikes
     ThorCooldownRate: 40
