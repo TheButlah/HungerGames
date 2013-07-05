@@ -12,6 +12,8 @@ Settings:
   KitSelectMessage: "&6You have selected the &l<kitname>&6 kit!"
   #<playername> will be replaced with the name of the player
   CompassTrackMessage: "&aYou have selected &l<playername>&a!"
+  ResetMapOnStartup: false
+  ResetMapOnGameEnd: true
   
 Timer:
   MinimumPlayersToStart: 1

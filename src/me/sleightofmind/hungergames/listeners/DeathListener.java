@@ -1,5 +1,8 @@
 package me.sleightofmind.hungergames.listeners;
 
+import me.sleightofmind.hungergames.Main;
+import me.sleightofmind.hungergames.tasks.PlayerKickTask;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -10,7 +13,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 public class DeathListener implements Listener{
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent evt){
-		evt.getEntity().kickPlayer("You were killed and have been kicked from the game.");
+		Bukkit.getScheduler().runTask(Main.instance, new PlayerKickTask(evt.getEntity()));
 		for(Player p : Bukkit.getOnlinePlayers()){
 			p.sendMessage(ChatColor.AQUA + ""+ Bukkit.getOnlinePlayers().length + " Players remaining.");
 		}

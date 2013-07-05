@@ -20,7 +20,7 @@ public class Config {
 	
 	public static String gameStartMessage, invincibilityExpireMessage, invincibilityStartMessage, noKitMessage, kitSelectMessage, victoryMessage;
 	
-	
+	public static boolean resetMapOnStartup, resetMapOnGameEnd;
 	
 	public static int assassinChargeRate, assassinDechargeRate;
 	public static double assassinDamageModifier;
@@ -60,6 +60,9 @@ public class Config {
 			kitSelectMessage = c.getString("Settings.KitSelectMessage").replaceAll("&", "§");
 			victoryMessage = c.getString("Settings.VictoryMessage").replaceAll("&", "§");
 			compassTrackMessage = c.getString("Settings.CompassTrackMessage").replaceAll("&", "§");
+			
+			resetMapOnStartup = c.getBoolean("Settings.ResetMapOnStartup");
+			resetMapOnGameEnd = c.getBoolean("Settings.ResetMapOnGameEnd");
 			
 			assassinChargeRate = c.getInt("KitSettings.Assassin.AssassinChargeRate");
 			assassinDechargeRate = c.getInt("KitSettings.Assassin.AssassinDechargeRate");

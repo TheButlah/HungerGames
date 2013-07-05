@@ -106,20 +106,15 @@ public class Main extends JavaPlugin {
 		getCommand("target").setExecutor(new Target_CommandExecutor());
 		//
 		
-		ShapelessRecipe mushSoupRecipe = new ShapelessRecipe(new ItemStack(Material.MUSHROOM_SOUP));
-		mushSoupRecipe.addIngredient(Material.RED_MUSHROOM);
-		mushSoupRecipe.addIngredient(Material.BROWN_MUSHROOM);
-		mushSoupRecipe.addIngredient(Material.BOWL);
-		
-		
+		//set up soup recipies
 		ItemStack cj = new ItemStack(Material.MUSHROOM_SOUP);
 		ItemMeta cjmeta = cj.getItemMeta();
 		cjmeta.setDisplayName("Cacti Juice");
 		cj.setItemMeta(cjmeta);
 		
 		ShapelessRecipe cactusSoupRecipe = new ShapelessRecipe(cj);
-		cactusSoupRecipe.addIngredient(Material.RED_MUSHROOM);
-		cactusSoupRecipe.addIngredient(Material.BROWN_MUSHROOM);
+		cactusSoupRecipe.addIngredient(Material.CACTUS);
+		cactusSoupRecipe.addIngredient(Material.CACTUS);
 		cactusSoupRecipe.addIngredient(Material.BOWL);
 		
 		ItemStack cm = new ItemStack(Material.MUSHROOM_SOUP);
@@ -128,23 +123,20 @@ public class Main extends JavaPlugin {
 		cm.setItemMeta(cmmeta);
 		
 		ShapelessRecipe cocoaSoupRecipe = new ShapelessRecipe(cm);
-		cocoaSoupRecipe.addIngredient(Material.RED_MUSHROOM);
-		cocoaSoupRecipe.addIngredient(Material.BROWN_MUSHROOM);
+		cocoaSoupRecipe.addIngredient(Material.COCOA);
 	    cocoaSoupRecipe.addIngredient(Material.BOWL);
 		
-		
-		getServer().addRecipe(mushSoupRecipe);
 		getServer().addRecipe(cactusSoupRecipe);
 		getServer().addRecipe(cocoaSoupRecipe);
 		
-		/*Bukkit.getScheduler().runTaskLater(this, new Runnable(){
+		if (Config.resetMapOnStartup) Bukkit.getScheduler().runTaskLater(this, new Runnable(){
 
 			@Override
 			public void run() {
 				resetMap(Config.hgWorld);
 			}
 			
-		},1);*/
+		},1);
 		
 	}
 	
@@ -197,7 +189,7 @@ public class Main extends JavaPlugin {
 		for(Player p : Bukkit.getOnlinePlayers()){
 			p.kickPlayer("Server being restarted to reset the map for the next game!");
 		}
-		Main.resetMap(Config.hgWorld);
+		if (Config.resetMapOnGameEnd) Main.resetMap(Config.hgWorld);
 		Main.playerkits.clear();
 		setupTasks();
 	}

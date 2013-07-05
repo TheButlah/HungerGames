@@ -21,10 +21,13 @@ public class PlayerJoinListener implements Listener{
 	public void onPlayerJoin(PlayerJoinEvent evt) {
 		Player player = evt.getPlayer();
 		
-		
 		if(Main.inProgress && !(player.isOp() || player.hasPermission("HungerGames.CanJoinGameInProgress"))) {
 			player.kickPlayer(ChatColor.GOLD + "You are not allowed to join a game that is in progress!");
 			return;
+		}
+		
+		if (player.isDead() && Main.inProgress && !(player.isOp() || player.hasPermission("HungerGames.CanRespawnWhileGameInProgress"))) {
+			player.kickPlayer(ChatColor.GOLD + "You are not allowed to respawn while a game is in progress!");		
 		}
 		
 		if (!Main.inProgress) {

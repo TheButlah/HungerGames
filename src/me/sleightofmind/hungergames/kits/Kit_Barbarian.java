@@ -12,9 +12,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -28,9 +26,9 @@ public class Kit_Barbarian extends Kit implements Listener{
 		
 		swordlore.add("");
 		swordlore.add(ChatColor.DARK_PURPLE.toString()+ChatColor.ITALIC+"This sord will level up with you.");
-		swordlore.add("You can follow it's progress by looking at the");
-		swordlore.add("durability. Once the durability is full it will");
-		swordlore.add("upgrade, becoming a more powerful sword.");
+		swordlore.add("You can follow it's progress by looking at its");
+		swordlore.add("kills. The more kills you get, the more powerful");
+		swordlore.add("this sword will become.");
 		
 		ItemStack sword = new ItemStack(Material.WOOD_SWORD);
 		sword.addUnsafeEnchantment(Enchantment.DURABILITY, 999);
@@ -42,11 +40,9 @@ public class Kit_Barbarian extends Kit implements Listener{
 	}
 	
 	@EventHandler
-	public void onKill(PlayerInteractEvent evt) {
-		//Player dead = evt.getEntity();
-		//Player killer = dead.getKiller();
-		Player killer = evt.getPlayer();
-		if (evt.getAction() != Action.LEFT_CLICK_AIR) return;
+	public void onKill(PlayerDeathEvent evt) {
+		Player dead = evt.getEntity();
+		Player killer = dead.getKiller();
 		if (killer == null) return;
 		Kit k = Main.playerkits.get(killer.getName());
 		if (!(k instanceof Kit_Barbarian)) return;
@@ -62,8 +58,8 @@ public class Kit_Barbarian extends Kit implements Listener{
 	}
 	
 	/**
-	 * precondition: Item is the correct Barbarian sword
-	 * @param item
+	 * Precondition: Item is the correct Barbarian sword
+	 * @param item An itemstack representing the Barbarian sword
 	 */
 	private static void addkill(ItemStack item) {
 		ItemMeta meta = item.getItemMeta();
@@ -86,6 +82,7 @@ public class Kit_Barbarian extends Kit implements Listener{
 		String newname = name.substring(0,swordname.indexOf(':')+2)+kills+name.substring(name.length()-6);
 		meta.setDisplayName(newname);
 		item.setItemMeta(meta);
+		item.setDurability((short) 0);
 	}
 
 	@Override

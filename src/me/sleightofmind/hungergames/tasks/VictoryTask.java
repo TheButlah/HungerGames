@@ -9,7 +9,6 @@ public class VictoryTask extends BukkitRunnable{
 	@Override
 	public void run() {
 		Main.endGame();
-		
 	}
 
 }
