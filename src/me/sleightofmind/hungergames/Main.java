@@ -84,7 +84,7 @@ public class Main extends JavaPlugin {
 		pm.registerEvents(new FeastBlockListener(), this);
 		pm.registerEvents(new DeathListener(), this);
 		//Load kits into defaultkits array
-		defaultkits.add(new Kit_Test());
+		//defaultkits.add(new Kit_Test());
 		defaultkits.add(new Kit_Assassin());
 		defaultkits.add(new Kit_Thor());
 		defaultkits.add(new Kit_Cultivator());
