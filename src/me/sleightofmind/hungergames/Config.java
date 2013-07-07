@@ -12,11 +12,13 @@ public class Config {
 
 	public static String hgWorld;
 	
-	public static int minPlayersToStart, playersToQuickStart, initialCountdownTime, quickStartCountdownTime, invincibilityDuration, minutesToFeast, forcefieldSideLength;
+	public static int minPlayersToStart, playersToQuickStart, initialCountdownTime, 
+	quickStartCountdownTime, invincibilityDuration, minutesToFeast, 
+	fireworkDisplayDistance, forcefieldSideLength;
+	
 	public static String compassTrackMessage;
 	
 	public static int feastFloatDistance, miniFeastFloatDistance;
-	
 	
 	public static String gameStartMessage, invincibilityExpireMessage, invincibilityStartMessage, noKitMessage, kitSelectMessage, victoryMessage;
 	
@@ -48,18 +50,20 @@ public class Config {
 			quickStartCountdownTime = c.getInt("Timer.QuickStartCountdownTime");
 			invincibilityDuration = c.getInt("Timer.InvincibilityDuration");
 			minutesToFeast = c.getInt("Timer.MinutesToFeast");
+			
 			forcefieldSideLength = c.getInt("Settings.ForcefieldSideLength");
+			fireworkDisplayDistance = c.getInt("Settings.FireworkDisplayDistance");
 			
 			feastFloatDistance = c.getInt("Setting.FeastFloatingDistance");
 			miniFeastFloatDistance = c.getInt("Setting.MiniFeastFloatingDistance");
 			
-			invincibilityStartMessage = c.getString("Settings.InvincibilityStartMessage").replaceAll("&", "ยง");
-			gameStartMessage = c.getString("Settings.GameStartMessage").replaceAll("&", "ยง");
-			invincibilityExpireMessage = c.getString("Settings.InvincibilityExpireMessage").replaceAll("&", "ยง");
-			noKitMessage = c.getString("Settings.NoKitMessage").replaceAll("&", "ยง");
-			kitSelectMessage = c.getString("Settings.KitSelectMessage").replaceAll("&", "ยง");
-			victoryMessage = c.getString("Settings.VictoryMessage").replaceAll("&", "ยง");
-			compassTrackMessage = c.getString("Settings.CompassTrackMessage").replaceAll("&", "ยง");
+			invincibilityStartMessage = c.getString("Settings.InvincibilityStartMessage").replaceAll("&", "ง");
+			gameStartMessage = c.getString("Settings.GameStartMessage").replaceAll("&", "ง");
+			invincibilityExpireMessage = c.getString("Settings.InvincibilityExpireMessage").replaceAll("&", "ง");
+			noKitMessage = c.getString("Settings.NoKitMessage").replaceAll("&", "ง");
+			kitSelectMessage = c.getString("Settings.KitSelectMessage").replaceAll("&", "ง");
+			victoryMessage = c.getString("Settings.VictoryMessage").replaceAll("&", "ง");
+			compassTrackMessage = c.getString("Settings.CompassTrackMessage").replaceAll("&", "ง");
 			
 			resetMapOnStartup = c.getBoolean("Settings.ResetMapOnStartup");
 			resetMapOnGameEnd = c.getBoolean("Settings.ResetMapOnGameEnd");
@@ -69,7 +73,7 @@ public class Config {
 			assassinDamageModifier = c.getDouble("KitSettings.Assassin.AssassinDamageModifier");
 			
 			barbarianKillsToRankUp = c.getInt("KitSettings.Barbarian.KillsToRankUp");
-			barbarianSwordName = c.getString("KitSettings.Barbarian.SwordName").replaceAll("&", "ยง");
+			barbarianSwordName = c.getString("KitSettings.Barbarian.SwordName").replaceAll("&", "ง");
 			
 			thorCooldownRate = c.getInt("KitSettings.Thor.ThorCooldownRate");
 			

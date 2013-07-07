@@ -19,6 +19,7 @@ import me.sleightofmind.hungergames.listeners.PlayerJoinListener;
 import me.sleightofmind.hungergames.listeners.SoupListener;
 import me.sleightofmind.hungergames.tasks.AssassinCompassTask;
 import me.sleightofmind.hungergames.tasks.FeastCountdownTask;
+import me.sleightofmind.hungergames.tasks.FireworkDisplayTask;
 import me.sleightofmind.hungergames.tasks.ForceFieldTask;
 import me.sleightofmind.hungergames.tasks.InvincibilityTask;
 import me.sleightofmind.hungergames.tasks.KitInformTask;
@@ -27,18 +28,12 @@ import me.sleightofmind.hungergames.worldgen.LoadListener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
-import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
-import org.bukkit.FireworkEffect.Builder;
-import org.bukkit.FireworkEffect.Type;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -290,18 +285,8 @@ public class Main extends JavaPlugin {
 	public static void registerVictory(Player p){
 		p.sendMessage(Config.victoryMessage);
 		p.setHealth(20);
-		Firework f = p.getWorld().spawn(p.getLocation(), Firework.class);
-		FireworkMeta fmeta = f.getFireworkMeta();
 		
-		Builder effect1 = FireworkEffect.builder();
-		effect1.with(Type.CREEPER);
-		effect1.withColor(Color.GREEN);
-		effect1.flicker(true);
-		fmeta.addEffect(effect1.build());
-		
-		fmeta.setPower(1);
-		f.setFireworkMeta(fmeta);
-		
+		Bukkit.getScheduler().runTaskTimer(Main.instance, new FireworkDisplayTask(p.getLocation()), 5, 10);
 		
 		Debug.debug("Sent victory message to " + p.getName());
 		Main.instance.getServer().getScheduler().scheduleSyncDelayedTask(instance, new VictoryTask(), 200);
