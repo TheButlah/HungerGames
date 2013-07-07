@@ -15,7 +15,16 @@ public class KitInformTask extends BukkitRunnable {
 	public void run() {
 		if(Main.inProgress) return;
 		for(Player p : Bukkit.getOnlinePlayers()){
+			
+			
+			
+			//Debug.debug("MessageDebug: " + p.getName() + " - " + Main.playerkits.get(p.getName()).getName());
 			if (!(Main.playerkits.get(p.getName()) instanceof DefaultKit)) continue;
+			
+			for(int i = 0; i < 30; i++){
+				p.sendMessage(" ");
+			}
+			
 			p.sendMessage(ChatColor.BLUE + "Choose your kit now: /kit [kitname]");
 			String haslist = "";
 			String otherlist = "";

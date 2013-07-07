@@ -2,6 +2,7 @@ package me.sleightofmind.hungergames.commands;
 
 import me.sleightofmind.hungergames.Config;
 import me.sleightofmind.hungergames.Main;
+import me.sleightofmind.hungergames.kits.DefaultKit;
 import me.sleightofmind.hungergames.kits.Kit;
 
 import org.bukkit.ChatColor;
@@ -18,7 +19,7 @@ public class Kit_CommandExecutor implements CommandExecutor{
 			if (sender instanceof Player) {
 				Player p = (Player) sender;
 				Kit k = Main.playerkits.get(p.getName());
-				if (k == null) p.sendMessage(Config.noKitMessage);
+				if (k == null || k instanceof DefaultKit) p.sendMessage(Config.noKitMessage);
 				p.sendMessage(Config.kitSelectMessage.replaceAll("<kitname>", k.getName()));
 				return true;
 			}

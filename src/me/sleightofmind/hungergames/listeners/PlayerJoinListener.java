@@ -34,7 +34,10 @@ public class PlayerJoinListener implements Listener{
 			player.teleport(player.getWorld().getHighestBlockAt(player.getLocation()).getLocation());
 		}
 		
-		if (!Main.playerkits.containsKey(player.getName())) Main.playerkits.put(player.getName(), new DefaultKit());
+		if (!Main.playerkits.containsKey(player.getName())){
+			Main.playerkits.put(player.getName(), new DefaultKit());
+			Debug.debug("Adding player " + player.getName() + " to default kit.");
+		}
 		
 		
 		if(!Main.inProgress && Main.instance.getServer().getOnlinePlayers().length == Config.minPlayersToStart && !Main.inProgress){

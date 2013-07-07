@@ -301,6 +301,8 @@ public class Main extends JavaPlugin {
 		
 		fmeta.setPower(1);
 		f.setFireworkMeta(fmeta);
+		
+		
 		Debug.debug("Sent victory message to " + p.getName());
 		Main.instance.getServer().getScheduler().scheduleSyncDelayedTask(instance, new VictoryTask(), 200);
 	}
@@ -308,7 +310,7 @@ public class Main extends JavaPlugin {
 	private static void setupTasks(){
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new ForceFieldTask(), 1, 40);
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new AssassinCompassTask(), 1, 40);
-		Bukkit.getScheduler().runTaskTimer(Main.instance, new KitInformTask(), 100, 100);
+		Bukkit.getScheduler().runTaskTimer(Main.instance, new KitInformTask(), 20*5, 20*5);
 	}
 	
 	public static void cancelInvincibilityTask() {
