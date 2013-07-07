@@ -84,7 +84,6 @@ public class Main extends JavaPlugin {
 		pm.registerEvents(new FeastBlockListener(), this);
 		pm.registerEvents(new DeathListener(), this);
 		//Load kits into defaultkits array
-		//defaultkits.add(new Kit_Test());
 		defaultkits.add(new Kit_Assassin());
 		defaultkits.add(new Kit_Thor());
 		defaultkits.add(new Kit_Cultivator());
@@ -167,6 +166,7 @@ public class Main extends JavaPlugin {
 				
 			}else{
 				p.setDisplayName(p.getName() + "(None)");
+				p.sendMessage(Config.noKitMessage);
 			}
 		}
 				
@@ -308,7 +308,7 @@ public class Main extends JavaPlugin {
 	private static void setupTasks(){
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new ForceFieldTask(), 1, 40);
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new AssassinCompassTask(), 1, 40);
-		Bukkit.getScheduler().runTaskTimer(Main.instance, new KitInformTask(), 200, 400);
+		Bukkit.getScheduler().runTaskTimer(Main.instance, new KitInformTask(), 100, 100);
 	}
 	
 	public static void cancelInvincibilityTask() {
