@@ -35,6 +35,9 @@ public class Config {
 	
 	public static int spidermanCooldownRate;
 	
+	public static int flashMaxRange, flashCooldownRate;
+	
+	public static int minerPotionDuration;
 	
 	public static FileConfiguration c;
 	public static Random r;
@@ -79,8 +82,13 @@ public class Config {
 			barbarianSwordName = c.getString("KitSettings.Barbarian.SwordName").replaceAll("&", "§");
 			
 			thorCooldownRate = c.getInt("KitSettings.Thor.ThorCooldownRate");
+			
 			spidermanCooldownRate = c.getInt("KitSettings.Spiderman.SpidermanCooldownRate");
 			
+			flashMaxRange = c.getInt("KitSettings.Flash.FlashMaxRange");
+			flashCooldownRate = c.getInt("KitSettings.Flash.FlashCooldownRate");
+			
+			minerPotionDuration = c.getInt("KitSettings.Miner.MinerPotionDuration");
 		}
 		catch(NumberFormatException e){
 			Main.log.severe("One of the configuration options has an invalid value.");

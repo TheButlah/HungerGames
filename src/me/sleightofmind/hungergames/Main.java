@@ -23,6 +23,7 @@ import me.sleightofmind.hungergames.tasks.FireworkDisplayTask;
 import me.sleightofmind.hungergames.tasks.ForceFieldTask;
 import me.sleightofmind.hungergames.tasks.InvincibilityTask;
 import me.sleightofmind.hungergames.tasks.KitInformTask;
+import me.sleightofmind.hungergames.tasks.PoseidonTask;
 import me.sleightofmind.hungergames.tasks.SpidermanWebWalkTask;
 import me.sleightofmind.hungergames.tasks.VictoryTask;
 import me.sleightofmind.hungergames.tasks.WerewolfPotionTask;
@@ -91,6 +92,10 @@ public class Main extends JavaPlugin {
 		defaultkits.add(new Kit_Tank());
 		defaultkits.add(new Kit_Werewolf());
 		defaultkits.add(new Kit_Spiderman());
+		defaultkits.add(new Kit_Urgal());
+		defaultkits.add(new Kit_Flash());
+		defaultkits.add(new Kit_Poseidon());
+		defaultkits.add(new Kit_Miner());
 		
 		//setup tasks
 		setupTasks();
@@ -304,6 +309,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new KitInformTask(), 20*5, 20*5);
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new WerewolfPotionTask(), 20*10, 20*10);
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new SpidermanWebWalkTask(), 30, 20);
+		Bukkit.getScheduler().runTaskTimer(Main.instance, new PoseidonTask(), 25, 100);
 	}
 	
 	public static void cancelInvincibilityTask() {

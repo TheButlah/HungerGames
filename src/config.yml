@@ -48,6 +48,16 @@ KitSettings:
   Spiderman:
     #The number of ticks of cooldown in between web throws
     SpidermanCooldownRate: 30
+    
+  Flash:
+    #Max number of blocks that this kit can teleport to
+    FlashMaxRange: 80
+    #Specified in seconds
+    FlashCooldownRate: 150
+    
+  Miner:
+    #Specified in seconds
+    MinerPotionDuration: 10
 
 FeastItems:
   firedoor:
