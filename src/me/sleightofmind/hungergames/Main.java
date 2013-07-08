@@ -23,7 +23,9 @@ import me.sleightofmind.hungergames.tasks.FireworkDisplayTask;
 import me.sleightofmind.hungergames.tasks.ForceFieldTask;
 import me.sleightofmind.hungergames.tasks.InvincibilityTask;
 import me.sleightofmind.hungergames.tasks.KitInformTask;
+import me.sleightofmind.hungergames.tasks.SpidermanWebWalkTask;
 import me.sleightofmind.hungergames.tasks.VictoryTask;
+import me.sleightofmind.hungergames.tasks.WerewolfPotionTask;
 import me.sleightofmind.hungergames.worldgen.LoadListener;
 
 import org.bukkit.Bukkit;
@@ -78,6 +80,7 @@ public class Main extends JavaPlugin {
 		pm.registerEvents(new CompassListener(), this);
 		pm.registerEvents(new FeastBlockListener(), this);
 		pm.registerEvents(new DeathListener(), this);
+		
 		//Load kits into defaultkits array
 		defaultkits.add(new Kit_Assassin());
 		defaultkits.add(new Kit_Thor());
@@ -85,6 +88,9 @@ public class Main extends JavaPlugin {
 		defaultkits.add(new Kit_Viper());
 		defaultkits.add(new Kit_Suprise());
 		defaultkits.add(new Kit_Barbarian());
+		defaultkits.add(new Kit_Tank());
+		defaultkits.add(new Kit_Werewolf());
+		defaultkits.add(new Kit_Spiderman());
 		
 		//setup tasks
 		setupTasks();
@@ -289,13 +295,15 @@ public class Main extends JavaPlugin {
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new FireworkDisplayTask(p.getLocation()), 5, 10);
 		
 		Debug.debug("Sent victory message to " + p.getName());
-		Main.instance.getServer().getScheduler().scheduleSyncDelayedTask(instance, new VictoryTask(), 200);
+		Main.instance.getServer().getScheduler().scheduleSyncDelayedTask(instance, new VictoryTask(), Config.victoryCelebrationDuration*20);
 	}
 
 	private static void setupTasks(){
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new ForceFieldTask(), 1, 40);
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new AssassinCompassTask(), 1, 40);
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new KitInformTask(), 20*5, 20*5);
+		Bukkit.getScheduler().runTaskTimer(Main.instance, new WerewolfPotionTask(), 20*10, 20*10);
+		Bukkit.getScheduler().runTaskTimer(Main.instance, new SpidermanWebWalkTask(), 30, 20);
 	}
 	
 	public static void cancelInvincibilityTask() {

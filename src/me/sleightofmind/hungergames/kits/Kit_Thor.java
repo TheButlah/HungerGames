@@ -32,24 +32,26 @@ public class Kit_Thor extends Kit implements Listener{
 	
 	@EventHandler
 	public void onPlayerClick(PlayerInteractEvent evt) {
-		Kit k = Main.playerkits.get(evt.getPlayer().getName());
-		if (k instanceof Kit_Thor && evt.hasItem() && evt.getItem().getType() == Material.WOOD_AXE && 
-				!(evt.getAction() == Action.LEFT_CLICK_AIR || evt.getAction() == Action.LEFT_CLICK_BLOCK || evt.getAction() == Action.RIGHT_CLICK_AIR || evt.getAction() == Action.PHYSICAL)) {
+		if (evt.getAction() == Action.LEFT_CLICK_AIR || evt.getAction() == Action.LEFT_CLICK_BLOCK || evt.getAction() == Action.PHYSICAL) {
+			return;
+		}
+		if (evt.hasItem() && evt.getItem().getType() == Material.WOOD_AXE) {
+			Kit k = Main.playerkits.get(evt.getPlayer().getName());
+			if (!(k instanceof Kit_Thor)) return;
 			Kit_Thor kit = (Kit_Thor) k;
 			if (kit.onCooldown) {
 				evt.getPlayer().sendMessage(ChatColor.GREEN + "This ability is on cooldown!");
 				return;				
 			} else {
+				Block b = evt.getPlayer().getTargetBlock(null, 7);
+				if (b.getType() == Material.AIR) return;
 				kit.onCooldown = true;
 				Bukkit.getScheduler().runTaskLater(Main.instance, new ThorCooldownTask(kit), Config.thorCooldownRate);
+				b.setType(Material.NETHERRACK);
+				b.getRelative(BlockFace.UP).setType(Material.FIRE);
+				Location loc = b.getWorld().getHighestBlockAt(b.getLocation()).getLocation();
+				b.getWorld().strikeLightning(loc);
 			}
-			
-			
-			Block b = evt.getClickedBlock();
-			b.setType(Material.NETHERRACK);
-			b.getRelative(BlockFace.UP).setType(Material.FIRE);
-			Location loc = b.getWorld().getHighestBlockAt(b.getLocation()).getLocation();
-			b.getWorld().strikeLightning(loc);
 		}
 	}
 }

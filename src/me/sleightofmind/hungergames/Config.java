@@ -13,7 +13,7 @@ public class Config {
 	public static String hgWorld;
 	
 	public static int minPlayersToStart, playersToQuickStart, initialCountdownTime, 
-	quickStartCountdownTime, invincibilityDuration, minutesToFeast, 
+	quickStartCountdownTime, invincibilityDuration, minutesToFeast, victoryCelebrationDuration, 
 	fireworkDisplayDistance, forcefieldSideLength;
 	
 	public static String compassTrackMessage;
@@ -33,6 +33,8 @@ public class Config {
 	
 	public static int thorCooldownRate;
 	
+	public static int spidermanCooldownRate;
+	
 	
 	public static FileConfiguration c;
 	public static Random r;
@@ -50,6 +52,7 @@ public class Config {
 			quickStartCountdownTime = c.getInt("Timer.QuickStartCountdownTime");
 			invincibilityDuration = c.getInt("Timer.InvincibilityDuration");
 			minutesToFeast = c.getInt("Timer.MinutesToFeast");
+			victoryCelebrationDuration = c.getInt("Timer.VictoryCelebrationDuration");
 			
 			forcefieldSideLength = c.getInt("Settings.ForcefieldSideLength");
 			fireworkDisplayDistance = c.getInt("Settings.FireworkDisplayDistance");
@@ -76,6 +79,7 @@ public class Config {
 			barbarianSwordName = c.getString("KitSettings.Barbarian.SwordName").replaceAll("&", "§");
 			
 			thorCooldownRate = c.getInt("KitSettings.Thor.ThorCooldownRate");
+			spidermanCooldownRate = c.getInt("KitSettings.Spiderman.SpidermanCooldownRate");
 			
 		}
 		catch(NumberFormatException e){

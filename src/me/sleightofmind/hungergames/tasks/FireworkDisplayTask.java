@@ -32,7 +32,7 @@ public class FireworkDisplayTask extends BukkitRunnable{
 		
 		int rindex = rand.nextInt(Type.values().length);
 	
-		Location newloc = loc.add(rx, 0, rz);
+		Location newloc = loc.clone().add(rx, 0, rz);
 		Firework f = loc.getWorld().spawn(newloc, Firework.class);
 		FireworkMeta fmeta = f.getFireworkMeta();
 
@@ -42,6 +42,7 @@ public class FireworkDisplayTask extends BukkitRunnable{
 		effect.flicker(rand.nextBoolean());
 		effect.trail(rand.nextBoolean());
 		fmeta.addEffect(effect.build());
+		f.setFireworkMeta(fmeta);
 		
 	}
 

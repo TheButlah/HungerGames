@@ -1,9 +1,9 @@
 Settings:
   HungerGamesWorld: world
-  ForcefieldSideLength: 500
-  FireworkDisplayDistance: 10
+  ForcefieldSideLength: 750
+  FireworkDisplayDistance: 15
   FeastFloatingDistance: 3
-  MiniFeastFloating: 3
+  MiniFeastFloatingDistance: 3
   InvincibilityStartMessage: "&aYou are now invincible!"
   InvincibilityExpireMessage: "&aYou are no longer invincible."
   GameStartMessage: "&6The Hunger Games have begun!"
@@ -17,14 +17,14 @@ Settings:
   ResetMapOnGameEnd: true
   
 Timer:
-  MinimumPlayersToStart: 1
-  PlayersToQuickStart: 2
-  MinutesToFeast: 1
+  MinimumPlayersToStart: 4
+  PlayersToQuickStart: 16
+  MinutesToFeast: 22
   
   #These should be specified in seconds
-  InitialCountdownTime: 20
-  QuickStartCountdownTime: 15
-  InvincibilityDuration: 10
+  InitialCountdownTime: 300
+  QuickStartCountdownTime: 60
+  InvincibilityDuration: 120
 
 KitSettings:
   Assassin:
@@ -34,14 +34,20 @@ KitSettings:
     
     #This is the amount that the assassins dmg is multiplied by when is charge is 100%
     AssassinDamageModifier: 2
+  
   Barbarian:
     #This is the inital number of kills to rank up from wood to stone sword
     #Each level of sword costs one more than the previous level (i.e. stone to iron costs 3 if this value is 2)
     KillsToRankUp: 2
     SwordName: "&cTyrfing"
+  
   Thor:
     #The number of ticks of cooldown in between lightning strikes
     ThorCooldownRate: 40
+  
+  Spiderman:
+    #The number of ticks of cooldown in between web throws
+    SpidermanCooldownRate: 30
 
 FeastItems:
   firedoor:
@@ -70,6 +76,7 @@ MiniFeastItems:
     percentchance: 55
     enchantments:
       - 1|2
+ 
   swordofderp:
     itemid: 267
     itemdata: 200
