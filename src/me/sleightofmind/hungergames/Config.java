@@ -9,8 +9,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class Config {
-
-	public static String hgWorld;
 	
 	public static int minPlayersToStart, playersToQuickStart, initialCountdownTime, 
 	quickStartCountdownTime, invincibilityDuration, minutesToFeast, victoryCelebrationDuration, 
@@ -22,7 +20,7 @@ public class Config {
 	
 	public static String gameStartMessage, invincibilityExpireMessage, invincibilityStartMessage, noKitMessage, kitSelectMessage, victoryMessage;
 	
-	public static boolean resetMapOnStartup, resetMapOnGameEnd;
+	public static boolean resetMap;
 	
 	public static int assassinChargeRate, assassinDechargeRate;
 	public static double assassinDamageModifier;
@@ -47,7 +45,6 @@ public class Config {
 		r = new Random();
 		c = Main.instance.getConfig();
 		try{
-			hgWorld = c.getString("Settings.HungerGamesWorld");
 			
 			minPlayersToStart = c.getInt("Timer.MinimumPlayersToStart");
 			playersToQuickStart = c.getInt("Timer.PlayersToQuickStart");
@@ -71,8 +68,7 @@ public class Config {
 			victoryMessage = c.getString("Settings.VictoryMessage").replaceAll("&", "§");
 			compassTrackMessage = c.getString("Settings.CompassTrackMessage").replaceAll("&", "§");
 			
-			resetMapOnStartup = c.getBoolean("Settings.ResetMapOnStartup");
-			resetMapOnGameEnd = c.getBoolean("Settings.ResetMapOnGameEnd");
+			resetMap = c.getBoolean("Settings.ResetMap");
 			
 			assassinChargeRate = c.getInt("KitSettings.Assassin.AssassinChargeRate");
 			assassinDechargeRate = c.getInt("KitSettings.Assassin.AssassinDechargeRate");
@@ -89,8 +85,7 @@ public class Config {
 			flashCooldownRate = c.getInt("KitSettings.Flash.FlashCooldownRate");
 			
 			minerPotionDuration = c.getInt("KitSettings.Miner.MinerPotionDuration");
-		}
-		catch(NumberFormatException e){
+		} catch(NumberFormatException e) {
 			Main.log.severe("One of the configuration options has an invalid value.");
 			e.printStackTrace();
 		}
@@ -153,7 +148,7 @@ public class Config {
 	
 	public static ItemStack[] getNewMiniFeastChest(){
 		ArrayList<ItemStack> result = new ArrayList<ItemStack>();
-		for(String path : c.getConfigurationSection("MiniFeastItems").getKeys(false)){
+		for(String path : c.getConfigurationSection("MiniFeastItems").getKeys(false)) {
 			Debug.debug("Looking for item at path: " + path);
 			int chosenpercent = r.nextInt(100) + 1;
 			if(c.getInt("MiniFeastItems." + path + ".percentchance") <= chosenpercent){
@@ -198,7 +193,6 @@ public class Config {
 				result.add(currentitem);
 				
 			}
-			
 		}
 		result = cullToChestSize(result);
 		ItemStack[] realresult = new ItemStack[result.size()];

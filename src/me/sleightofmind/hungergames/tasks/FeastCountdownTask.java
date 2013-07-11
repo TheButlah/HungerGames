@@ -16,10 +16,10 @@ public class FeastCountdownTask extends BukkitRunnable{
 	
 	public void run() {
 		Debug.debug("FeastCountdownTask run");
-		if(Main.instance.getServer().getWorld(Config.hgWorld) == null){
+		if(Main.hgworld == null){
 			Debug.debug("World is null lol");
 		}
-		if(FeastGen.FeastLoc == null) FeastGen.FeastLoc = FeastGen.selectLoc(Main.instance.getServer().getWorld(Config.hgWorld));
+		if(FeastGen.FeastLoc == null) FeastGen.FeastLoc = FeastGen.selectLoc(Main.hgworld);
 		
 		feasttime--;
 		if(feasttime <= 5){

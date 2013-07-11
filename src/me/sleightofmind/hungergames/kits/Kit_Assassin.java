@@ -107,7 +107,7 @@ public class Kit_Assassin extends Kit implements Listener{
 				player.sendMessage(ChatColor.GREEN + "You have selected " + target.getName() + "!");
 				AssassinCompassTask.targets.put(player.getName(), target.getName());
 			} else {
-				player.setCompassTarget(Main.instance.getServer().getWorld(Config.hgWorld).getSpawnLocation());
+				player.setCompassTarget(Main.hgworld.getSpawnLocation());
 			}
 		}
 	}

@@ -1,5 +1,4 @@
 Settings:
-  HungerGamesWorld: world
   ForcefieldSideLength: 750
   FireworkDisplayDistance: 15
   FeastFloatingDistance: 3
@@ -13,8 +12,7 @@ Settings:
   KitSelectMessage: "&6You have selected the &l<kitname>&6 kit!"
   #<playername> will be replaced with the name of the player
   CompassTrackMessage: "&aYou have selected &l<playername>&a!"
-  ResetMapOnStartup: false
-  ResetMapOnGameEnd: true
+  ResetMap: true
   
 Timer:
   MinimumPlayersToStart: 4
@@ -25,6 +23,7 @@ Timer:
   InitialCountdownTime: 300
   QuickStartCountdownTime: 60
   InvincibilityDuration: 120
+  VictoryCelebrationDuration: 20
 
 KitSettings:
   Assassin:

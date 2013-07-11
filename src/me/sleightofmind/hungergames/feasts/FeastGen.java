@@ -18,7 +18,6 @@ import org.bukkit.block.Chest;
 
 public class FeastGen {
 
-	static World world = Main.instance.getServer().getWorld(Config.hgWorld);
 	static int floatamount = Config.feastFloatDistance;
 	public static Block FeastLoc;
 	public static int radius = 10;
@@ -43,9 +42,9 @@ public class FeastGen {
 	
 	public static int highest(World w, int x, int z){
 		List<Integer> invalidblocks = Arrays.asList(0, 17, 18, 37, 38, 40, 39, 32, 27, 28, 30, 31, 6);
-		int highest = world.getMaxHeight();
+		int highest = Main.hgworld.getMaxHeight();
 		for(int i = highest; i > 0; i--){
-			if(!invalidblocks.contains(world.getBlockTypeIdAt(x, i, z)))return i;
+			if(!invalidblocks.contains(Main.hgworld.getBlockTypeIdAt(x, i, z)))return i;
 		}
 		return 0;
 	}
@@ -61,7 +60,7 @@ public class FeastGen {
 	}
 	
 	public static void generateFeastChest(Location loc){
-		Block b = world.getBlockAt(loc);
+		Block b = Main.hgworld.getBlockAt(loc);
 		b.setType(Material.CHEST);
 		((Chest)b.getState()).getInventory().setContents(Config.getNewFeastChest());
 		//System.out.println("Feast chest generated at " + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ());

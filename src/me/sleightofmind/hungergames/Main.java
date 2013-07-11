@@ -1,8 +1,6 @@
 package me.sleightofmind.hungergames;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,9 +28,10 @@ import me.sleightofmind.hungergames.tasks.WerewolfPotionTask;
 import me.sleightofmind.hungergames.worldgen.LoadListener;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.WorldCreator;
+import org.bukkit.World.Environment;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -40,6 +39,7 @@ import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 public class Main extends JavaPlugin {
@@ -61,6 +61,8 @@ public class Main extends JavaPlugin {
 	public static boolean invinciblePeriod = true;
 	private static BukkitTask invincibletask = null;
 	
+	public static World hgworld;
+	
 	
 	FileConfiguration c;
 	
@@ -72,6 +74,21 @@ public class Main extends JavaPlugin {
 		Config.init();
 		timeLeftToStart = Config.initialCountdownTime;
 		PluginManager pm = getServer().getPluginManager();
+		
+		if (Config.resetMap) {
+			File worldfile = new File(Bukkit.getWorldContainer(), "HungerGames");
+			deleteFolder(worldfile);
+		}		
+		
+		Bukkit.getScheduler().runTask(Main.instance, new BukkitRunnable() {
+
+			@Override
+			public void run() {
+				Main.hgworld = Bukkit.createWorld(WorldCreator.name("HungerGames").environment(Environment.NORMAL));
+			}
+			
+		});
+		
 		
 		//Set up non-kit related listeners
 		pm.registerEvents(new LobbyCancelListener(), this);
@@ -106,6 +123,7 @@ public class Main extends JavaPlugin {
 		}
 		
 		
+		
 		//Set up commands
 		getCommand("kit").setExecutor(new Kit_CommandExecutor());
 		getCommand("target").setExecutor(new Target_CommandExecutor());
@@ -133,21 +151,24 @@ public class Main extends JavaPlugin {
 		
 		getServer().addRecipe(cactusSoupRecipe);
 		getServer().addRecipe(cocoaSoupRecipe);
-		
-		if (Config.resetMapOnStartup) Bukkit.getScheduler().runTaskLater(this, new Runnable(){
-
-			@Override
-			public void run() {
-				resetMap(Config.hgWorld);
-			}
-			
-		},1);
-		
 	}
 	
 	public void onDisable() {
 		instance = null;
 		Bukkit.getScheduler().cancelAllTasks();
+		Bukkit.shutdown();
+	}
+	
+	private void deleteFolder(File file) {
+		if (file.isDirectory()) {
+			for (File f : file.listFiles()) {
+				if (f.isDirectory()) {
+					deleteFolder(f);
+				} else {
+					f.delete();
+				}				
+			}
+		}
 	}
 	
 	public static void startGame(){
@@ -162,8 +183,7 @@ public class Main extends JavaPlugin {
 		Bukkit.broadcastMessage(Config.invincibilityStartMessage);
 		
 		for (Player p : instance.getServer().getOnlinePlayers()) {
-			World w = p.getWorld();
-			p.teleport(w.getHighestBlockAt(w.getSpawnLocation()).getLocation());
+			p.teleport(Main.hgworld.getHighestBlockAt(Main.hgworld.getSpawnLocation()).getLocation());
 			
 			
 			if(getKit(p) != null){
@@ -195,99 +215,12 @@ public class Main extends JavaPlugin {
 		for(Player p : Bukkit.getOnlinePlayers()){
 			p.kickPlayer("Server being restarted to reset the map for the next game!");
 		}
-		if (Config.resetMapOnGameEnd) Main.resetMap(Config.hgWorld);
+		
 		Main.playerkits.clear();
-		setupTasks();
+		Main.defaultkits.clear();
+		
+		Bukkit.shutdown();
 	}
-	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static void resetMap(String mapname){
-		//test
-		World w = Main.instance.getServer().getWorld(mapname);
-		
-		long newSeed = Config.r.nextLong();
-		Debug.debug("Seed is " + newSeed);
-		
-		for(Chunk c : w.getLoadedChunks()){
-			w.unloadChunk(c);
-		}
-		
-		try {
-			Debug.debug("Beginning reseed!");
-			String name = Main.instance.getServer().getClass().getPackage().getName();
-			String version = name.substring(name.lastIndexOf('.') + 1);
-			//String version = "v" + numbers[0] + "_" + numbers[1] + "_R" + numbers[2];
-			//version = "v1_5_R3";
-			Debug.debug("Version is " + version);
-			Class worldDataClass = Class.forName("net.minecraft.server." + version + ".WorldData");
-			Class craftWorldClass = Class.forName("org.bukkit.craftbukkit." + version + ".CraftWorld");
-			Class worldServerClass = Class.forName("net.minecraft.server." + version + ".WorldServer");
-			setSeed(w, newSeed, version, craftWorldClass, worldServerClass, worldDataClass);
-			
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		double totalchunks = Math.pow((((Config.forcefieldSideLength / 16)*2) + 1), 2);
-		double donechunks = 0;
-		int chunks = 0;
-		Debug.debug("Final seed:  " + w.getSeed());
-		
-		for(int x = w.getSpawnLocation().getChunk().getX() - (Config.forcefieldSideLength / 16) - 1 ; x < w.getSpawnLocation().getChunk().getX() + (Config.forcefieldSideLength / 16) + 1; x++){
-			for(int z = w.getSpawnLocation().getChunk().getZ() - (Config.forcefieldSideLength / 16) - 1 ; z < w.getSpawnLocation().getChunk().getZ() + (Config.forcefieldSideLength / 16) + 1; z++){
-				w.regenerateChunk(x, z);
-				chunks++;
-				donechunks++;
-				if(chunks == 100){
-					chunks = 0;
-					System.out.println(donechunks + " chunks generated, " + Double.toString((donechunks/totalchunks)*100).substring(0, 4) + "% complete.");
-				}
-			}
-			
-		}
-		Debug.debug("Final seed:  " + w.getSeed());
-	}
-	
-	public static <CW,WS,WD> void setSeed(World world, long seed, String version, Class<CW> craftworldclass, Class<WS> worldServerClass, Class<WD> worlddataclass){
-		
-		@SuppressWarnings("unchecked")
-		CW craftworld = (CW) world;
-		try {
-			Method handleMeth = craftworld.getClass().getMethod("getHandle");
-			@SuppressWarnings("unchecked")
-			WS handle = (WS) handleMeth.invoke(craftworld, new Object[0]);
-			Method worldDataMeth = handle.getClass().getMethod("getWorldData");
-			@SuppressWarnings("unchecked")
-			WD data = (WD) worldDataMeth.invoke(handle, new Object[0]);
-			
-			Field f = data.getClass().getDeclaredField("seed");
-			f.setAccessible(true);
-			f.setLong(data, seed);
-			f.setAccessible(false);
-			 
-			world.save();
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchFieldException e) {
-			//net.minecraft.server.v1_5_R3.WorldData data = ((org.bukkit.craftbukkit.v1_5_R3.CraftWorld)w).getHandle().getWorldData();
-			e.printStackTrace();
-		}
-		
-		
-		
-	}
-	
-	
 	
 	public static Kit getKit(Player p){
 		return playerkits.get(p.getName());

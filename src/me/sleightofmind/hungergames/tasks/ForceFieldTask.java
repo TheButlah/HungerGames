@@ -15,7 +15,7 @@ public class ForceFieldTask extends BukkitRunnable {
 
 	@Override
 	public void run() {
-		World w = Main.instance.getServer().getWorld(Config.hgWorld);
+		World w = Main.hgworld;
 		Location loc = w.getSpawnLocation();
 		
 		for(Player p : w.getPlayers()){

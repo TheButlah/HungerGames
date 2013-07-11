@@ -30,10 +30,6 @@ public class PlayerJoinListener implements Listener{
 			player.kickPlayer(ChatColor.GOLD + "You are not allowed to respawn while a game is in progress!");		
 		}
 		
-		if (!Main.inProgress) {
-			player.teleport(player.getWorld().getHighestBlockAt(player.getLocation()).getLocation());
-		}
-		
 		if (!Main.playerkits.containsKey(player.getName())){
 			Main.playerkits.put(player.getName(), new DefaultKit());
 			Debug.debug("Adding player " + player.getName() + " to default kit.");
@@ -49,7 +45,7 @@ public class PlayerJoinListener implements Listener{
 		}
 		
 		if (!Main.inProgress){
-			World w = Main.instance.getServer().getWorld(Config.hgWorld);
+			World w = Main.hgworld;
 			player.teleport(w.getHighestBlockAt(w.getSpawnLocation()).getLocation());
 			player.setHealth(player.getMaxHealth());
 			player.setFoodLevel(20);
