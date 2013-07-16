@@ -113,6 +113,8 @@ public class Main extends JavaPlugin {
 		defaultkits.add(new Kit_Flash());
 		defaultkits.add(new Kit_Poseidon());
 		defaultkits.add(new Kit_Miner());
+		defaultkits.add(new Kit_Beastmaster());
+		defaultkits.add(new Kit_Viking());
 		
 		//setup tasks
 		setupTasks();
