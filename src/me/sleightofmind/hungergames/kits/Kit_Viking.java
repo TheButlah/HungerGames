@@ -34,6 +34,7 @@ public class Kit_Viking extends Kit implements Listener{
 		if (!(type == Material.WOOD_AXE || type == Material.STONE_AXE || type == Material.IRON_AXE || type == Material.DIAMOND_AXE)) return;
 		if (!(Main.playerkits.get(p.getName()) instanceof Kit_Viking)) return;
 		item.setDurability((short) (item.getDurability() - 1));
+		evt.setDamage(evt.getDamage() + 2); //swords do 1 half heart more than axes, and we need it to do half heart more than swords
 	}
 
 }

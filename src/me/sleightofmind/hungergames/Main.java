@@ -23,6 +23,7 @@ import me.sleightofmind.hungergames.tasks.InvincibilityTask;
 import me.sleightofmind.hungergames.tasks.KitInformTask;
 import me.sleightofmind.hungergames.tasks.PoseidonTask;
 import me.sleightofmind.hungergames.tasks.SpidermanWebWalkTask;
+import me.sleightofmind.hungergames.tasks.SpyCompassTask;
 import me.sleightofmind.hungergames.tasks.VictoryTask;
 import me.sleightofmind.hungergames.tasks.WerewolfPotionTask;
 import me.sleightofmind.hungergames.worldgen.LoadListener;
@@ -115,6 +116,7 @@ public class Main extends JavaPlugin {
 		defaultkits.add(new Kit_Miner());
 		defaultkits.add(new Kit_Beastmaster());
 		defaultkits.add(new Kit_Viking());
+		defaultkits.add(new Kit_Spy());
 		
 		//setup tasks
 		setupTasks();
@@ -239,12 +241,15 @@ public class Main extends JavaPlugin {
 	}
 
 	private static void setupTasks(){
-		Bukkit.getScheduler().runTaskTimer(Main.instance, new ForceFieldTask(), 1, 40);
-		Bukkit.getScheduler().runTaskTimer(Main.instance, new AssassinCompassTask(), 1, 40);
-		Bukkit.getScheduler().runTaskTimer(Main.instance, new KitInformTask(), 20*5, 20*5);
-		Bukkit.getScheduler().runTaskTimer(Main.instance, new WerewolfPotionTask(), 20*10, 20*10);
+		//note the seemingly arbitrary initial offsets to the tasks.
+		//This is to evenly spread the load so that all the tasks don't get run at the same time.
+		Bukkit.getScheduler().runTaskTimer(Main.instance, new ForceFieldTask(), 1, 2*20);
+		Bukkit.getScheduler().runTaskTimer(Main.instance, new AssassinCompassTask(), 1, 2*20);
+		Bukkit.getScheduler().runTaskTimer(Main.instance, new KitInformTask(), 20*5, 5*20);
+		Bukkit.getScheduler().runTaskTimer(Main.instance, new WerewolfPotionTask(), 20*10, 10*20);
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new SpidermanWebWalkTask(), 30, 20);
-		Bukkit.getScheduler().runTaskTimer(Main.instance, new PoseidonTask(), 25, 100);
+		Bukkit.getScheduler().runTaskTimer(Main.instance, new PoseidonTask(), 25, 5*20);
+		Bukkit.getScheduler().runTaskTimer(Main.instance, new SpyCompassTask(), 35, 2*20);
 	}
 	
 	public static void cancelInvincibilityTask() {

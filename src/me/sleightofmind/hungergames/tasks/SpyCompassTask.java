@@ -5,7 +5,6 @@ import me.sleightofmind.hungergames.kits.Kit;
 import me.sleightofmind.hungergames.kits.Kit_Spy;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -21,9 +20,10 @@ public class SpyCompassTask extends BukkitRunnable{
 					if (!(ent instanceof Player)) return;
 					Player other = (Player) ent;
 					double distsqu = other.getLocation().distanceSquared(p.getLocation());
-					if (distsqu <= 2500) {
+					
+					if (distsqu <= 2500 && distsqu >= 1600) {
 						Kit k = Main.playerkits.get(other.getName());
-						message(p, other, distsqu, k);
+						Kit_Spy.message(p, other, distsqu, k);
 					}
 				}
 			}
@@ -31,8 +31,5 @@ public class SpyCompassTask extends BukkitRunnable{
 		
 	}
 	
-	private void message(Player player, Player other, double distancesquared, Kit kit) {
-		player.sendMessage(ChatColor.AQUA + other.getDisplayName() + ChatColor.GREEN + "[" + kit.getName() + "]" + ChatColor.RESET + " is " + ChatColor.BOLD + Integer.toString((int) Math.sqrt(distancesquared)) + ChatColor.GREEN + " blocks from you!");
-	}
-
+	
 }
