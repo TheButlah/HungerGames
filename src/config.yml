@@ -57,6 +57,13 @@ KitSettings:
   Miner:
     #Specified in seconds
     MinerPotionDuration: 10
+  
+  Pyro:
+    PyroFireDuration: 100 #Ticks for which someone ignited by the pyro's fire charges will be on fire.
+    PyroFireRadius: 3 #Distance in blocks at which you will be ignited by the pyro's fire charge.
+    
+  Snail:
+    SnailSlowDurationTicks: 100 #Ticks for which someone hit by a snail will be slowed.
 
 FeastItems:
   firedoor:

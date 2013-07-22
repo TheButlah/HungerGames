@@ -15,7 +15,7 @@ public class DeathListener implements Listener{
 	public void onPlayerDeath(PlayerDeathEvent evt){
 		Bukkit.getScheduler().runTask(Main.instance, new PlayerKickTask(evt.getEntity()));
 		for(Player p : Bukkit.getOnlinePlayers()){
-			p.sendMessage(ChatColor.AQUA + ""+ Bukkit.getOnlinePlayers().length + " Players remaining.");
+			p.sendMessage(ChatColor.AQUA.toString() + (Bukkit.getOnlinePlayers().length - 1) + " Players remaining.");
 		}
 	}
 }

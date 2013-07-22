@@ -22,6 +22,7 @@ import me.sleightofmind.hungergames.tasks.ForceFieldTask;
 import me.sleightofmind.hungergames.tasks.InvincibilityTask;
 import me.sleightofmind.hungergames.tasks.KitInformTask;
 import me.sleightofmind.hungergames.tasks.PoseidonTask;
+import me.sleightofmind.hungergames.tasks.ScoutReplenishTask;
 import me.sleightofmind.hungergames.tasks.SpidermanWebWalkTask;
 import me.sleightofmind.hungergames.tasks.SpyCompassTask;
 import me.sleightofmind.hungergames.tasks.VictoryTask;
@@ -107,6 +108,7 @@ public class Main extends JavaPlugin {
 		defaultkits.add(new Kit_Viper());
 		defaultkits.add(new Kit_Suprise());
 		defaultkits.add(new Kit_Barbarian());
+		//R Kits
 		defaultkits.add(new Kit_Tank());
 		defaultkits.add(new Kit_Werewolf());
 		defaultkits.add(new Kit_Spiderman());
@@ -117,6 +119,17 @@ public class Main extends JavaPlugin {
 		defaultkits.add(new Kit_Beastmaster());
 		defaultkits.add(new Kit_Viking());
 		defaultkits.add(new Kit_Spy());
+		//S Kits
+		defaultkits.add(new Kit_Archer());
+		defaultkits.add(new Kit_Doctor());
+		defaultkits.add(new Kit_Hunter());
+		defaultkits.add(new Kit_Lumberjack());
+		defaultkits.add(new Kit_Pyro());
+		defaultkits.add(new Kit_Scout());
+		defaultkits.add(new Kit_Snail());
+		defaultkits.add(new Kit_Switcher());
+		defaultkits.add(new Kit_Summoner());
+		defaultkits.add(new Kit_Worm());
 		
 		//setup tasks
 		setupTasks();
@@ -250,6 +263,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new SpidermanWebWalkTask(), 30, 20);
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new PoseidonTask(), 25, 5*20);
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new SpyCompassTask(), 35, 2*20);
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.instance, new ScoutReplenishTask(), 20*60*10, 20*60*10);
 	}
 	
 	public static void cancelInvincibilityTask() {
