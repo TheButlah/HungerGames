@@ -250,7 +250,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new FireworkDisplayTask(p.getLocation()), 5, 10);
 		
 		Debug.debug("Sent victory message to " + p.getName());
-		Main.instance.getServer().getScheduler().scheduleSyncDelayedTask(instance, new VictoryTask(), Config.victoryCelebrationDuration*20);
+		Main.instance.getServer().getScheduler().runTaskLater(instance, new VictoryTask(), Config.victoryCelebrationDuration*20);
 	}
 
 	private static void setupTasks(){
@@ -262,8 +262,8 @@ public class Main extends JavaPlugin {
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new WerewolfPotionTask(), 20*10, 10*20);
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new SpidermanWebWalkTask(), 30, 20);
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new PoseidonTask(), 25, 5*20);
-		Bukkit.getScheduler().runTaskTimer(Main.instance, new SpyCompassTask(), 35, 2*20);
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.instance, new ScoutReplenishTask(), 20*60*10, 20*60*10);
+		Bukkit.getScheduler().runTaskTimer(Main.instance, new SpyCompassTask(), 35, 5*20);
+		Bukkit.getScheduler().runTaskTimer(Main.instance, new ScoutReplenishTask(), 20*60*10, 20*60*10);
 	}
 	
 	public static void cancelInvincibilityTask() {

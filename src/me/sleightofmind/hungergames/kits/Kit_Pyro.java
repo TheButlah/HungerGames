@@ -36,6 +36,7 @@ public class Kit_Pyro extends Kit implements Listener {
 			if(Main.playerkits.get(p.getName()) instanceof Kit_Pyro){
 				DamageCause dc = evt.getCause();
 				if(dc == DamageCause.FIRE || dc == DamageCause.FIRE_TICK || dc == DamageCause.LIGHTNING){ //I *think* this is all we need...
+					p.setFireTicks(0);
 					evt.setCancelled(true);
 				}
 			}
@@ -45,14 +46,18 @@ public class Kit_Pyro extends Kit implements Listener {
 	@EventHandler
 	public void onFireCharge(PlayerInteractEvent e){
 		Action a = e.getAction();
-		if(a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK){
+		if(Main.getKit(e.getPlayer()) instanceof Kit_Pyro && a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK){
 			if(e.getPlayer().getItemInHand().getType() == Material.FIREBALL){
 				e.getPlayer().launchProjectile(SmallFireball.class);
-				/*World w = e.getPlayer().getLocation().getWorld();
-				SmallFireball f = (SmallFireball) w.spawnEntity(e.getPlayer().getLocation(), EntityType.SMALL_FIREBALL);
-				Location ploc = e.getPlayer().getLocation();
-				Location tloc = e.getPlayer().getTargetBlock(null, 10).getLocation();
-				f.setVelocity(new Vector(tloc.getX() - ploc.getX(), tloc.getY() - ploc.getY(), tloc.getZ() - ploc.getZ()));*/
+				ItemStack item = e.getItem();
+				if (item.getAmount() <= 1) {
+					item.setType(Material.AIR);
+				} else {
+					item.setAmount(item.getAmount() - 1);
+				}
+				e.getPlayer().setItemInHand(item);
+				e.setCancelled(true);
+				
 				
 			}
 		}
@@ -62,13 +67,15 @@ public class Kit_Pyro extends Kit implements Listener {
 	public void onChargeHit(ProjectileHitEvent e){
 		if(e.getEntity() instanceof SmallFireball){
 			Location impactloc = e.getEntity().getLocation();
-			for(Entity ent : impactloc.getWorld().getEntities()){
-				if(ent instanceof LivingEntity && ent.getLocation().distance(impactloc) < Config.c.getInt("HungerGames.kits.PyroFireRadius")){
-					LivingEntity lent = (LivingEntity) e.getEntity();
+			for(Entity ent : e.getEntity().getNearbyEntities(Config.pyroFireRadius, Config.pyroFireRadius, Config.pyroFireRadius)){
+				if(ent instanceof LivingEntity && ent.getLocation().distanceSquared(impactloc) < Config.pyroFireRadius*Config.pyroFireRadius){
+					LivingEntity lent = (LivingEntity) ent;
 					lent.setFireTicks(Config.c.getInt("KitSettings.Pyro.PyroFireDuration"));
 					e.getEntity().remove();
 				}
 			}
 		}
 	}
+	
+	
 }

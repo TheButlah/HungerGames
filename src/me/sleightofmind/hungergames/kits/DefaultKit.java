@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 public class DefaultKit extends Kit implements Listener{
 	
 	public DefaultKit() {
-		name = "Spy";
+		name = "Default";
 		items = new ItemStack[] {};
 	}
 	

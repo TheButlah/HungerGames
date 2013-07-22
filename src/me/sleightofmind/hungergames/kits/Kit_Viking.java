@@ -13,7 +13,7 @@ public class Kit_Viking extends Kit implements Listener{
 	
 	public Kit_Viking() {
 		name = "Viking";
-		items = new ItemStack[] {};
+		items = new ItemStack[0];
 	}
 	
 	@Override
@@ -29,7 +29,10 @@ public class Kit_Viking extends Kit implements Listener{
 		if (!(evt.getDamager() instanceof Player)) return;
 		Player p = (Player) evt.getDamager();
 		ItemStack item = p.getItemInHand();
-		if (item == null) return;
+		if (item == null) {
+			p.sendMessage("item is null");
+			return;
+		}
 		Material type = item.getType();
 		if (!(type == Material.WOOD_AXE || type == Material.STONE_AXE || type == Material.IRON_AXE || type == Material.DIAMOND_AXE)) return;
 		if (!(Main.playerkits.get(p.getName()) instanceof Kit_Viking)) return;

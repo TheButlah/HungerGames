@@ -25,24 +25,7 @@ public class Kit_Scout extends Kit implements Listener {
 	public void registerListeners() {
 		Main.instance.getServer().getPluginManager().registerEvents(this, Main.instance);
 	}
-	/*
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onPotion(ProjectileLaunchEvent evt) {
-		if(evt.getEntity() instanceof ThrownPotion){
-			ThrownPotion tp = (ThrownPotion) evt.getEntity();
-			if(!(tp.getShooter() instanceof Player)) return;
-			Player p = (Player) tp.getShooter();
-			if(Main.getKit(p) instanceof S_Kit_Scout){
-				for(PotionEffect pe : tp.getEffects()){
-					if(pe.getType() == PotionEffectType.SPEED && numWaiting < 2){
-						numWaiting++;
-						Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new ScoutReplenishTask(p.getName()), 20);
-					}
-				}
-			}
-			
-		}
-	}*/
+	
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onFall(EntityDamageEvent e) {
 		if(e.getEntity() instanceof Player){

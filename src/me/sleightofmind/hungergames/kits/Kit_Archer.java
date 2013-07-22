@@ -8,11 +8,6 @@ public class Kit_Archer extends Kit implements Listener {
 	
 	public Kit_Archer() {
 		name = "Archer";
-		items = new ItemStack[] {new ItemStack(Material.BOW), new ItemStack(Material.ARROW, 64)};
+		items = new ItemStack[] {new ItemStack(Material.BOW), new ItemStack(Material.ARROW, 20)};
 	}
-	/*
-	@Override
-	public void registerListeners() {
-		Main.instance.getServer().getPluginManager().registerEvents(this, Main.instance);
-	}*/
 }

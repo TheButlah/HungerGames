@@ -4,13 +4,14 @@ import me.sleightofmind.hungergames.Main;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Egg;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.SpawnEgg;
 
 public class Kit_Summoner extends Kit implements Listener {
 	public Kit_Summoner() {
@@ -26,17 +27,19 @@ public class Kit_Summoner extends Kit implements Listener {
 	@EventHandler
 	public void onEgg(EntityDamageByEntityEvent evt) {
 		if(evt.getEntity() instanceof LivingEntity && evt.getDamager() instanceof Egg){
-			Egg s = (Egg) evt.getDamager();
-			if(!(s.getShooter() instanceof Player)) return;
-			Player p = (Player) s.getShooter();
-			if(Main.playerkits.get(p.getName()) instanceof Kit_Summoner){
+			Egg egg = (Egg) evt.getDamager();
+			if(!(egg.getShooter() instanceof Player)) return;
+			Player shooter = (Player) egg.getShooter();
+			if(Main.playerkits.get(shooter.getName()) instanceof Kit_Summoner){
 				LivingEntity e = (LivingEntity) evt.getEntity();
 				if((e instanceof Player)) return;
 				e.remove();
-				SpawnEgg se = new SpawnEgg(e.getType());
-				ItemStack sei = new ItemStack(Material.MONSTER_EGG);
-				sei.setData(se);
-				p.getInventory().addItem(sei);
+				Entity entity = evt.getEntity();
+			    EntityType entitytype = entity.getType();
+			    short entitytypeid = entitytype.getTypeId();
+				ItemStack eggitem = new ItemStack(Material.MONSTER_EGG, 1, entitytypeid);
+
+				shooter.getInventory().addItem(eggitem);
 			}
 			
 		}

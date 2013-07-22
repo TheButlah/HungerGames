@@ -6,7 +6,7 @@ public class Kit_Poseidon extends Kit{
 	
 	public Kit_Poseidon() {
 		name = "Poseidon";
-		items = new ItemStack[] {};
+		items = new ItemStack[0];
 	}
 
 }

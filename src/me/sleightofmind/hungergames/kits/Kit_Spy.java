@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 public class Kit_Spy extends Kit{
 	
 	public Kit_Spy() {
-		name = "Default";
+		name = "Spy";
 		items = new ItemStack[0];
 	}
 	

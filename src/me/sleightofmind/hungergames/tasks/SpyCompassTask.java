@@ -17,11 +17,11 @@ public class SpyCompassTask extends BukkitRunnable{
 			if (Main.playerkits.get(name) instanceof Kit_Spy) {
 				Player p = Bukkit.getPlayer(name);
 				for (Entity ent : p.getNearbyEntities(50, 50, 50)) {
-					if (!(ent instanceof Player)) return;
+					if (!(ent instanceof Player)) continue;
 					Player other = (Player) ent;
 					double distsqu = other.getLocation().distanceSquared(p.getLocation());
 					
-					if (distsqu <= 2500 && distsqu >= 1600) {
+					if (distsqu <= 2500) {
 						Kit k = Main.playerkits.get(other.getName());
 						Kit_Spy.message(p, other, distsqu, k);
 					}

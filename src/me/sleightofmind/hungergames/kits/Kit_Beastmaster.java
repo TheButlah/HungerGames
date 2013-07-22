@@ -35,7 +35,7 @@ public class Kit_Beastmaster extends Kit implements Listener{
 				ItemStack item = p.getItemInHand();
 				if (item == null || item.getType() != Material.BONE) return;
 				if (!(Main.playerkits.get(p.getName()) instanceof Kit_Beastmaster)) return;
-				w.setTamed(true);
+				w.setOwner(p);
 				if (item.getAmount() <= 1) {
 					item.setType(Material.AIR);
 				} else {

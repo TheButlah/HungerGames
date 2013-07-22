@@ -19,7 +19,10 @@ public class Kit_CommandExecutor implements CommandExecutor{
 			if (sender instanceof Player) {
 				Player p = (Player) sender;
 				Kit k = Main.playerkits.get(p.getName());
-				if (k == null || k instanceof DefaultKit) p.sendMessage(Config.noKitMessage);
+				if (k == null || k instanceof DefaultKit) {
+					p.sendMessage(Config.noKitMessage);
+					return true;
+				}
 				p.sendMessage(Config.kitSelectMessage.replaceAll("<kitname>", k.getName()));
 				return true;
 			}

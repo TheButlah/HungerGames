@@ -37,8 +37,16 @@ public class Config {
 	
 	public static int minerPotionDuration;
 	
+	public static int snailSlowDurationTicks;
+	
+	public static int wormBlocksPerFoodUnit, wormBlocksPerHealth;
+	
+	public static int pyroFireRadius, pyroFireDuration;
+	
 	public static FileConfiguration c;
 	public static Random r;
+
+
 	
 	
 	public static void init() {
@@ -85,6 +93,14 @@ public class Config {
 			flashCooldownRate = c.getInt("KitSettings.Flash.FlashCooldownRate");
 			
 			minerPotionDuration = c.getInt("KitSettings.Miner.MinerPotionDuration");
+			
+			snailSlowDurationTicks = c.getInt("KitSettings.Snail.SnailSlowDurationTicks");
+			
+			wormBlocksPerFoodUnit = c.getInt("KitSettings.Worm.WormBlocksPerFoodUnit");
+			wormBlocksPerHealth = c.getInt("KitSettings.Worm.WormBlocksPerHealth");
+			
+			pyroFireRadius = Config.c.getInt("KitSettings.Pyro.PyroFireRadius");
+			pyroFireDuration = Config.c.getInt("KitSettings.Pyro.PyroFireDuration");
 		} catch(NumberFormatException e) {
 			Main.log.severe("One of the configuration options has an invalid value.");
 			e.printStackTrace();
