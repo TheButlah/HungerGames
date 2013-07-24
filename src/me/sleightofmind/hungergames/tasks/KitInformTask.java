@@ -21,24 +21,8 @@ public class KitInformTask extends BukkitRunnable {
 			//Debug.debug("MessageDebug: " + p.getName() + " - " + Main.playerkits.get(p.getName()).getName());
 			if (!(Main.playerkits.get(p.getName()) instanceof DefaultKit)) continue;
 			
-			for(int i = 0; i < 30; i++){
-				p.sendMessage(" ");
-			}
 			
-			p.sendMessage(ChatColor.BLUE + "Choose your kit now: /kit [kitname]");
-			String haslist = "";
-			String otherlist = "";
-			for(Kit k : Main.defaultkits){
-				if(p.hasPermission("HungerGames.kits." + k.getName()) || p.isOp()){
-					haslist += k.getName() + ", ";
-				}else{
-					otherlist += haslist += k.getName() + ", ";
-				}
-			}
-			if(haslist.length() > 2)haslist = haslist.substring(0, haslist.length() - 2);
-			if(otherlist.length() > 2)otherlist = otherlist.substring(0, otherlist.length() - 2);
-			p.sendMessage(ChatColor.GREEN + "Your Kits: " + ChatColor.WHITE + haslist);
-			p.sendMessage(ChatColor.GREEN + "Other Kits: " + ChatColor.WHITE + otherlist);
+			p.sendMessage(ChatColor.GOLD + "Choose a kit before the game starts! Choose a kit with /kit <kitname>, or type /kit list to see the list of kits you can choose from.");
 			
 		}
 	}

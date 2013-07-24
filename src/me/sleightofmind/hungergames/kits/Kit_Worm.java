@@ -30,10 +30,7 @@ public class Kit_Worm extends Kit implements Listener {
 	@EventHandler
 	public void onWormFall(EntityDamageEvent e){
 		if(e.getEntity().getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.DIRT && e.getCause() == DamageCause.FALL && e.getEntity() instanceof Player && Main.getKit(((Player) e.getEntity())) instanceof Kit_Worm){
-			int damagereduction = Config.c.getInt("KitSettings.Worm.FallDamageReduction");
-			double damage = e.getDamage() - damagereduction;
-			if(damage < 0) damage = 0;
-			e.setDamage(damage);
+			if (e.getDamage() > 2) e.setDamage(2);
 		}
 	}
 	

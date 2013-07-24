@@ -5,6 +5,7 @@ import me.sleightofmind.hungergames.Main;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -13,7 +14,9 @@ import org.bukkit.inventory.ItemStack;
 public class Kit_Lumberjack extends Kit implements Listener {
 	public Kit_Lumberjack() {
 		name = "Lumberjack";
-		items = new ItemStack[0];
+		ItemStack axe = new ItemStack(Material.WOOD_AXE);
+		axe.addEnchantment(Enchantment.DURABILITY, 1);
+		items = new ItemStack[] {axe};
 	}
 	
 	@Override

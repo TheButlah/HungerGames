@@ -29,8 +29,26 @@ public class Kit_CommandExecutor implements CommandExecutor{
 		}
 		
 		if (args.length == 1) {
-			
-			if (true) {
+			if(args[0].equalsIgnoreCase("list")){
+				Player p = (Player) sender;
+				
+				p.sendMessage(ChatColor.BLUE + "Choose your kit with '/kit [kitname]'");
+				String haslist = "";
+				String otherlist = "";
+				for(Kit k : Main.defaultkits){
+					if(p.hasPermission("HungerGames.kits." + k.getName()) || p.isOp()){
+						haslist += k.getName() + ", ";
+					}else{
+						otherlist += haslist += k.getName() + ", ";
+					}
+				}
+				if(haslist.length() > 2)haslist = haslist.substring(0, haslist.length() - 2);
+				if(otherlist.length() > 2)otherlist = otherlist.substring(0, otherlist.length() - 2);
+				p.sendMessage(ChatColor.GREEN + "Your Kits: " + ChatColor.WHITE + haslist);
+				p.sendMessage(ChatColor.GREEN + "Other Kits: " + ChatColor.WHITE + otherlist);
+				return true;
+			}
+			else{
 				if (sender instanceof Player) {
 					Player p = (Player) sender;
 					if (p.isOp() ||p.hasPermission("HungerGames.Kits." + args[0].toLowerCase())) {
@@ -54,10 +72,7 @@ public class Kit_CommandExecutor implements CommandExecutor{
 			}
 					
 		}
-		/*if(args.length == 1 && args[0].equalsIgnoreCase("resetmap")){
-			Player p = (Player) sender;
-			Main.resetMap(p.getWorld().getName());
-		}*/
+
 		
 		return false;
 	}
