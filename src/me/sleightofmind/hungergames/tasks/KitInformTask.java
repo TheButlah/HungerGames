@@ -22,7 +22,7 @@ public class KitInformTask extends BukkitRunnable {
 			if (!(Main.playerkits.get(p.getName()) instanceof DefaultKit)) continue;
 			
 			
-			p.sendMessage(ChatColor.GOLD + "Choose a kit before the game starts! Choose a kit with /kit <kitname>, or type /kit list to see the list of kits you can choose from.");
+			p.sendMessage(ChatColor.GOLD + "Choose a kit before the game starts! Choose a kit with '/kit name', type '/kit list' to see the list of kits you can choose from.");
 			
 		}
 	}
