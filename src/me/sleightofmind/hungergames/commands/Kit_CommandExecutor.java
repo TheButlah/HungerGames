@@ -17,7 +17,9 @@ public class Kit_CommandExecutor implements CommandExecutor{
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
 		if (args.length == 0) {
 			if (sender instanceof Player) {
+				
 				Player p = (Player) sender;
+				
 				Kit k = Main.playerkits.get(p.getName());
 				if (k == null || k instanceof DefaultKit) {
 					p.sendMessage(Config.noKitMessage);
@@ -51,6 +53,12 @@ public class Kit_CommandExecutor implements CommandExecutor{
 			else{
 				if (sender instanceof Player) {
 					Player p = (Player) sender;
+					
+					if(Main.inProgress){
+						p.sendMessage(ChatColor.GOLD + "You may not change kits while the game is in progress.");
+						return true;
+					}
+					
 					if (p.isOp() ||p.hasPermission("HungerGames.Kits." + args[0].toLowerCase())) {
 						for (Kit k : Main.defaultkits) {
 							if (k.getName().equalsIgnoreCase(args[0])) {
