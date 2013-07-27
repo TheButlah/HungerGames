@@ -1,11 +1,11 @@
 name: HungerGames
 main: me.sleightofmind.hungergames.Main
-version: 1.1
+version: 1.2
 load: STARTUP
 commands:
   kit:
     description: Select your kit to play with.
-    usage: "Correct usage: /kit <kitname>"
+    usage: "Correct usage: /kit <kitname> or /kit list"
   target:
     description: Assassins can use this to select which player their compass targets.
     usage: "Correct usage: /target <playername>"

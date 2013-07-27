@@ -80,16 +80,19 @@ public class Main extends JavaPlugin {
 		if (Config.resetMap) {
 			File worldfile = new File(Bukkit.getWorldContainer(), "HungerGames");
 			deleteFolder(worldfile);
-		}		
+		}
 		
 		Bukkit.getScheduler().runTask(Main.instance, new BukkitRunnable() {
 
 			@Override
 			public void run() {
 				Main.hgworld = Bukkit.createWorld(WorldCreator.name("HungerGames").environment(Environment.NORMAL));
+				//Freeze time
+				Main.hgworld.setGameRuleValue("doDaylightCycle", "false");
 			}
 			
 		});
+		
 		
 		
 		//Set up non-kit related listeners
@@ -193,6 +196,11 @@ public class Main extends JavaPlugin {
 		inProgress = true;
 		Main.instance.getServer().getScheduler().cancelTask(gameStartTask.getTaskId());
 		
+		//Scout task. This needs to start at the beginning of the game, not in the setupTasks method
+		Bukkit.getScheduler().runTaskTimer(Main.instance, new ScoutReplenishTask(), 20*60*10, 20*60*10);
+		
+		//Re-enable time
+		Main.hgworld.setGameRuleValue("doDaylightCycle", "true");
 		
 		for (int i = 0; i<10; i++) Bukkit.broadcastMessage("");
 		Bukkit.broadcastMessage(Config.gameStartMessage);
@@ -263,7 +271,6 @@ public class Main extends JavaPlugin {
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new SpidermanWebWalkTask(), 30, 20);
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new PoseidonTask(), 25, 5*20);
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new SpyCompassTask(), 35, 5*20);
-		Bukkit.getScheduler().runTaskTimer(Main.instance, new ScoutReplenishTask(), 20*60*10, 20*60*10);
 	}
 	
 	public static void cancelInvincibilityTask() {

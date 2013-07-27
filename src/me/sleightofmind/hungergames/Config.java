@@ -14,11 +14,13 @@ public class Config {
 	quickStartCountdownTime, invincibilityDuration, minutesToFeast, victoryCelebrationDuration, 
 	fireworkDisplayDistance, forcefieldSideLength;
 	
+	public static double feastBoundaryRatio;
+	
 	public static String compassTrackMessage;
 	
 	public static int feastFloatDistance, miniFeastFloatDistance;
 	
-	public static String gameStartMessage, invincibilityExpireMessage, invincibilityStartMessage, noKitMessage, kitSelectMessage, victoryMessage;
+	public static String gameStartMessage, invincibilityExpireMessage, invincibilityStartMessage, noKitMessage, kitSelectMessage, victoryMessage, kitInformMessage, cannotChangeInProgessMessage, doNotHavePermissionMessage;
 	
 	public static boolean resetMap;
 	
@@ -47,13 +49,13 @@ public class Config {
 	public static Random r;
 
 
+	public static final String sc = String.valueOf(new Character((char) 167)); //the section character
 	
 	
 	public static void init() {
 		r = new Random();
 		c = Main.instance.getConfig();
 		try{
-			
 			minPlayersToStart = c.getInt("Timer.MinimumPlayersToStart");
 			playersToQuickStart = c.getInt("Timer.PlayersToQuickStart");
 			initialCountdownTime = c.getInt("Timer.InitialCountdownTime");
@@ -65,16 +67,21 @@ public class Config {
 			forcefieldSideLength = c.getInt("Settings.ForcefieldSideLength");
 			fireworkDisplayDistance = c.getInt("Settings.FireworkDisplayDistance");
 			
+			feastBoundaryRatio = c.getDouble("Settings.FeastBoundaryRatio");
 			feastFloatDistance = c.getInt("Setting.FeastFloatingDistance");
 			miniFeastFloatDistance = c.getInt("Setting.MiniFeastFloatingDistance");
 			
-			invincibilityStartMessage = c.getString("Settings.InvincibilityStartMessage").replaceAll("&", "§");
-			gameStartMessage = c.getString("Settings.GameStartMessage").replaceAll("&", "§");
-			invincibilityExpireMessage = c.getString("Settings.InvincibilityExpireMessage").replaceAll("&", "§");
-			noKitMessage = c.getString("Settings.NoKitMessage").replaceAll("&", "§");
-			kitSelectMessage = c.getString("Settings.KitSelectMessage").replaceAll("&", "§");
-			victoryMessage = c.getString("Settings.VictoryMessage").replaceAll("&", "§");
-			compassTrackMessage = c.getString("Settings.CompassTrackMessage").replaceAll("&", "§");
+			invincibilityStartMessage = c.getString("Settings.InvincibilityStartMessage").replaceAll("&", sc);
+			gameStartMessage = c.getString("Settings.GameStartMessage").replaceAll("&", sc);
+			invincibilityExpireMessage = c.getString("Settings.InvincibilityExpireMessage").replaceAll("&", sc);
+			noKitMessage = c.getString("Settings.NoKitMessage").replaceAll("&", sc);
+			kitSelectMessage = c.getString("Settings.KitSelectMessage").replaceAll("&", sc);
+			victoryMessage = c.getString("Settings.VictoryMessage").replaceAll("&", sc);
+			compassTrackMessage = c.getString("Settings.CompassTrackMessage").replaceAll("&", sc);
+			
+			kitInformMessage = c.getString("Settings.KitInformMessage").replaceAll("&", sc);
+			cannotChangeInProgessMessage = c.getString("Settings.CannotChangeInProgessMessage").replaceAll("&", sc);
+			doNotHavePermissionMessage = c.getString("Settings.DoNotHavePermissionMessage").replaceAll("&", sc);
 			
 			resetMap = c.getBoolean("Settings.ResetMap");
 			
@@ -83,7 +90,7 @@ public class Config {
 			assassinDamageModifier = c.getDouble("KitSettings.Assassin.AssassinDamageModifier");
 			
 			barbarianKillsToRankUp = c.getInt("KitSettings.Barbarian.KillsToRankUp");
-			barbarianSwordName = c.getString("KitSettings.Barbarian.SwordName").replaceAll("&", "§");
+			barbarianSwordName = c.getString("KitSettings.Barbarian.SwordName").replaceAll("&", sc);
 			
 			thorCooldownRate = c.getInt("KitSettings.Thor.ThorCooldownRate");
 			
@@ -101,6 +108,8 @@ public class Config {
 			
 			pyroFireRadius = Config.c.getInt("KitSettings.Pyro.PyroFireRadius");
 			pyroFireDuration = Config.c.getInt("KitSettings.Pyro.PyroFireDuration");
+			
+			Debug.debug = Config.c.getBoolean("Settings.DebugMessages");
 		} catch(NumberFormatException e) {
 			Main.log.severe("One of the configuration options has an invalid value.");
 			e.printStackTrace();

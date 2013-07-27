@@ -49,13 +49,21 @@ public class FeastGen {
 		return 0;
 	}
 	
-	
+	//currently unused
+	public static boolean getWithinDistanceToForceField(int distance, Location loc){
+		if(Math.abs(loc.getZ() - loc.getZ()) > Config.forcefieldSideLength - distance || Math.abs(loc.getX() - loc.getX()) > Config.forcefieldSideLength - distance) {
+			return true;
+		}
+		return false;
+		
+	}
 	
 	public static Block selectLoc(World world){
-		Random rand = new Random();
-		int finx = world.getSpawnLocation().getBlockX() + (rand.nextInt(Config.forcefieldSideLength * 2) - Config.forcefieldSideLength);
-		int finz = world.getSpawnLocation().getBlockZ() + (rand.nextInt(Config.forcefieldSideLength * 2) - Config.forcefieldSideLength);
+		Random rand = Config.r;
+		int finx = world.getSpawnLocation().getBlockX() + (int) ((rand.nextInt(Config.forcefieldSideLength * 2) - Config.forcefieldSideLength) * Config.feastBoundaryRatio);
+		int finz = world.getSpawnLocation().getBlockZ() + (int) ((rand.nextInt(Config.forcefieldSideLength * 2) - Config.forcefieldSideLength) * Config.feastBoundaryRatio);
 		Block b = world.getBlockAt(finx, world.getHighestBlockYAt(finx, finz) + floatamount, finz);
+		
 		return b;
 	}
 	

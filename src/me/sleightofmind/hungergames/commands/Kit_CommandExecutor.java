@@ -1,5 +1,8 @@
 package me.sleightofmind.hungergames.commands;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import me.sleightofmind.hungergames.Config;
 import me.sleightofmind.hungergames.Main;
 import me.sleightofmind.hungergames.kits.DefaultKit;
@@ -34,20 +37,33 @@ public class Kit_CommandExecutor implements CommandExecutor{
 			if(args[0].equalsIgnoreCase("list")){
 				Player p = (Player) sender;
 				
+				ArrayList<String> ownedKits = new ArrayList<String>();
+				ArrayList<String> unOwnedKits = new ArrayList<String>();
+				
 				p.sendMessage(ChatColor.BLUE + "Choose your kit with '/kit [kitname]'");
-				String haslist = "";
-				String otherlist = "";
+				
 				for(Kit k : Main.defaultkits){
 					if(p.hasPermission("HungerGames.kits." + k.getName()) || p.isOp()){
-						haslist += k.getName() + ", ";
+						ownedKits.add(k.getName());
 					}else{
-						otherlist += haslist += k.getName() + ", ";
+						unOwnedKits.add(k.getName());
 					}
 				}
-				if(haslist.length() > 2)haslist = haslist.substring(0, haslist.length() - 2);
-				if(otherlist.length() > 2)otherlist = otherlist.substring(0, otherlist.length() - 2);
-				p.sendMessage(ChatColor.GREEN + "Your Kits: " + ChatColor.WHITE + haslist);
-				p.sendMessage(ChatColor.GREEN + "Other Kits: " + ChatColor.WHITE + otherlist);
+				Collections.sort(ownedKits);
+				Collections.sort(unOwnedKits);
+				String hasList = "";
+				String otherList = "";
+				for(String s : ownedKits){
+					hasList += s + ", ";
+				}
+				if(hasList.length() > 2)hasList = hasList.substring(0, hasList.length() - 2);
+				for(String s : unOwnedKits){
+					otherList += s + ", ";
+				}
+				if(otherList.length() > 2)otherList = otherList.substring(0, otherList.length() - 2);
+				
+				p.sendMessage(ChatColor.GREEN + "Your Kits: " + ChatColor.WHITE + hasList);
+				p.sendMessage(ChatColor.GREEN + "Other Kits: " + ChatColor.WHITE + otherList);
 				return true;
 			}
 			else{
@@ -55,7 +71,7 @@ public class Kit_CommandExecutor implements CommandExecutor{
 					Player p = (Player) sender;
 					
 					if(Main.inProgress){
-						p.sendMessage(ChatColor.GOLD + "You may not change kits while the game is in progress.");
+						p.sendMessage(Config.cannotChangeInProgessMessage);
 						return true;
 					}
 					
@@ -72,7 +88,7 @@ public class Kit_CommandExecutor implements CommandExecutor{
 							}
 						}
 					} else {
-						p.sendMessage(ChatColor.GOLD + "You dont have access to that kit!");
+						p.sendMessage(Config.doNotHavePermissionMessage);
 					}
 				} else {
 					sender.sendMessage("You must be in-game to perform this command!");
@@ -82,7 +98,7 @@ public class Kit_CommandExecutor implements CommandExecutor{
 		}
 
 		
-		return false;
+		return true;
 	}
 
 }

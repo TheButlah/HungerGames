@@ -3,16 +3,28 @@ Settings:
   FireworkDisplayDistance: 15
   FeastFloatingDistance: 3
   MiniFeastFloatingDistance: 3
+  #This is a number between 1 and 0. 
+  #This is multiplied with the ForcefieldSideLength to get the maximum distance that a feast can be from the spawn.
+  FeastBoundaryRatio: .5
+
   InvincibilityStartMessage: "&aYou are now invincible!"
   InvincibilityExpireMessage: "&aYou are no longer invincible."
+
+  DebugMessages: false
+  
   GameStartMessage: "&6The Hunger Games have begun!"
-  NoKitMessage: "&6You haven't selected a kit! Select one before the game starts for items and abilities."
   VictoryMessage: "&6You have won the Hunger Games!"
   #<kitname> will be replaced with the name of the player's kit
   KitSelectMessage: "&6You have selected the &l<kitname>&6 kit!"
   #<playername> will be replaced with the name of the player
   CompassTrackMessage: "&aYou have selected &l<playername>&a!"
+
   ResetMap: true
+  
+  KitInformMessage: "&6Choose a kit before the game starts! Choose a kit with '/kit <kitname>', type '/kit list' to see the list of kits you can choose from."
+  CannotChangeInProgessMessage: "&6You may not change kits while the game is in progress."
+  DoNotHavePermissionMessage: "&6You do not have access to that kit!"
+  NoKitMessage: "&6You haven't selected a kit! Select one before the game starts for items and abilities."
   
 Timer:
   MinimumPlayersToStart: 4
@@ -30,7 +42,6 @@ KitSettings:
     #These should be specified in ticks (20t = 1 second)
     AssassinChargeRate: 40
     AssassinDechargeRate: 10
-    
     #This is the amount that the assassins dmg is multiplied by when is charge is 100%
     AssassinDamageModifier: 2
   
