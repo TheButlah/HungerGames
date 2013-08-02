@@ -74,6 +74,9 @@ public class Main extends JavaPlugin {
 		c = getConfig();
 		log = getLogger();
 		Config.init();
+		
+		Debug.debug("Debug messages for HungerGames are enabled!");
+		
 		timeLeftToStart = Config.initialCountdownTime;
 		PluginManager pm = getServer().getPluginManager();
 		

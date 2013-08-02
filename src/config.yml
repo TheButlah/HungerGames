@@ -1,4 +1,7 @@
 Settings:
+  FreeKits:
+     - Archer
+     - Hunter
   ForcefieldSideLength: 750
   FireworkDisplayDistance: 15
   FeastFloatingDistance: 3

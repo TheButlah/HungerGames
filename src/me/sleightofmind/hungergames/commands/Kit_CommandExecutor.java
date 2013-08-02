@@ -43,7 +43,7 @@ public class Kit_CommandExecutor implements CommandExecutor{
 				p.sendMessage(ChatColor.BLUE + "Choose your kit with '/kit [kitname]'");
 				
 				for(Kit k : Main.defaultkits){
-					if(p.hasPermission("HungerGames.kits." + k.getName()) || p.isOp()){
+					if(Config.canUseKit(p, k.getName().toLowerCase())){
 						ownedKits.add(k.getName());
 					}else{
 						unOwnedKits.add(k.getName());
@@ -75,7 +75,7 @@ public class Kit_CommandExecutor implements CommandExecutor{
 						return true;
 					}
 					
-					if (p.isOp() ||p.hasPermission("HungerGames.Kits." + args[0].toLowerCase())) {
+					if (Config.canUseKit(p, args[0].toLowerCase())) {
 						for (Kit k : Main.defaultkits) {
 							if (k.getName().equalsIgnoreCase(args[0])) {
 								try {

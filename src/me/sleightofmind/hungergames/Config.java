@@ -1,14 +1,18 @@
 package me.sleightofmind.hungergames;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class Config {
+	
+	public static List<String> freeKits;
 	
 	public static int minPlayersToStart, playersToQuickStart, initialCountdownTime, 
 	quickStartCountdownTime, invincibilityDuration, minutesToFeast, victoryCelebrationDuration, 
@@ -53,9 +57,16 @@ public class Config {
 	
 	
 	public static void init() {
+		
 		r = new Random();
 		c = Main.instance.getConfig();
 		try{
+			Debug.debug = Config.c.getBoolean("Settings.DebugMessages");
+			
+			freeKits = c.getStringList("Settings.FreeKits");
+			Debug.debug(freeKits.toString());
+			
+			
 			minPlayersToStart = c.getInt("Timer.MinimumPlayersToStart");
 			playersToQuickStart = c.getInt("Timer.PlayersToQuickStart");
 			initialCountdownTime = c.getInt("Timer.InitialCountdownTime");
@@ -109,7 +120,7 @@ public class Config {
 			pyroFireRadius = Config.c.getInt("KitSettings.Pyro.PyroFireRadius");
 			pyroFireDuration = Config.c.getInt("KitSettings.Pyro.PyroFireDuration");
 			
-			Debug.debug = Config.c.getBoolean("Settings.DebugMessages");
+			
 		} catch(NumberFormatException e) {
 			Main.log.severe("One of the configuration options has an invalid value.");
 			e.printStackTrace();
@@ -242,4 +253,16 @@ public class Config {
 		return items;
 	}
 	
+	public static boolean canUseKit(Player p, String kitname){
+		for(String k : freeKits){
+			Debug.debug("Checking equality of " + k + " and " + kitname);
+			if(k.equalsIgnoreCase(kitname)){
+				return true;
+			}
+		}
+		if(p.hasPermission("HungerGames.kits." + kitname) || p.isOp()){
+			return true;
+		}
+		return false;
+	}
 }

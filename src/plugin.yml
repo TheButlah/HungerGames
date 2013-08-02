@@ -1,6 +1,6 @@
 name: HungerGames
 main: me.sleightofmind.hungergames.Main
-version: 1.2
+version: 1.5.1
 load: STARTUP
 commands:
   kit:
