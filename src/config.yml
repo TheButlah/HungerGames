@@ -29,17 +29,26 @@ Settings:
   DoNotHavePermissionMessage: "&6You do not have access to that kit!"
   NoKitMessage: "&6You haven't selected a kit! Select one before the game starts for items and abilities."
   
+  TimeLeftToStartMessage: "&6There are only <time> until the game starts!"
+  #<time> will be replaced by the current time left to start in minutes and seconds
+  PlayersLeftToStartMessage: "&6Only another <players> players are needed to start the game!"
+  #<players> will be replaced by the current number of players left to start
+  NoKitInfoMessage: "&6No info available for this kit."
+
+  Worldname: HungerGames
+KitInfo:
+  pyro: "&6This kit sets things on fire."
+  hunter: "&6This kit hunts pigs." 
 Timer:
-  MinimumPlayersToStart: 4
-  PlayersToQuickStart: 16
-  MinutesToFeast: 22
+  MinimumPlayersToStart: 1
+  PlayersToQuickStart: 1
+  MinutesToFeast: 2
   
   #These should be specified in seconds
-  InitialCountdownTime: 300
-  QuickStartCountdownTime: 60
-  InvincibilityDuration: 120
+  InitialCountdownTime: 20
+  QuickStartCountdownTime: 15
+  InvincibilityDuration: 1
   VictoryCelebrationDuration: 20
-
 KitSettings:
   Assassin:
     #These should be specified in ticks (20t = 1 second)
@@ -61,7 +70,8 @@ KitSettings:
   Spiderman:
     #The number of ticks of cooldown in between web throws
     SpidermanCooldownRate: 30
-    
+    #The number of seconds of time it takes for a spiderman's webs to regenerate
+    SpidermanRegenRate: 180
   Flash:
     #Max number of blocks that this kit can teleport to
     FlashMaxRange: 80

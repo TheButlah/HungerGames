@@ -24,7 +24,10 @@ public class Config {
 	
 	public static int feastFloatDistance, miniFeastFloatDistance;
 	
-	public static String gameStartMessage, invincibilityExpireMessage, invincibilityStartMessage, noKitMessage, kitSelectMessage, victoryMessage, kitInformMessage, cannotChangeInProgessMessage, doNotHavePermissionMessage;
+	public static String gameStartMessage, invincibilityExpireMessage, invincibilityStartMessage, noKitMessage, kitSelectMessage, victoryMessage, kitInformMessage, cannotChangeInProgessMessage, 
+	doNotHavePermissionMessage, playerLeftToStartMessage, timeLeftToStartMessage, noKitInfoMessage;
+	
+	public static String worldname;
 	
 	public static boolean resetMap;
 	
@@ -44,6 +47,8 @@ public class Config {
 	public static int minerPotionDuration;
 	
 	public static int snailSlowDurationTicks;
+	
+	public static int spidermanRegenRate;
 	
 	public static int wormBlocksPerFoodUnit, wormBlocksPerHealth;
 	
@@ -66,6 +71,7 @@ public class Config {
 			freeKits = c.getStringList("Settings.FreeKits");
 			Debug.debug(freeKits.toString());
 			
+			Config.worldname = c.getString("Settings.Worldname");
 			
 			minPlayersToStart = c.getInt("Timer.MinimumPlayersToStart");
 			playersToQuickStart = c.getInt("Timer.PlayersToQuickStart");
@@ -94,6 +100,10 @@ public class Config {
 			cannotChangeInProgessMessage = c.getString("Settings.CannotChangeInProgessMessage").replaceAll("&", sc);
 			doNotHavePermissionMessage = c.getString("Settings.DoNotHavePermissionMessage").replaceAll("&", sc);
 			
+			Config.timeLeftToStartMessage = c.getString("Settings.TimeLeftToStartMessage").replaceAll("&", sc);
+			Config.playerLeftToStartMessage = c.getString("Settings.PlayersLeftToStartMessage").replaceAll("&", sc);
+			Config.noKitInfoMessage = c.getString("Settings.NoKitInfoMessage").replaceAll("&", sc);
+			
 			resetMap = c.getBoolean("Settings.ResetMap");
 			
 			assassinChargeRate = c.getInt("KitSettings.Assassin.AssassinChargeRate");
@@ -106,6 +116,7 @@ public class Config {
 			thorCooldownRate = c.getInt("KitSettings.Thor.ThorCooldownRate");
 			
 			spidermanCooldownRate = c.getInt("KitSettings.Spiderman.SpidermanCooldownRate");
+			spidermanRegenRate = c.getInt("KitSettings.Spiderman.SpidermanRegenRate");
 			
 			flashMaxRange = c.getInt("KitSettings.Flash.FlashMaxRange");
 			flashCooldownRate = c.getInt("KitSettings.Flash.FlashCooldownRate");

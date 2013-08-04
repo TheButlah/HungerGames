@@ -23,6 +23,7 @@ import me.sleightofmind.hungergames.tasks.InvincibilityTask;
 import me.sleightofmind.hungergames.tasks.KitInformTask;
 import me.sleightofmind.hungergames.tasks.PoseidonTask;
 import me.sleightofmind.hungergames.tasks.ScoutReplenishTask;
+import me.sleightofmind.hungergames.tasks.SpidermanReplenishTask;
 import me.sleightofmind.hungergames.tasks.SpidermanWebWalkTask;
 import me.sleightofmind.hungergames.tasks.SpyCompassTask;
 import me.sleightofmind.hungergames.tasks.VictoryTask;
@@ -76,12 +77,12 @@ public class Main extends JavaPlugin {
 		Config.init();
 		
 		Debug.debug("Debug messages for HungerGames are enabled!");
-		
+		Debug.debug("World name set to " + Config.worldname);
 		timeLeftToStart = Config.initialCountdownTime;
 		PluginManager pm = getServer().getPluginManager();
 		
 		if (Config.resetMap) {
-			File worldfile = new File(Bukkit.getWorldContainer(), "HungerGames");
+			File worldfile = new File(Bukkit.getWorldContainer(), Config.worldname);
 			deleteFolder(worldfile);
 		}
 		
@@ -89,7 +90,7 @@ public class Main extends JavaPlugin {
 
 			@Override
 			public void run() {
-				Main.hgworld = Bukkit.createWorld(WorldCreator.name("HungerGames").environment(Environment.NORMAL));
+				Main.hgworld = Bukkit.createWorld(WorldCreator.name(Config.worldname).environment(Environment.NORMAL));
 				//Freeze time
 				Main.hgworld.setGameRuleValue("doDaylightCycle", "false");
 			}
@@ -201,7 +202,7 @@ public class Main extends JavaPlugin {
 		
 		//Scout task. This needs to start at the beginning of the game, not in the setupTasks method
 		Bukkit.getScheduler().runTaskTimer(Main.instance, new ScoutReplenishTask(), 20*60*10, 20*60*10);
-		
+		Bukkit.getScheduler().runTaskTimer(Main.instance, new SpidermanReplenishTask(), Config.spidermanRegenRate*20, Config.spidermanRegenRate*20);
 		//Re-enable time
 		Main.hgworld.setGameRuleValue("doDaylightCycle", "true");
 		
@@ -279,6 +280,23 @@ public class Main extends JavaPlugin {
 	public static void cancelInvincibilityTask() {
 		if (invincibletask == null) return;
 		Bukkit.getScheduler().cancelTask(invincibletask.getTaskId());
+	}
+	
+	public static void sendStartUpdate(Player p){
+		if(!Main.inProgress){
+			if(Bukkit.getOnlinePlayers().length < Config.minPlayersToStart){
+				p.sendMessage(Config.playerLeftToStartMessage.replaceAll("<players>", Integer.toString(Config.minPlayersToStart - Bukkit.getOnlinePlayers().length)));
+			}else{
+				int minutes = Main.timeLeftToStart / 60;
+				int seconds = Main.timeLeftToStart % 60;
+				p.sendMessage(Config.timeLeftToStartMessage.replaceAll("<time>", minutes + "minute(s) and " + seconds + "second(s)"));
+			}
+		
+		}else{
+			p.sendMessage(Config.gameStartMessage);
+		}
+		
+		
 	}
 	
 }

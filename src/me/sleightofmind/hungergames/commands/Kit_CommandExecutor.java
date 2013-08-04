@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import me.sleightofmind.hungergames.Config;
+import me.sleightofmind.hungergames.Debug;
 import me.sleightofmind.hungergames.Main;
 import me.sleightofmind.hungergames.kits.DefaultKit;
 import me.sleightofmind.hungergames.kits.Kit;
@@ -33,7 +34,7 @@ public class Kit_CommandExecutor implements CommandExecutor{
 			}
 		}
 		
-		if (args.length == 1) {
+		if (args.length >= 1) {
 			if(args[0].equalsIgnoreCase("list")){
 				Player p = (Player) sender;
 				
@@ -65,12 +66,25 @@ public class Kit_CommandExecutor implements CommandExecutor{
 				p.sendMessage(ChatColor.GREEN + "Your Kits: " + ChatColor.WHITE + hasList);
 				p.sendMessage(ChatColor.GREEN + "Other Kits: " + ChatColor.WHITE + otherList);
 				return true;
+			}else if(args[0].equalsIgnoreCase("info") && args.length == 2){
+				Debug.debug("INFO COMMAND RUN");
+				Player p = (Player) sender;
+				String info = Config.c.getString("KitInfo." + args[1].toLowerCase());
+				if(info != null){
+					Debug.debug("INFO: " + info);
+					Debug.debug("KitInfo." + args[1].toLowerCase());
+					info = info.replaceAll("&", Config.sc);
+					p.sendMessage(info);
+				}else{
+					p.sendMessage(Config.noKitInfoMessage);
+					Debug.debug("INFO WAS NULL");
+				}
 			}
 			else{
 				if (sender instanceof Player) {
 					Player p = (Player) sender;
 					
-					if(Main.inProgress){
+					if(Main.inProgress && !p.isOp()){
 						p.sendMessage(Config.cannotChangeInProgessMessage);
 						return true;
 					}

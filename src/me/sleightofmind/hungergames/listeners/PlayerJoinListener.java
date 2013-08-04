@@ -6,6 +6,7 @@ import me.sleightofmind.hungergames.Main;
 import me.sleightofmind.hungergames.kits.DefaultKit;
 import me.sleightofmind.hungergames.tasks.GameCountdownTask;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -54,6 +55,7 @@ public class PlayerJoinListener implements Listener{
 			for (PotionEffect effect : player.getActivePotionEffects()) {
 				player.removePotionEffect(effect.getType());
 			}
+			Main.sendStartUpdate(player);
 		}
 		
 	}
@@ -88,6 +90,8 @@ public class PlayerJoinListener implements Listener{
 			}
 			Debug.debug("Registering victory for " + winner.getName());
 			Main.registerVictory(winner);
+		}else if(Main.instance.getServer().getOnlinePlayers().length == 1 && Main.inProgress){
+			Main.endGame();
 		}
 	}
 }
