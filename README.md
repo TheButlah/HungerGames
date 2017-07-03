@@ -9,5 +9,5 @@ Ryan Butler (https://github.com/TheButlah)
 
 Sam Katz (https://github.com/SamKatz)
 
-Josh Ferrel (https://github.com/negasora)
+Josh Ferrell (https://github.com/negasora)
 
