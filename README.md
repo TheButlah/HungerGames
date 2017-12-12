@@ -5,9 +5,9 @@ The kit system is highly modular, allowing the programmer to easily add new kits
 ## Authors
 This plugin was made without any version control system in place, so it was retroactively migrated to git. As such, although the dates of the commits are accurate, the authors of the commits are not. Below are the plugin authors, all of which invested approximately equal effort developing the plugin:
 
-Ryan Butler (https://github.com/TheButlah)
+[Ryan Butler](https://github.com/TheButlah)
 
-Sam Katz (https://github.com/SamKatz)
+[Sam Katz](https://github.com/SamKatz)
 
-Josh Ferrell (https://github.com/negasora)
+[Josh Ferrell](https://github.com/negasora)
 
